@@ -67,13 +67,76 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="abmlMedicos.aspx" />
+    <Content Include="abmlPacientes.aspx" />
+    <Content Include="asignarTurnos.aspx" />
+    <Content Include="HomeAdmin.aspx" />
+    <Content Include="informes.aspx" />
+    <Content Include="login.aspx" />
+    <Content Include="turnosMedico.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="abmlMedicos.aspx.cs">
+      <DependentUpon>abmlMedicos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="abmlMedicos.aspx.designer.cs">
+      <DependentUpon>abmlMedicos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="abmlPacientes.aspx.cs">
+      <DependentUpon>abmlPacientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="abmlPacientes.aspx.designer.cs">
+      <DependentUpon>abmlPacientes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="asignarTurnos.aspx.cs">
+      <DependentUpon>asignarTurnos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="asignarTurnos.aspx.designer.cs">
+      <DependentUpon>asignarTurnos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HomeAdmin.aspx.cs">
+      <DependentUpon>HomeAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HomeAdmin.aspx.designer.cs">
+      <DependentUpon>HomeAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="informes.aspx.cs">
+      <DependentUpon>informes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="informes.aspx.designer.cs">
+      <DependentUpon>informes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="login.aspx.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="login.aspx.designer.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="principal.Master.cs">
+      <DependentUpon>principal.Master</DependentUpon>
+    </Compile>
+    <Compile Include="principal.Master.designer.cs">
+      <DependentUpon>principal.Master</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="turnosMedico.aspx.cs">
+      <DependentUpon>turnosMedico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="turnosMedico.aspx.designer.cs">
+      <DependentUpon>turnosMedico.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="principal.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
