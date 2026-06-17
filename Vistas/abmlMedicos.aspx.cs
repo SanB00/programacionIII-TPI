@@ -13,5 +13,10 @@ namespace Vistas
         {
 
         }
+
+        protected void btnNuevo_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
