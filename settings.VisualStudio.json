@@ -1,0 +1,8 @@
+{
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "java.format.settings.url": "https://githubusercontent.com",
+    "java.format.settings.profile": "Google Style"
+}
