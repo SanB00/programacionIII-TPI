@@ -26,7 +26,7 @@
                     <asp:LinkButton ID="lbPacientes_admin" runat="server" Font-Bold="True" ForeColor="#102a43" Font-Size="Medium" style="text-decoration: none;" OnClick="lbPacientes_admin_Click">Ir a Pacientes</asp:LinkButton>
                 </td>
                 <td class="auto-style2" style="border: 1px solid #d9e2ec; padding: 30px; text-align: center; width: 50%;">
-                    <asp:LinkButton ID="lbInformes_admin" runat="server" Font-Bold="True" ForeColor="#102a43" Font-Size="Medium" style="text-decoration: none;">Ir a Informes</asp:LinkButton>
+                    <asp:LinkButton ID="lbInformes_admin" runat="server" Font-Bold="True" ForeColor="#102a43" Font-Size="Medium" style="text-decoration: none;" OnClick="lbInformes_admin_Click"> Ir a Informes </asp:LinkButton>
                 </td>
             </tr>
         </table>

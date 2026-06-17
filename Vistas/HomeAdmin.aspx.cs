@@ -22,5 +22,8 @@ namespace Vistas
         protected void lbPacientes_admin_Click(object sender, EventArgs e) {
             Response.Redirect("~/abmlPacientes.aspx");
         }
+        protected void lbInformes_admin_Click(object sender, EventArgs e) {
+            Response.Redirect("~/informes.aspx");
+        }
     }
 }
