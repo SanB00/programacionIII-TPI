@@ -42,6 +42,12 @@ dotnet_naming_rule.classes_should_be_pascal_case.symbols = class_symbols
 dotnet_naming_rule.classes_should_be_pascal_case.style = pascal_case_style
 dotnet_naming_rule.classes_should_be_pascal_case.severity = error
 
+# Define the symbol group for private/internal fields
+dotnet_naming_symbols.field_symbols.applicable_kinds = field
+dotnet_naming_symbols.field_symbols.applicable_accessibilities = private, internal, private_protected, protected_internal, public, protected
+dotnet_naming_rule.field_rule.symbols = field_symbols
+dotnet_naming_rule.field_rule.naming_style = camel_case_style
+dotnet_naming_rule.field_rule.severity = error
 
 #### 1. INDENTATION & TABS ####
 # Standard indentation uses 4 spaces

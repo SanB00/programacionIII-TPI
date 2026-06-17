@@ -19,6 +19,10 @@ namespace Vistas
             Response.Redirect("~/abmlMedicos.aspx");
         }
 
+        protected void lbTurnos_admin_Click(object sender, EventArgs e) {
+            Response.Redirect("~/asignarTurnos.aspx");
+        }
+
         protected void lbPacientes_admin_Click(object sender, EventArgs e) {
             Response.Redirect("~/abmlPacientes.aspx");
         }
