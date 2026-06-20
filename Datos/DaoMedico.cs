@@ -1,4 +1,4 @@
 ﻿namespace Datos {
-    internal class DaoMedico {
+    public class DaoMedico {
     }
 }

@@ -1,4 +1,4 @@
 ﻿namespace Datos {
-    internal class DaoTurno {
+    public class DaoTurno {
     }
 }

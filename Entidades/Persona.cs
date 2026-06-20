@@ -1,4 +1,5 @@
 ﻿namespace Entidades {
-    internal class Persona {
+    public class Persona {
+
     }
 }

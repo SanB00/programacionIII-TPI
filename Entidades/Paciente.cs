@@ -1,4 +1,4 @@
 ﻿namespace Entidades {
-    internal class Paciente {
+    public class Paciente : Persona {
     }
 }

@@ -1,5 +1,5 @@
 ﻿namespace Entidades {
-    internal class Especialidad {
+    public class Especialidad {
         private int id;
         private string nombre;
 

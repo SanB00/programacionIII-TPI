@@ -1,4 +1,4 @@
 ﻿namespace Datos {
-    internal class DaoLocalidad {
+    public class DaoLocalidad {
     }
 }

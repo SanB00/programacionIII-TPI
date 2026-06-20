@@ -1,5 +1,5 @@
 ﻿namespace Entidades {
-    internal class Provincia {
+    public class Provincia {
         private int id;
         private string nombre;
 

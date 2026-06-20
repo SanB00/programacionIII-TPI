@@ -1,4 +1,4 @@
 ﻿namespace Entidades {
-    internal class Usuario {
+    public class Usuario {
     }
 }

@@ -1,5 +1,5 @@
 ﻿namespace Entidades {
-    internal class Localidad {
+    public class Localidad {
         private int id;
         private int idProvincia;
         private string nombre;

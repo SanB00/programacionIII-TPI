@@ -1,4 +1,4 @@
 ﻿namespace Entidades {
-    internal class Medico {
+    public class Medico {
     }
 }

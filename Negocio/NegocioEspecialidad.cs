@@ -1,4 +1,4 @@
 ﻿namespace Negocio {
-    internal class NegocioEspecialidad {
+    public class NegocioEspecialidad {
     }
 }

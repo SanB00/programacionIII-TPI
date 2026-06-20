@@ -1,4 +1,4 @@
 ﻿namespace Entidades {
-    internal class Turno {
+    public class Turno {
     }
 }
