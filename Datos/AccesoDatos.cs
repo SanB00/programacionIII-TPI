@@ -4,33 +4,16 @@ using System.Data.SqlClient;
 
 namespace Datos {
     public class AccesoDatos {
-        private const string CADENA_CONEXION = @"Initial Catalog=BDClinica;Data Source=(localdb)\MSSQLLocalDB;Integrated Security=True";
-        //private string CADENA_CONEXION = @"Data Source=localhost\\sqlexpress;Initial Catalog=BDClinica;Integrated Security=True";
-        // cadenaParaEntrega
-        // 	    private const string CADENA_CONEXION = @"Data Source=localhost\\sqlexpress;Initial Catalog=BDClinica;Integrated Security=True";
-        // 
-        // Franco
-        //      private const string CADENA_CONEXION = @"Initial Catalog=BDClinica;Data Source=localhost\sqlexpress;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-        // 	 
-        // Lautaro
-        // 	    private const string CADENA_CONEXION = @"Initial Catalog=BDClinica;Data Source=localhost;Integrated Security=True;Trust Server Certificate=True";
-        // 
-        // Santi
-        // 	    private const string CADENA_CONEXION = @"Initial Catalog=BDClinica;Data Source=(localdb)\MSSQLLocalDB;Integrated Security=True";
-        // 
-        // Elian 
-        // 	    private const string CADENA_CONEXION = @"Initial Catalog=BDClinica;Data Source=localhost;Integrated Security=True";
-        //  
-        // Yulieth 
-        // 	    private const string CADENA_CONEXION = @"Initial Catalog=BDClinica;Data Source=DESKTOP-RFDMNU2\SQLEXPRESS;Integrated Security=True;Encrypt=False;TrustServerCertificate=True";			 	 
-        // 	 
-        // Guillermo
-        // 	    private const string CADENA_CONEXION = @"Initial Catalog=BDClinica;Data Source=localhost;Integrated Security=True";
-
+        // private string rutaBD = @"Data Source=localhost;Initial Catalog=BDSucursales;Integrated Security=True";
+        // private string rutaBD = @"Data Source=localhost\sqlexpress;Initial Catalog=BDSucursales;Integrated Security=True";
+        // private string rutaBD = @"Data Source=localhost\\sqlexpress; Initial Catalog=BDSucursales;Integrated Security=True";
+        // private string rutaBD = @"Data Source=DESKTOP-RFDMNU2\SQLEXPRESS;Initial Catalog=BDClinicaIntegrated Security=True;Encrypt=False;TrustServerCertificate=True";
+         private string rutaBD = @"Data Source =.\SQLEXPRESS;Initial Catalog = BDSucursales; Integrated Security = True;";
+       // private string rutaBD = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=BDClinica;Integrated Security=True";
         public AccesoDatos() { }
 
         public SqlConnection obtenerConexion() {
-            SqlConnection sqlConnection = new SqlConnection(CADENA_CONEXION);
+            SqlConnection sqlConnection = new SqlConnection(rutaBD);
             try {
                 sqlConnection.Open();
                 return sqlConnection;
@@ -61,7 +44,7 @@ namespace Datos {
         }
 
         public DataTable ejecutarConsulta(string consultaSQL, SqlParameter[] parametros = null) {
-            string connectionString = CADENA_CONEXION;
+            string connectionString = rutaBD;
             DataTable dataTable = new DataTable();
 
             // El bloque 'using' asegura que la conexión se cierre SIEMPRE, incluso si hay error
@@ -81,16 +64,39 @@ namespace Datos {
             return dataTable;
         }
         public int ejecutarTransaccion(string consultaSQL) {
-            string connectionString = CADENA_CONEXION;
+            string connectionString = rutaBD;
             SqlConnection sqlConnection = new SqlConnection(connectionString);
+
             sqlConnection.Open();
 
             SqlCommand sqlCommand = new SqlCommand(consultaSQL, sqlConnection);
-
             int filasAfectadas = sqlCommand.ExecuteNonQuery(); /// INSERT, UPDATE, DELETE
 
             sqlConnection.Close();
+
             return filasAfectadas;
+        }
+
+        public Boolean existe(String consulta) {
+            Boolean estado = false;
+            SqlConnection conexion = obtenerConexion();
+            SqlCommand cmd = new SqlCommand(consulta, conexion);
+            SqlDataReader datos = cmd.ExecuteReader();
+            if (datos.Read()) {
+                estado = true;
+            }
+            return estado;
+        }
+
+        public int obtenerMaximo(String consulta) {
+            int max = 0;
+            SqlConnection conexion = obtenerConexion();
+            SqlCommand cmd = new SqlCommand(consulta, conexion);
+            SqlDataReader datos = cmd.ExecuteReader();
+            if (datos.Read()) {
+                max = Convert.ToInt32(datos[0].ToString());
+            }
+            return max;
         }
     }
 }
