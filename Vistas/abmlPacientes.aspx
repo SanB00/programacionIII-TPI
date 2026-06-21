@@ -35,7 +35,7 @@
             <td>Dirección</td>
             <td><asp:TextBox ID="txtDireccion" runat="server" /></td>
             <td>Provincia</td>
-            <td><asp:DropDownList ID="ddlProvincia" runat="server" /></td>
+            <td><asp:DropDownList ID="ddlProvincia" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlProvincia_SelectedIndexChanged" /></td>
         </tr>
         <tr>
             <td>Localidad</td>
