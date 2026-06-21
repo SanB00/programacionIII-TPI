@@ -6,14 +6,21 @@ namespace Vistas {
     public partial class abmlPacientes : System.Web.UI.Page {
         private readonly NegocioProvincia objNegocioProvincia = new NegocioProvincia();
         private readonly NegocioLocalidad objNegocioLocalidad = new NegocioLocalidad();
+        private NegocioPaciente objNegocioPaciente = new NegocioPaciente();
 
         protected void page_Load(object sender, EventArgs e) {
-            if (!this.IsPostBack) {
+            if (Page.IsPostBack == false) {
                 cargarProvincias();
                 cargarLocalidades(0);
+                cargarGridView();
             }
+
         }
 
+        private void cargarGridView() {
+            gvPacientes.DataSource = objNegocioPaciente.getTodosPacientes();
+            gvPacientes.DataBind();
+        }
         private void cargarProvincias() {
             ddlProvincia.Items.Clear();
 
@@ -42,23 +49,10 @@ namespace Vistas {
             int idProvincia = Convert.ToInt32(ddlProvincia.SelectedValue);
             cargarLocalidades(idProvincia);
         }
+
+        protected void btnAgregarPaciente_Click(object sender, EventArgs e) {
+            bloqueAgregarPaciente.Visible = true;
+        }
     }
 }
 
-/*
-use BDClinica
-go
-INSERT INTO LOCALIDAD (IdLocalidad, Nombre, IdProvincia)
-SELECT 1, 'Don Torcuato', 1 UNION
-SELECT 2, 'Tigre', 1 UNION
-SELECT 3, 'San Fernando', 1 UNION
-SELECT 4, 'San Isidro', 1 UNION
-SELECT 5, 'Vicente López', 1 UNION
-SELECT 6, 'La Plata', 1 UNION
-SELECT 7, 'Mar del Plata', 1 UNION
-SELECT 8, 'Palermo', 5 UNION
-SELECT 9, 'Recoleta', 5 UNION
-SELECT 10, 'Belgrano', 5 UNION
-SELECT 11, 'Córdoba Capital', 6 UNION
-SELECT 12, 'Río Cuarto', 6;
-GO

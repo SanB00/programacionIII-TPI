@@ -5,8 +5,10 @@
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">   
     <h1>PACIENTES</h1>
+    <asp:Button ID="btnAgregarPaciente" runat="server" OnClick="btnAgregarPaciente_Click" Text="Agregar Nuevo Paciente" />
     <br />
-    <table>
+    <br />
+    <table id="bloqueAgregarPaciente" runat="server" visible="false" border="0">
         <tr>
             <td>DNI</td>
             <td><asp:TextBox ID="txtDni" runat="server" MaxLength="8" /></td>
@@ -47,45 +49,92 @@
             <td>Teléfono</td>
             <td><asp:TextBox ID="txtTelefono" runat="server" /></td>
             <td></td>
-            <td></td>
+            <td style="text-align: right">&nbsp;<asp:Button ID="btnAgregar" runat="server" style="text-align: right" Text="Agregar" />
+            </td>
         </tr>
     </table>
 
     <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     Buscar por DNI: <asp:TextBox ID="txtFiltro" runat="server" />
     
     <br /><br />
-    <asp:GridView ID="grdPacientes" runat="server"
-        AutoGenerateColumns="false"
+    <asp:GridView ID="gvPacientes" runat="server"
+        AutoGenerateColumns="False"
         DataKeyNames="DNI"
-        AllowPaging="true" PageSize="8"
-        GridLines="Horizontal"
+        AllowPaging="True" PageSize="8"
+        GridLines="None"
         Width="900px" 
         Font-Names="Arial" Font-Size="Small"
-        EmptyDataText="No se encontraron pacientes.">
-        <HeaderStyle BackColor="#102a43" ForeColor="White" Font-Bold="true" />
-        <AlternatingRowStyle BackColor="#f0f4f8" />
+        EmptyDataText="No se encontraron pacientes." CellPadding="4" ForeColor="#333333" style="margin-right: 53px">
+        <EditRowStyle BackColor="#2461BF" />
+        <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+        <HeaderStyle BackColor="#507CD1" ForeColor="White" Font-Bold="true" />
+        <AlternatingRowStyle BackColor="White" />
         <Columns>
-            <asp:BoundField DataField="DNI"          HeaderText="DNI" />
-            <asp:BoundField DataField="Nombre"       HeaderText="Nombre" />
-            <asp:BoundField DataField="Apellido"     HeaderText="Apellido" />
-            <asp:BoundField DataField="Sexo"         HeaderText="Sexo" />
-            <asp:BoundField DataField="Nacionalidad" HeaderText="Nacionalidad" />
-            <asp:BoundField DataField="FechaNac"     HeaderText="F. Nacimiento" DataFormatString="{0:dd/MM/yyyy}" />
-            <asp:BoundField DataField="Direccion"    HeaderText="Dirección" />
-            <asp:BoundField DataField="Localidad"    HeaderText="Localidad" />
-            <asp:BoundField DataField="Provincia"    HeaderText="Provincia" />
-            <asp:BoundField DataField="Correo"       HeaderText="Correo" />
-            <asp:BoundField DataField="Telefono"     HeaderText="Teléfono" />
-            <asp:TemplateField HeaderText="Acciones">
+            <asp:TemplateField HeaderText="DNI">
                 <ItemTemplate>
-                    <asp:LinkButton runat="server" CommandName="Edit" Text="Editar" />
-                    &nbsp;|&nbsp;
-                    <asp:LinkButton runat="server" CommandName="Delete" Text="Eliminar"
-                        OnClientClick="return confirm('¿Eliminar paciente?');" />
+                    <asp:Label ID="lbl_it_DNI" runat="server" Text='<%# Bind("DNI") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Nombre">
+                <ItemTemplate>
+                    <asp:Label ID="lbl_it_Nombre" runat="server" Text='<%# Bind("Nombre") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Apellido">
+                <ItemTemplate>
+                    <asp:Label ID="lbl_it_Apellido" runat="server" Text='<%# Bind("Apellido") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Sexo">
+                <ItemTemplate>
+                    <asp:Label ID="lbl_it_Sexo" runat="server" Text='<%# Bind("Sexo") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Nacionalidad">
+                <ItemTemplate>
+                    <asp:Label ID="lbl_it_Nacionalidad" runat="server" Text='<%# Bind("Nacionalidad") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Fecha De Nac.">
+                <ItemTemplate>
+                    <asp:Label ID="lbl__it_fechaNac" runat="server" Text='<%# Eval("FechaNacimiento", "{0:dd/MM/yyyy}") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Direccion">
+                <ItemTemplate>
+                    <asp:Label ID="lbl_it_Direccion" runat="server" Text='<%# Bind("Direccion") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Correo Electronico">
+                <ItemTemplate>
+                    <asp:Label ID="lbl_it_mail" runat="server" Text='<%# Bind("CorreoElectronico") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Telefono">
+                <ItemTemplate>
+                    <asp:Label ID="lbl_it_Telefono" runat="server" Text='<%# Bind("Telefono") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Provincia">
+                <ItemTemplate>
+                    <asp:Label ID="lbl_it_Provincia" runat="server" Text='<%# Bind("Provincia") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Localidad">
+                <ItemTemplate>
+                    <asp:Label ID="lbl_it_localidad" runat="server" Text='<%# Bind("Localidad") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
+        <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+        <RowStyle BackColor="#EFF3FB" />
+        <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+        <SortedAscendingCellStyle BackColor="#F5F7FB" />
+        <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+        <SortedDescendingCellStyle BackColor="#E9EBEF" />
+        <SortedDescendingHeaderStyle BackColor="#4870BE" />
     </asp:GridView>
    
     <br />

@@ -15,7 +15,25 @@ namespace Vistas
     {
 
         /// <summary>
-        /// txtDni control.
+        /// Control btnAgregarPaciente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAgregarPaciente;
+
+        /// <summary>
+        /// Control bloqueAgregarPaciente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTable bloqueAgregarPaciente;
+
+        /// <summary>
+        /// Control txtDni.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
@@ -114,7 +132,16 @@ namespace Vistas
         protected global::System.Web.UI.WebControls.TextBox txtTelefono;
 
         /// <summary>
-        /// txtFiltro control.
+        /// Control btnAgregar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAgregar;
+
+        /// <summary>
+        /// Control txtFiltro.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
@@ -129,7 +156,7 @@ namespace Vistas
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdPacientes;
+        protected global::System.Web.UI.WebControls.GridView gvPacientes;
 
         /// <summary>
         /// HyperLink1 control.
