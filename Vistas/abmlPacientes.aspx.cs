@@ -6,7 +6,7 @@ namespace Vistas {
     public partial class AbmlPacientes : System.Web.UI.Page {
         private readonly NegocioProvincia objNegocioProvincia = new NegocioProvincia();
         private readonly NegocioLocalidad objNegocioLocalidad = new NegocioLocalidad();
-        private NegocioPaciente objNegocioPaciente = new NegocioPaciente();
+        private readonly NegocioPaciente objNegocioPaciente = new NegocioPaciente();
 
         protected void page_Load(object sender, EventArgs e) {
             if (Page.IsPostBack == false) {
@@ -14,7 +14,6 @@ namespace Vistas {
                 cargarLocalidades(0);
                 cargarGridView();
             }
-
         }
 
         private void cargarGridView() {

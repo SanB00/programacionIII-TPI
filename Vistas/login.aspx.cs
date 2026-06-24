@@ -3,12 +3,14 @@
 namespace Vistas {
     public partial class login : System.Web.UI.Page {
         protected void page_Load(object sender, EventArgs e) {
-
+            //TODO Borrar esta linea de codigo cuando se implemente la logica de login
+            txtUsuario.Text = "admin";
+            txtContrasenia.Text = "1234";
         }
 
         protected void btnIniciarSesion_Click(object sender, EventArgs e) {
-            string usuario = tbUsuario.Text;
-            string contraseña = tbContrasenia.Text;
+            string usuario = txtUsuario.Text;
+            string contraseña = txtContrasenia.Text;
 
             if (usuario == "admin" && contraseña == "1234") {
                 Session["Usuario"] = usuario;
