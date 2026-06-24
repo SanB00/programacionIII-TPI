@@ -1,5 +1,6 @@
 USE MASTER
 GO 
+-- DROP DATABASE [BDClinica]
 
 CREATE DATABASE [BDClinica]
 GO
