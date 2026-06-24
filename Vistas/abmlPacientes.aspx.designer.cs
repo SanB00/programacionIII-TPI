@@ -11,7 +11,7 @@ namespace Vistas
 {
 
 
-    public partial class abmlPacientes
+    public partial class AbmlPacientes
     {
 
         /// <summary>

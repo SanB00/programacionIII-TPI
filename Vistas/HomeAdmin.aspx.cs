@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
-namespace Vistas
-{
-    public partial class HomeAdmin : System.Web.UI.Page
-    {
-        protected void Page_Load(object sender, EventArgs e) {
+namespace Vistas {
+    public partial class HomeAdmin : System.Web.UI.Page {
+        protected void page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
                 lblBienvenida.Text = "Bienvenido " + Session["Usuario"];
             }
@@ -24,7 +17,7 @@ namespace Vistas
         }
 
         protected void lbPacientes_admin_Click(object sender, EventArgs e) {
-            Response.Redirect("~/abmlPacientes.aspx");
+            Response.Redirect("~/AbmlPacientes.aspx");
         }
         protected void lbInformes_admin_Click(object sender, EventArgs e) {
             Response.Redirect("~/informes.aspx");

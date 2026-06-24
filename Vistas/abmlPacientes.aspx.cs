@@ -3,7 +3,7 @@ using System;
 using System.Web.UI.WebControls;
 
 namespace Vistas {
-    public partial class abmlPacientes : System.Web.UI.Page {
+    public partial class AbmlPacientes : System.Web.UI.Page {
         private readonly NegocioProvincia objNegocioProvincia = new NegocioProvincia();
         private readonly NegocioLocalidad objNegocioLocalidad = new NegocioLocalidad();
         private NegocioPaciente objNegocioPaciente = new NegocioPaciente();
