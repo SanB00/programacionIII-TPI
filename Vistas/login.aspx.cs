@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
-namespace Vistas
-{
-    public partial class login : System.Web.UI.Page
-    {
-        protected void Page_Load(object sender, EventArgs e) {
+namespace Vistas {
+    public partial class login : System.Web.UI.Page {
+        protected void page_Load(object sender, EventArgs e) {
 
         }
 
@@ -21,8 +14,7 @@ namespace Vistas
                 Session["Usuario"] = usuario;
 
                 Response.Redirect("HomeAdmin.aspx");
-            }
-            else {
+            } else {
                 lblMensaje.Text = "Usuario o contraseña incorrectos.";
                 lblMensaje.Visible = true;
             }
