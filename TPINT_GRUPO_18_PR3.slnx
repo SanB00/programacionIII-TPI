@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="SQLQueryBDClinica.sql" />
+  </Folder>
   <Project Path="Datos/Datos.csproj" Id="0d30a9e8-d529-4acf-b469-b69f73082890" />
   <Project Path="Entidades/Entidades.csproj" Id="4c21f9bc-e21b-4cbd-96d8-d0b8941ddafa" />
   <Project Path="Negocio/Negocio.csproj" Id="18ba8f6d-78a7-4aab-96b2-7231f18395af" />

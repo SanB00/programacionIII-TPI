@@ -8,11 +8,11 @@ namespace Datos {
         //Franco
         //private string rutaBD = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=BDClinica;Integrated Security=True";
         //Lauti
-        private string rutaBD = @"Data Source=localhost;Initial Catalog=BDClinica;Integrated Security=True";
+        // private string rutaBD = @"Data Source=localhost;Initial Catalog=BDClinica;Integrated Security=True";
         // private string rutaBD = @"Data Source=DESKTOP-RFDMNU2\SQLEXPRESS;Initial Catalog=BDClinicaIntegrated Security=True;Encrypt=False;TrustServerCertificate=True";
         // private string rutaBD = @"Data Source =.\SQLEXPRESS;Initial Catalog = BDClinica; Integrated Security = True;";
         // Santiago
-        //private string rutaBD = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=BDClinica;Integrated Security=True";
+        private string rutaBD = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=BDClinica;Integrated Security=True";
         // Elian
         //private string rutaBD = @"Data Source=DESKTOP-6K4PVV3\SQLEXPRESS;Initial Catalog=BDClinica;Integrated Security=True";
         public AccesoDatos() { }

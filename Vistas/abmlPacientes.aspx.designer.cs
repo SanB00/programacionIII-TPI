@@ -24,16 +24,16 @@ namespace Vistas
         protected global::System.Web.UI.WebControls.Button btnAgregarPaciente;
 
         /// <summary>
-        /// Control lblMensaje.
+        /// lblMensaje control.
         /// </summary>
         /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMensaje;
 
         /// <summary>
-        /// Control bloqueAgregarPaciente.
+        /// bloqueAgregarPaciente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
@@ -168,12 +168,12 @@ namespace Vistas
         protected global::System.Web.UI.WebControls.GridView gvPacientes;
 
         /// <summary>
-        /// HyperLink1 control.
+        /// lnkVolverMenu control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink HyperLink1;
+        protected global::System.Web.UI.WebControls.HyperLink lnkVolverMenu;
     }
 }

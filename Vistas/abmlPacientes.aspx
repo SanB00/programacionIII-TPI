@@ -4,7 +4,7 @@
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">   
-    <h1>PACIENTES</h1>
+    <h1>Pacientes</h1>
     <asp:Button ID="btnAgregarPaciente" runat="server" OnClick="btnAgregarPaciente_Click" Text="Agregar Nuevo Paciente" />
     &nbsp;&nbsp;
     <asp:Label ID="lblMensaje" runat="server"></asp:Label>
@@ -149,5 +149,5 @@
     </asp:GridView>
    
     <br />
-    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/HomeAdmin.aspx">Volver al menú</asp:HyperLink>
+    <asp:HyperLink ID="lnkVolverMenu" runat="server" NavigateUrl="~/HomeAdmin.aspx">Volver al menú</asp:HyperLink>
 </asp:Content>

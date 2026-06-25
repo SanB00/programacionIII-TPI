@@ -6,7 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     
-    <h1>MEDICOS</h1>
+    <h1>Médicos</h1>
     <br />
     <table>
         <tr>
@@ -30,14 +30,14 @@
                     <asp:ListItem Value="F">Femenino</asp:ListItem>
                 </asp:DropDownList>
             </td>
-            <td>Fecha Nac.</td>
+            <td>Fecha Nacimiento</td>
             <td><asp:TextBox ID="txtNacimiento" runat="server" TextMode="Date" /></td>
         </tr>
         <tr>
             <td>Especialidad</td>
             <td><asp:DropDownList ID="ddlEspecialidad" runat="server" /></td>
             <td>Localidad</td>
-            <td><asp:DropDownList ID="DropDownList1" runat="server" /></td>
+            <td><asp:DropDownList ID="ddlLocalidad" runat="server" /></td>
         </tr>
         <tr>
             <td>Teléfono</td>
@@ -50,13 +50,13 @@
             <td>
                 <asp:TextBox ID="txtNacionalidad" runat="server"></asp:TextBox>
             </td>
-            <td>Direccion</td>
+            <td>Dirección</td>
             <td>
                 <asp:TextBox ID="txtDireccion" runat="server"></asp:TextBox>
             </td>
         </tr>
         <tr>
-            <td>Dias de Atencion</td>
+            <td>Dias de Atención</td>
             <td>
                 <asp:TextBox ID="txtDiasAtencion" runat="server"></asp:TextBox>
             </td>
@@ -106,6 +106,6 @@
 </asp:GridView>
    
 
-    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/HomeAdmin.aspx">Volver al menu</asp:HyperLink>
+    <asp:HyperLink ID="lnkVolverMenu" runat="server" NavigateUrl="~/HomeAdmin.aspx">Volver al menú</asp:HyperLink>
 
 </asp:Content>
