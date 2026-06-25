@@ -48,6 +48,8 @@
         <tr>
             <td colspan="4">
       
+                <asp:Button ID="btnGuardarMedico" runat="server" Text="Guardar" />
+      
             </td>
         </tr>
     </table>

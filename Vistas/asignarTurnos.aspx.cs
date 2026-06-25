@@ -5,5 +5,10 @@ namespace Vistas {
         protected void page_Load(object sender, EventArgs e) {
 
         }
+
+        protected void btnAsignarTurno_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

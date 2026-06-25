@@ -42,7 +42,7 @@
         </tr>
         <tr>
             <td class="auto-style9">
-                <asp:Button ID="btnAsignarTurno" runat="server" Text="Asignar turno" />
+                <asp:Button ID="btnAsignarTurno" runat="server" Text="Asignar turno" OnClick="btnAsignarTurno_Click" />
             </td>
             <td class="auto-style10">
                 <asp:Label ID="lblMensaje" runat="server"></asp:Label>
