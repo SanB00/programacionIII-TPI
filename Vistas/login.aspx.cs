@@ -3,22 +3,28 @@ using System;
 
 namespace Vistas {
     public partial class login : System.Web.UI.Page {
-        protected void Page_Load(object sender, EventArgs e) {
-            //if (!IsPostBack) {
-            //    txtUsuario.Text = "admin";
-            //    txtContrasenia.Text = "1234";
-            //}
+        protected void page_Load(object sender, EventArgs e) {
+            
         }
 
         protected void btnIniciarSesion_Click(object sender, EventArgs e) {
             NegocioUsuario negocio = new NegocioUsuario();
 
-            bool valido = negocio.ValidarUsuario(txtUsuario.Text, txtContrasenia.Text);
+            string tipoUsuario = negocio.validarUsuario(txtUsuario.Text, txtContrasenia.Text);
 
-            if (valido) {
+            if (tipoUsuario!=null) {
                 Session["Usuario"] = txtUsuario.Text;
-                Response.Redirect("HomeAdmin.aspx");
+                Session["TipoUsuario"] = tipoUsuario;
+
+                if (tipoUsuario == "Administrador") {
+                    Response.Redirect("HomeAdmin.aspx");
+                } 
+                else if (tipoUsuario == "Medico") {
+                    Response.Redirect("turnosMedico.aspx");
+                } 
             } else {
+                txtUsuario.Text = "";
+                lblMensaje.Visible = true;
                 lblMensaje.Text = "Usuario o contraseña incorrectos";
             }
         }

@@ -2,9 +2,9 @@
 
 namespace Negocio {
     public class NegocioUsuario {
-        public bool ValidarUsuario(string usuario, string contrasenia) {
+        public string validarUsuario(string usuario, string contrasenia) {
             DaoUsuario dao = new DaoUsuario();
-            return dao.ValidarUsuario(usuario, contrasenia);
+            return dao.validarUsuario(usuario, contrasenia);
         }
     }
 }

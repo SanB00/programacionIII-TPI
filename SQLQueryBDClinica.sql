@@ -382,3 +382,63 @@ SELECT 1005, '32555666', 'Valeria', 'Torres', 'F', 'Argentina', '1990-07-08', 'I
 SELECT 1006, '27777444', 'Franco', 'Sanchez', 'M', 'Argentina', '1972-12-01', 'Urquiza 987', 6, 3, 'diego.sanchez@gmail.com', '1160066677', 2, 'Lunes-Viernes', '08:00-12:00', NULL;
 GO
 
+CREATE PROCEDURE SP_AgregarPaciente
+    @dni CHAR(8),
+    @nombre VARCHAR(50),
+    @apellido VARCHAR(50),
+    @sexo CHAR(1),
+    @nacionalidad VARCHAR(50),
+    @fecha DATE,
+    @direccion VARCHAR(100),
+    @correo VARCHAR(100),
+    @telefono VARCHAR(20),
+    @provincia INT,
+    @localidad INT
+AS
+BEGIN
+    INSERT INTO PACIENTE
+    (
+        DNI, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento,
+        Direccion, CorreoElectronico, Telefono, IdProvincia, IdLocalidad, Estado
+    )
+    VALUES
+    (
+        @dni, @nombre, @apellido, @sexo, @nacionalidad, @fecha,
+        @direccion, @correo, @telefono, @provincia, @localidad, 1
+    )
+END
+GO
+
+CREATE PROCEDURE SP_AgregarMedico
+    @legajo INT,
+    @dni CHAR(8),
+    @nombre VARCHAR(50),
+    @apellido VARCHAR(50),
+    @sexo CHAR(1),
+    @nacionalidad VARCHAR(50),
+    @fecha DATE,
+    @direccion VARCHAR(100),
+    @idLocalidad INT,
+    @idProvincia INT,
+    @correo VARCHAR(100),
+    @telefono VARCHAR(20),
+    @idEspecialidad INT,
+    @diasAtencion VARCHAR(100),
+    @horarioAtencion VARCHAR(100),
+    @idUsuario INT = NULL
+AS
+BEGIN
+    INSERT INTO MEDICO
+    (
+        Legajo, DNI, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento,
+        Direccion, IdLocalidad, IdProvincia, CorreoElectronico, Telefono,
+        IdEspecialidad, DiasAtencion, HorarioAtencion, IdUsuario, Estado
+    )
+    VALUES
+    (
+        @legajo, @dni, @nombre, @apellido, @sexo, @nacionalidad, @fecha,
+        @direccion, @idLocalidad, @idProvincia, @correo, @telefono,
+        @idEspecialidad, @diasAtencion, @horarioAtencion, @idUsuario, 1
+    )
+END
+GO

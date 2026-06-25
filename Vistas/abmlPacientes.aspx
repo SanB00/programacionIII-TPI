@@ -6,6 +6,8 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">   
     <h1>PACIENTES</h1>
     <asp:Button ID="btnAgregarPaciente" runat="server" OnClick="btnAgregarPaciente_Click" Text="Agregar Nuevo Paciente" />
+    &nbsp;&nbsp;
+    <asp:Label ID="lblMensaje" runat="server"></asp:Label>
     <br />
     <br />
     <table id="bloqueAgregarPaciente" runat="server" visible="false" border="0">
@@ -29,7 +31,15 @@
         </tr>
         <tr>
             <td>Nacionalidad</td>
-            <td><asp:DropDownList ID="ddlNacionalidad" runat="server" /></td>
+            <td><asp:DropDownList ID="ddlNacionalidad" runat="server" >
+                <asp:ListItem>Argentino</asp:ListItem>
+                <asp:ListItem>Chileno</asp:ListItem>
+                <asp:ListItem>Paraguayo</asp:ListItem>
+                <asp:ListItem>Boliviano</asp:ListItem>
+                <asp:ListItem>Uruguayo</asp:ListItem>
+                <asp:ListItem>Brasilero</asp:ListItem>
+                </asp:DropDownList>
+            </td>
             <td>Fecha Nac.</td>
             <td><asp:TextBox ID="txtNacimiento" runat="server" TextMode="Date" /></td>
         </tr>
@@ -49,7 +59,7 @@
             <td>Teléfono</td>
             <td><asp:TextBox ID="txtTelefono" runat="server" /></td>
             <td></td>
-            <td style="text-align: right">&nbsp;<asp:Button ID="btnAgregar" runat="server" style="text-align: right" Text="Agregar" />
+            <td style="text-align: right">&nbsp;<asp:Button ID="btnAgregar" runat="server" style="text-align: right" Text="Agregar" OnClick="btnAgregar_Click" />
             </td>
         </tr>
     </table>
@@ -63,6 +73,7 @@
         AutoGenerateColumns="False"
         DataKeyNames="DNI"
         AllowPaging="True" PageSize="8"
+        OnPageIndexChanging="gvPacientes_PageIndexChanging"    
         GridLines="None"
         Width="900px" 
         Font-Names="Arial" Font-Size="Small"

@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 namespace Datos {
     public class DaoUsuario {
-        public bool ValidarUsuario(string usuario, string contrasenia) {
+        public string validarUsuario(string usuario, string contrasenia) {
             AccesoDatos acceso = new AccesoDatos();
 
             string consulta =
@@ -20,7 +20,11 @@ namespace Datos {
 
             DataTable dt = acceso.ejecutarConsulta(consulta, parametros);
 
-            return dt.Rows.Count > 0;
+            if (dt.Rows.Count > 0) {
+                return dt.Rows[0]["TipoUsuario"].ToString();
+            } else {
+                return null;
+            }
         }
     }
 }
