@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-    <form id="form1" runat="server" defaultbutton="btnIniciarSesion">
+    <form id="form1" runat="server">
         <div class="auto-style1">
             <div class="auto-style1">
         <div class="auto-style1">
@@ -38,9 +38,7 @@
 &nbsp;&nbsp;&nbsp;
                 <asp:TextBox ID="txtContrasenia" runat="server" TextMode="Password"></asp:TextBox>
             </div>
-            <br />
-            <asp:Button ID="btnIniciarSesion" runat="server" OnClick="btnIniciarSesion_Click" Text="Iniciar Sesion" IsDefault="True" />
-            <br />
+            <asp:Button ID="btnIniciarSesion" runat="server" Text="Iniciar Sesion" CausesValidation="false" OnClick="btnIniciarSesion_Click" />
             <br />
             <asp:Label ID="lblMensaje" runat="server" Visible="False"></asp:Label>
         </div>
