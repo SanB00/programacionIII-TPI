@@ -46,6 +46,26 @@
             <td><asp:TextBox ID="txtCorreo" runat="server" /></td>
         </tr>
         <tr>
+            <td>Nacionalidad</td>
+            <td>
+                <asp:TextBox ID="txtNacionalidad" runat="server"></asp:TextBox>
+            </td>
+            <td>Direccion</td>
+            <td>
+                <asp:TextBox ID="txtDireccion" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>Dias de Atencion</td>
+            <td>
+                <asp:TextBox ID="txtDiasAtencion" runat="server"></asp:TextBox>
+            </td>
+            <td>Horarios</td>
+            <td>
+                <asp:TextBox ID="txtHorarios" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
             <td colspan="4">
       
                 <asp:Button ID="btnGuardarMedico" runat="server" Text="Guardar" />
