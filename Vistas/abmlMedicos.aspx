@@ -37,7 +37,16 @@
             <td>Especialidad</td>
             <td><asp:DropDownList ID="ddlEspecialidad" runat="server" /></td>
             <td>Localidad</td>
-            <td><asp:DropDownList ID="ddlLocalidad" runat="server" /></td>
+            <td><asp:DropDownList ID="DropDownList1" runat="server" /></td>
+        </tr>
+        <tr>
+            <td>Provincia</td>
+            <td>
+                <asp:DropDownList ID="ddlProvincia" runat="server">
+                </asp:DropDownList>
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
         </tr>
         <tr>
             <td>Teléfono</td>

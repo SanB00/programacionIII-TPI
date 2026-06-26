@@ -8,7 +8,7 @@ namespace Entidades {
         private String horarioAtencion;          
 
         //Getters
-        public string getLegajo() {
+        public String getLegajo() {
             return this.legajo;
         }
         public string getEspecialidad() {
@@ -23,7 +23,7 @@ namespace Entidades {
 
         //Setters
 
-        public void setLegajo(string legajo) {
+        public void setLegajo(String legajo) {
             this.legajo = legajo;
         }
         public void setEspecialidad(string especialidad) {
