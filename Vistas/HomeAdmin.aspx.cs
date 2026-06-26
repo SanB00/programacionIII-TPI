@@ -3,7 +3,7 @@
 namespace Vistas {
     public partial class HomeAdmin : System.Web.UI.Page {
         protected void page_Load(object sender, EventArgs e) {
-            if (!IsPostBack) {
+            if (!this.IsPostBack) {
                 lblBienvenida.Text = "Bienvenido " + Session["Usuario"];
             }
         }

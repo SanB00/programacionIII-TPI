@@ -111,11 +111,10 @@ namespace Entidades {
             this.idLocalidad = idLocalidad;
         }
         public void setIdProvincia(int idProvincia) {
-           this.idProvincia = idProvincia;
+            this.idProvincia = idProvincia;
         }
         public void setEstado(bool estado) {
             this.estado = true;
         }
-
     }
 }
