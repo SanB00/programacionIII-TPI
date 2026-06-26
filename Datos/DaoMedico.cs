@@ -43,6 +43,15 @@ namespace Datos {
             
             return dt.Rows.Count > 0;
         }
+        public DataTable getTodos() {
+            AccesoDatos conexion = new AccesoDatos();
+            return conexion.ejecutarConsulta(
+                @"SELECT M.Legajo, M.Nombre + ' ' + M.Apellido AS NombreMedico,
+                         E.Nombre AS NombreEspecialidad
+                  FROM MEDICO M
+                  INNER JOIN ESPECIALIDAD E ON M.IdEspecialidad = E.IdEspecialidad
+                  WHERE M.Estado = 1");
+        }
 
     }
 }

@@ -442,3 +442,30 @@ BEGIN
     )
 END
 GO
+CREATE TABLE TURNO (
+    IdTurno       INT IDENTITY(1,1),
+    Legajo        INT      NOT NULL,
+    DNI           CHAR(8)  NOT NULL,
+    Fecha         DATE     NOT NULL,
+    HorarioInicio INT      NOT NULL,
+    Asistencia    BIT      NULL,
+    Observacion   VARCHAR(500) NULL,
+    Estado        BIT      NOT NULL DEFAULT 1,
+
+    CONSTRAINT PK_TURNO          PRIMARY KEY (IdTurno),
+    CONSTRAINT FK_TURNO_MEDICO   FOREIGN KEY (Legajo) REFERENCES MEDICO(Legajo),
+    CONSTRAINT FK_TURNO_PACIENTE FOREIGN KEY (DNI)    REFERENCES PACIENTE(DNI)
+);
+GO
+
+CREATE PROCEDURE SP_AgregarTurno
+    @legajo        INT,
+    @dni           CHAR(8),
+    @fecha         DATE,
+    @horarioInicio INT
+AS
+BEGIN
+    INSERT INTO TURNO (Legajo, DNI, Fecha, HorarioInicio, Estado)
+    VALUES (@legajo, @dni, @fecha, @horarioInicio, 1)
+END
+GO

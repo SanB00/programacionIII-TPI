@@ -6,6 +6,9 @@ namespace Negocio {
     public class NegocioMedico {
         
         DaoMedico daoMedico = new DaoMedico();
+        public System.Data.DataTable getTodos() {
+            return daoMedico.getTodos();
+        }
         public bool registrarMedico(Medico objMedico) {
             if (string.IsNullOrWhiteSpace(objMedico.getDni())
                 || string.IsNullOrWhiteSpace(objMedico.getNombre())

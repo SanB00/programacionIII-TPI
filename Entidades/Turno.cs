@@ -1,66 +1,26 @@
-﻿using System;
-
-namespace Entidades {
+﻿namespace Entidades {
     public class Turno {
-        int id;
-        int idEspecialidad;
-        String legajoMedico;
-        String dniPaciente;
-        String horario;
-        String dia;
+        private int idTurno;
+        private int legajo;
+        private string dniPaciente;
+        private string fecha;
+        private bool estado;
+        private int horarioInicio;
 
-        public Turno() { }
+        public int getIdTurno() { return idTurno; }
+        public void setIdTurno(int v) { idTurno = v; }
 
-        //  Getters
+        public int getLegajo() { return legajo; }
+        public void setLegajo(int v) { legajo = v; }
 
-        public int getId() {
-            return id;
-        }
+        public string getDniPaciente() { return dniPaciente; }
+        public void setDniPaciente(string v) { dniPaciente = v; }
 
-        public int getIdEspecialidad() {
-            return idEspecialidad;
-        }
-
-        public String getLegajoMedico() {
-            return legajoMedico;
-        }
-
-        public String getDniPaciente() {
-            return dniPaciente;
-        }
-
-        public String getHorario() {
-            return horario;
-        }
-
-        public String getDia() {
-            return dia;
-        }
-
-        // --- Setters ---
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public void setIdEspecialidad(int idEspecialidad) {
-            this.idEspecialidad = idEspecialidad;
-        }
-
-        public void setLegajoMedico(String legajoMedico) {
-            this.legajoMedico = legajoMedico;
-        }
-
-        public void setDniPaciente(String dniPaciente) {
-            this.dniPaciente = dniPaciente;
-        }
-
-        public void setHorario(String horario) {
-            this.horario = horario;
-        }
-
-        public void setDia(String dia) {
-            this.dia = dia;
-        }
+        public string getFecha() { return fecha; }
+        public void setFecha(string v) { fecha = v; }
+        public bool getEstado() { return estado; }
+        public void setEstado(bool v) { estado = v; }
+        public int getHorarioInicio() { return horarioInicio; }
+        public void setHorarioInicio(int v) { horarioInicio = v; }
     }
 }

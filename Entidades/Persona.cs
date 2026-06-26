@@ -69,7 +69,7 @@ namespace Entidades {
             return idLocalidad;
         }
         public int getIdProvincia() {
-            return idLocalidad;
+            return idProvincia;
         }
         public bool getEstado() {
             return estado;
@@ -111,7 +111,7 @@ namespace Entidades {
             this.idLocalidad = idLocalidad;
         }
         public void setIdProvincia(int idProvincia) {
-            this.idProvincia = idProvincia;
+           this.idProvincia = idProvincia;
         }
         public void setEstado(bool estado) {
             this.estado = true;
