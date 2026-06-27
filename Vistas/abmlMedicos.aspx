@@ -37,7 +37,7 @@
             <td>Especialidad</td>
             <td><asp:DropDownList ID="ddlEspecialidad" runat="server" /></td>
             <td>Localidad</td>
-            <td><asp:DropDownList ID="DropDownList1" runat="server" /></td>
+            <td><asp:DropDownList ID="ddlLocalidad" runat="server" /></td>
         </tr>
         <tr>
             <td>Provincia</td>
@@ -71,15 +71,26 @@
             </td>
             <td>Horarios</td>
             <td>
-                <asp:TextBox ID="txtHorarios" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtHorario" runat="server"></asp:TextBox>
             </td>
         </tr>
         <tr>
-            <td colspan="4">
+            <td>
       
                 <asp:Button ID="btnGuardarMedico" runat="server" Text="Guardar" />
       
             </td>
+            <td>
+                <asp:Label ID="lblMensaje" runat="server"></asp:Label>
+            </td>
+            <td>&nbsp;</td>
+            <td>
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="4">
+      
+                &nbsp;</td>
         </tr>
     </table>
 

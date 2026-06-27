@@ -3,7 +3,7 @@
 namespace Entidades {
     public class Medico : Persona {
         private String legajo;
-        private String especialidad;
+        private int idEspecialidad;
         private String diasAtencion;
         private String horarioAtencion;          
 
@@ -11,8 +11,8 @@ namespace Entidades {
         public String getLegajo() {
             return this.legajo;
         }
-        public string getEspecialidad() {
-            return this.especialidad;
+        public int getIdEspecialidad() {
+            return this.idEspecialidad;
         }
         public String getDiasAtencion() {
             return this.diasAtencion;
@@ -26,8 +26,8 @@ namespace Entidades {
         public void setLegajo(String legajo) {
             this.legajo = legajo;
         }
-        public void setEspecialidad(string especialidad) {
-            this.especialidad = especialidad;
+        public void setIdEspecialidad(int especialidad) {
+            this.idEspecialidad = especialidad;
         }
         public void setDiasAtencion(String diasAtencion) {
             this.diasAtencion = diasAtencion;

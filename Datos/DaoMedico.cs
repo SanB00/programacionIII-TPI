@@ -22,7 +22,7 @@ namespace Datos {
             cmd.Parameters.AddWithValue("@idProvincia", objMedico.getIdProvincia());
             cmd.Parameters.AddWithValue("@correo", objMedico.getCorreoElectronico());
             cmd.Parameters.AddWithValue("@telefono", objMedico.getTelefono());
-            cmd.Parameters.AddWithValue("@idEspecialidad", objMedico.getEspecialidad());
+            cmd.Parameters.AddWithValue("@idEspecialidad", objMedico.getIdEspecialidad());
             cmd.Parameters.AddWithValue("@diasAtencion", objMedico.getDiasAtencion());
             cmd.Parameters.AddWithValue("@horarioAtencion", objMedico.getHorarioAtencion());
 
