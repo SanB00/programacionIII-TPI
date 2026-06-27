@@ -3,6 +3,7 @@ using Negocio;
 using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Utils;
 
 namespace Vistas {
     public partial class AbmlPacientes : System.Web.UI.Page {
@@ -61,22 +62,79 @@ namespace Vistas {
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e) {
-            NegocioPaciente negocio = new NegocioPaciente();
-            Paciente nuevo = new Paciente();
+            #region 1) obtener datos del formulario
+            string dni = txtDni.Text;
+            string nombre = txtNombre.Text;
+            string apellido = txtApellido.Text;
+            string sexo = ddlSexo.SelectedValue;
+            string nacionalidad = ddlNacionalidad.SelectedValue;
+            string nacimiento = txtNacimiento.Text;
+            string direccion = txtDireccion.Text;
+            string correo = txtCorreo.Text;
+            string telefono = txtTelefono.Text;
+            int idProvincia = Convert.ToInt32(ddlProvincia.SelectedValue);
+            int idLocalidad = Convert.ToInt32(ddlLocalidad.SelectedValue);
+            #endregion
+            #region 2) validar datos del formulario
 
-            nuevo.setDni(txtDni.Text);
-            nuevo.setNombre(txtNombre.Text);
-            nuevo.setApellido(txtApellido.Text);
-            nuevo.setSexo(ddlSexo.SelectedValue);
-            nuevo.setNacionalidad(ddlNacionalidad.SelectedValue);
-            nuevo.setFechaNacimiento(txtNacimiento.Text);
-            nuevo.setDireccion(txtDireccion.Text);
-            nuevo.setCorreoElectronico(txtCorreo.Text);
-            nuevo.setTelefono(txtTelefono.Text);
-            nuevo.setIdProvincia(Convert.ToInt32(ddlProvincia.SelectedValue));
-            nuevo.setIdLocalidad(Convert.ToInt32(ddlLocalidad.SelectedValue));
+            string mensajeError = "";
+            if (!Common.esUnNroValido(dni)) {
+                mensajeError += "\n El DNI debe ser solo numeros. ";
+            }
+            if (!Common.estaElTextoDentroDelRango(dni, 1, 10)) {
+                mensajeError += "\n El dni debe tener entre 1 y 10 caracteres. ";
+            }
+            if (!Common.estaElTextoDentroDelRango(nombre)) {
+                mensajeError += $"\n El nombre debe tener entre {Common.MIN_CHARS_TEXTO} y {Common.MAX_CHARS_TEXTO} caracteres. ";
+            }
+            if (!Common.estaElTextoDentroDelRango(apellido)) {
+                mensajeError += $"\n El apellido debe tener entre {Common.MIN_CHARS_TEXTO} y {Common.MAX_CHARS_TEXTO} caracteres. ";
+            }
+            if (!Common.esUnaFechaValida(nacimiento)) {
+                mensajeError += "\n La fecha de nacimiento debe ser solo numeros. ";
+            }
+            if (!Common.estaElTextoDentroDelRango(direccion, 3, 100)) {
+                mensajeError += "\n La direccion debe tener entre 3 y 100 caracteres. ";
+            }
+            if (!Common.estaElTextoDentroDelRango(correo, 5, 50)) {
+                mensajeError += "\n El correo debe tener entre 5 y 50 caracteres. ";
+            }
+            if (!(sexo.Equals("M") || sexo.Equals("F"))) {
+                mensajeError += "\n Debe seleccionar un sexo M o F. ";
+            }
 
-            bool ok = negocio.agregarPaciente(nuevo);
+            if (ddlProvincia.SelectedIndex == 0 || ddlLocalidad.SelectedIndex == 0) {
+                mensajeError += "\n Debe seleccionar una provincia y una localidad. ";
+            }
+            if (!Common.esUnNroValido(telefono)) {
+                mensajeError += "\n El telefono debe ser solo numeros. ";
+            }
+
+            if (!string.IsNullOrEmpty(mensajeError)) {
+                lblMensaje.Text = mensajeError;
+                Common.mostrarMensajeEnAlerta(mensajeError, this);
+                return;
+            }
+            #endregion
+            #region 3) crear entidad y guardar en la base de datos
+            Paciente objPaciente = new Paciente();
+
+            objPaciente.setDni(dni);
+            objPaciente.setNombre(nombre);
+            objPaciente.setApellido(apellido);
+            objPaciente.setSexo(sexo);
+            objPaciente.setNacionalidad(nacionalidad);
+            objPaciente.setFechaNacimiento(nacimiento);
+            objPaciente.setDireccion(direccion);
+            objPaciente.setCorreoElectronico(correo);
+            objPaciente.setTelefono(telefono);
+            objPaciente.setIdProvincia(idProvincia);
+            objPaciente.setIdLocalidad(idLocalidad);
+            objPaciente.setEstado(true);
+
+            bool ok = new NegocioPaciente().agregarPaciente(objPaciente);
+            #endregion
+            #region 4) limpiar formulario y mostrar mensaje de éxito o error
 
             if (ok) {
                 lblMensaje.Text = "Paciente agregado correctamente";
@@ -94,7 +152,7 @@ namespace Vistas {
             } else {
                 lblMensaje.Text = "Error al agregar paciente";
             }
-
+            #endregion
         }
 
         protected void ddl_eit_Provincia_SelectedIndexChanged(object sender, EventArgs e) {

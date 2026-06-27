@@ -12,6 +12,7 @@ namespace Negocio {
         }
 
         public bool agregarPaciente(Paciente nuevo) {
+
             return objDaoPaciente.agregarPaciente(nuevo);
         }
 

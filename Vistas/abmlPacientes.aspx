@@ -212,5 +212,5 @@
     </asp:GridView>
    
     <br />
-    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/HomeAdmin.aspx">Volver al menú</asp:HyperLink>
+    <asp:HyperLink ID="lnkVolverMenu" runat="server" NavigateUrl="~/HomeAdmin.aspx">Volver al menú</asp:HyperLink>
 </asp:Content>
