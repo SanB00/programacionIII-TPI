@@ -1,6 +1,7 @@
 ﻿using Entidades;
 using Negocio;
 using System;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace Vistas {
@@ -10,7 +11,7 @@ namespace Vistas {
         private readonly NegocioPaciente objNegocioPaciente = new NegocioPaciente();
 
         protected void page_Load(object sender, EventArgs e) {
-            if (Page.IsPostBack == false) {
+            if (!this.IsPostBack) {
                 cargarProvincias();
                 cargarLocalidades(0);
                 cargarGridView();
@@ -56,7 +57,7 @@ namespace Vistas {
         }
 
         protected void btnAgregarPaciente_Click(object sender, EventArgs e) {
-            bloqueAgregarPaciente.Visible = true;       
+            bloqueAgregarPaciente.Visible = true;
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e) {
@@ -95,7 +96,98 @@ namespace Vistas {
             }
 
         }
+
+        protected void ddl_eit_Provincia_SelectedIndexChanged(object sender, EventArgs e) {
+            DropDownList ddlProvincia = (DropDownList)sender;
+            GridViewRow fila = (GridViewRow)ddlProvincia.NamingContainer;
+
+            DropDownList ddlLocalidad = (DropDownList)fila.FindControl("ddl_eit_Localidad");
+
+            NegocioLocalidad negocio = new NegocioLocalidad();
+
+            ddlLocalidad.DataSource = negocio.getPorProvincia(
+                Convert.ToInt32(ddlProvincia.SelectedValue)
+            );
+            ddlLocalidad.DataTextField = "Nombre";
+            ddlLocalidad.DataValueField = "IdLocalidad";
+            ddlLocalidad.DataBind();
+
+            ddlLocalidad.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
+        }
+
+        protected void gvPacientes_RowEditing(object sender, GridViewEditEventArgs e) {
+            gvPacientes.EditIndex = e.NewEditIndex;
+            cargarGridView();
+        }
+
+        protected void gvPacientes_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e) {
+            gvPacientes.EditIndex = -1;
+            cargarGridView();
+        }
+        protected void gvPacientes_RowDataBound(object sender, GridViewRowEventArgs e) {
+            if (e.Row.RowType == DataControlRowType.DataRow &&
+                (e.Row.RowState & DataControlRowState.Edit) != 0) {
+                DropDownList ddlProvincia = (DropDownList)e.Row.FindControl("ddl_eit_Provincia");
+                DropDownList ddlLocalidad = (DropDownList)e.Row.FindControl("ddl_eit_Localidad");
+
+                NegocioProvincia negocioProv = new NegocioProvincia();
+                NegocioLocalidad negocioLoc = new NegocioLocalidad();
+
+                ddlProvincia.DataSource = negocioProv.getTodos();
+                ddlProvincia.DataTextField = "Nombre";
+                ddlProvincia.DataValueField = "IdProvincia";
+                ddlProvincia.DataBind();
+
+                string idProvincia = DataBinder.Eval(e.Row.DataItem, "IdProvincia").ToString();
+
+                if (ddlProvincia.Items.FindByValue(idProvincia) != null) {
+                    ddlProvincia.SelectedValue = idProvincia;
+                }
+
+                int provId = Convert.ToInt32(idProvincia);
+
+                ddlLocalidad.DataSource = negocioLoc.getPorProvincia(provId);
+                ddlLocalidad.DataTextField = "Nombre";
+                ddlLocalidad.DataValueField = "IdLocalidad";
+                ddlLocalidad.DataBind();
+
+                string idLocalidad = DataBinder.Eval(e.Row.DataItem, "IdLocalidad").ToString();
+
+                if (ddlLocalidad.Items.FindByValue(idLocalidad) != null) {
+                    ddlLocalidad.SelectedValue = idLocalidad;
+                }
+            }
+        }
+
+        protected void gvPacientes_RowUpdating(object sender, GridViewUpdateEventArgs e) {
+            Paciente datosNuevos = new Paciente();
+            DropDownList ddlProvincia = (DropDownList)gvPacientes.Rows[e.RowIndex].FindControl("ddl_eit_Provincia");
+            DropDownList ddlLocalidad = (DropDownList)gvPacientes.Rows[e.RowIndex].FindControl("ddl_eit_Localidad");
+
+            datosNuevos.setDni(((Label)gvPacientes.Rows[e.RowIndex].FindControl("lbl_eit_DNI")).Text);
+            datosNuevos.setNombre(((TextBox)gvPacientes.Rows[e.RowIndex].FindControl("txt_eit_nombrePaciente")).Text);
+            datosNuevos.setApellido(((TextBox)gvPacientes.Rows[e.RowIndex].FindControl("txt_eit_apellido")).Text);
+            datosNuevos.setSexo(((DropDownList)gvPacientes.Rows[e.RowIndex].FindControl("ddl_eit_Sexo")).SelectedValue);
+            datosNuevos.setNacionalidad(((DropDownList)gvPacientes.Rows[e.RowIndex].FindControl("ddl_eit_nacionalidad")).SelectedValue);
+            datosNuevos.setFechaNacimiento(((TextBox)gvPacientes.Rows[e.RowIndex].FindControl("text_eit_Nacimiento")).Text);
+            datosNuevos.setDireccion(((TextBox)gvPacientes.Rows[e.RowIndex].FindControl("text_eit_Direccion")).Text);
+            datosNuevos.setCorreoElectronico(((TextBox)gvPacientes.Rows[e.RowIndex].FindControl("txt_eit_Correo")).Text);
+            datosNuevos.setTelefono(((TextBox)gvPacientes.Rows[e.RowIndex].FindControl("txt_eit_Telefono")).Text);
+            datosNuevos.setIdProvincia(Convert.ToInt32(((DropDownList)gvPacientes.Rows[e.RowIndex].FindControl("ddl_eit_Provincia")).SelectedValue));
+            datosNuevos.setIdLocalidad(Convert.ToInt32(((DropDownList)gvPacientes.Rows[e.RowIndex].FindControl("ddl_eit_Localidad")).SelectedValue));
+            datosNuevos.setEstado(Convert.ToBoolean((((DropDownList)gvPacientes.Rows[e.RowIndex].FindControl("ddl_eit_estado")).SelectedValue)));
+
+            NegocioPaciente negocio = new NegocioPaciente();
+
+            if (negocio.actualizarPaciente(datosNuevos)) {
+                lblMensaje.Text = "Paciente actualizado correctamente.";
+                gvPacientes.EditIndex = -1;
+                cargarGridView();
+            } else {
+                lblMensaje.Text = "No se pudo actualizar el paciente.";
+            }
+        }
+
     }
-    
 }
 

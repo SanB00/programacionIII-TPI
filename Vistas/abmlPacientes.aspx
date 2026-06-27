@@ -4,7 +4,7 @@
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">   
-    <h1>Pacientes</h1>
+    <h1>PACIENTES</h1>
     <asp:Button ID="btnAgregarPaciente" runat="server" OnClick="btnAgregarPaciente_Click" Text="Agregar Nuevo Paciente" />
     &nbsp;&nbsp;
     <asp:Label ID="lblMensaje" runat="server"></asp:Label>
@@ -77,65 +77,128 @@
         GridLines="None"
         Width="900px" 
         Font-Names="Arial" Font-Size="Small"
-        EmptyDataText="No se encontraron pacientes." CellPadding="4" ForeColor="#333333" style="margin-right: 53px">
+        EmptyDataText="No se encontraron pacientes." CellPadding="4" ForeColor="#333333" style="margin-right: 53px" AutoGenerateEditButton="True" OnRowCancelingEdit="gvPacientes_RowCancelingEdit" OnRowEditing="gvPacientes_RowEditing" OnRowUpdating="gvPacientes_RowUpdating" OnRowDataBound="gvPacientes_RowDataBound">
         <EditRowStyle BackColor="#2461BF" />
         <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
         <HeaderStyle BackColor="#507CD1" ForeColor="White" Font-Bold="true" />
         <AlternatingRowStyle BackColor="White" />
         <Columns>
             <asp:TemplateField HeaderText="DNI">
+                <EditItemTemplate>
+                    <asp:Label ID="lbl_eit_DNI" runat="server" Text='<%# Bind("DNI") %>'></asp:Label>
+                </EditItemTemplate>
                 <ItemTemplate>
                     <asp:Label ID="lbl_it_DNI" runat="server" Text='<%# Bind("DNI") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Nombre">
+                <EditItemTemplate>
+                    <asp:TextBox ID="txt_eit_nombrePaciente" runat="server" Text='<%# Bind("Nombre") %>'></asp:TextBox>
+                </EditItemTemplate>
                 <ItemTemplate>
                     <asp:Label ID="lbl_it_Nombre" runat="server" Text='<%# Bind("Nombre") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Apellido">
+                <EditItemTemplate>
+                    <asp:TextBox ID="txt_eit_apellido" runat="server" Text='<%# Bind("Apellido") %>'></asp:TextBox>
+                </EditItemTemplate>
                 <ItemTemplate>
                     <asp:Label ID="lbl_it_Apellido" runat="server" Text='<%# Bind("Apellido") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Sexo">
+                <EditItemTemplate>
+                    <asp:DropDownList ID="ddl_eit_Sexo" runat="server" SelectedValue='<%# Bind("Sexo") %>'>
+                        <asp:ListItem>--</asp:ListItem>
+                        <asp:ListItem Value="M">Masculino</asp:ListItem>
+                        <asp:ListItem Value="F">Femenino</asp:ListItem>
+                    </asp:DropDownList>
+                </EditItemTemplate>
                 <ItemTemplate>
                     <asp:Label ID="lbl_it_Sexo" runat="server" Text='<%# Bind("Sexo") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Nacionalidad">
+                <EditItemTemplate>
+                    <asp:DropDownList ID="ddl_eit_nacionalidad" runat="server">
+                        <asp:ListItem>Argentino</asp:ListItem>
+                        <asp:ListItem>Chileno</asp:ListItem>
+                        <asp:ListItem>Paraguayo</asp:ListItem>
+                        <asp:ListItem>Boliviano</asp:ListItem>
+                        <asp:ListItem>Uruguayo</asp:ListItem>
+                        <asp:ListItem>Brasilero</asp:ListItem>
+                    </asp:DropDownList>
+                </EditItemTemplate>
                 <ItemTemplate>
                     <asp:Label ID="lbl_it_Nacionalidad" runat="server" Text='<%# Bind("Nacionalidad") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Fecha De Nac.">
+                <EditItemTemplate>
+                    <asp:TextBox ID="text_eit_Nacimiento" runat="server" TextMode="Date" />
+                </EditItemTemplate>
                 <ItemTemplate>
                     <asp:Label ID="lbl__it_fechaNac" runat="server" Text='<%# Eval("FechaNacimiento", "{0:dd/MM/yyyy}") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Direccion">
+                <EditItemTemplate>
+                    <asp:TextBox ID="text_eit_Direccion" runat="server" Text='<%# Bind("Direccion") %>' />
+                </EditItemTemplate>
                 <ItemTemplate>
                     <asp:Label ID="lbl_it_Direccion" runat="server" Text='<%# Bind("Direccion") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Correo Electronico">
+                <EditItemTemplate>
+                    <asp:TextBox ID="txt_eit_Correo" runat="server" TextMode="Email" Text='<%# Bind("CorreoElectronico") %>' />
+                </EditItemTemplate>
                 <ItemTemplate>
                     <asp:Label ID="lbl_it_mail" runat="server" Text='<%# Bind("CorreoElectronico") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Telefono">
+                <EditItemTemplate>
+                    <asp:TextBox ID="txt_eit_Telefono" runat="server" Text='<%# Bind("Telefono") %>' />
+                </EditItemTemplate>
                 <ItemTemplate>
                     <asp:Label ID="lbl_it_Telefono" runat="server" Text='<%# Bind("Telefono") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Provincia">
+                <EditItemTemplate>
+                    <asp:DropDownList
+                        ID="ddl_eit_Provincia" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddl_eit_Provincia_SelectedIndexChanged">
+                    </asp:DropDownList>
+                </EditItemTemplate>
                 <ItemTemplate>
-                    <asp:Label ID="lbl_it_Provincia" runat="server" Text='<%# Bind("Provincia") %>'></asp:Label>
+                    <asp:Label ID="lbl_it_Provincia" runat="server"
+                        Text='<%# Bind("Provincia") %>'>
+                    </asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Localidad">
+                <EditItemTemplate>
+                    <asp:DropDownList ID="ddl_eit_Localidad" runat="server">
+                    </asp:DropDownList>
+                </EditItemTemplate>
                 <ItemTemplate>
-                    <asp:Label ID="lbl_it_localidad" runat="server" Text='<%# Bind("Localidad") %>'></asp:Label>
+                    <asp:Label ID="lbl_it_localidad" runat="server"
+                        Text='<%# Bind("Localidad") %>'>
+                    </asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Estado">
+                <EditItemTemplate>
+                    <asp:DropDownList ID="ddl_eit_estado" runat="server">
+                        <asp:ListItem>--</asp:ListItem>
+                        <asp:ListItem Text="Activo" Value="True"></asp:ListItem>
+                        <asp:ListItem Text="Inactivo" Value="False"></asp:ListItem>
+                    </asp:DropDownList>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="lblEstado" runat="server" Text='<%# Bind("Estado") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
@@ -149,5 +212,5 @@
     </asp:GridView>
    
     <br />
-    <asp:HyperLink ID="lnkVolverMenu" runat="server" NavigateUrl="~/HomeAdmin.aspx">Volver al menú</asp:HyperLink>
+    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/HomeAdmin.aspx">Volver al menú</asp:HyperLink>
 </asp:Content>

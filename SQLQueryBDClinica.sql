@@ -409,6 +409,38 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE SP_ActualizarPaciente
+    @DNI CHAR(8),
+    @Nombre VARCHAR(50),
+    @Apellido VARCHAR(50),
+    @Sexo VARCHAR(1),
+    @Nacionalidad VARCHAR(50),
+    @FechaNacimiento DATE,
+    @Direccion VARCHAR(100),
+    @CorreoElectronico VARCHAR(100),
+    @Telefono VARCHAR(20),
+    @IdProvincia INT,
+    @IdLocalidad INT,
+    @Estado BIT
+AS
+BEGIN
+    UPDATE PACIENTE
+    SET
+        Nombre = @Nombre,
+        Apellido = @Apellido,
+        Sexo = @Sexo,
+        Nacionalidad = @Nacionalidad,
+        FechaNacimiento = @FechaNacimiento,
+        Direccion = @Direccion,
+        CorreoElectronico = @CorreoElectronico,
+        Telefono = @Telefono,
+        IdProvincia = @IdProvincia,
+        IdLocalidad = @IdLocalidad,
+        Estado = @Estado
+    WHERE DNI = @DNI
+END
+GO
+
 CREATE PROCEDURE SP_AgregarMedico
     @legajo INT,
     @dni CHAR(8),
@@ -442,6 +474,8 @@ BEGIN
     )
 END
 GO
+
+
 CREATE TABLE TURNO (
     IdTurno       INT IDENTITY(1,1),
     Legajo        INT      NOT NULL,
