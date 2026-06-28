@@ -359,7 +359,7 @@ SELECT '93456789', 'Camila', 'Silva', 'F', 'Argentina', '1997-08-30', 'Perú 444
 SELECT '94567890', 'Javier', 'Morales', 'M', 'Argentina', '1983-03-05', 'Urquiza 555', 'javier.morales@gmail.com', '1100011122', 3, 17 UNION
 SELECT '95678901', 'Florencia', 'Herrera', 'F', 'Argentina', '2002-11-19', 'Pellegrini 666', 'florencia.herrera@gmail.com', '1101122233', 3, 18 UNION
 SELECT '96789012', 'Fernando', 'Acosta', 'M', 'Argentina', '1990-02-14', 'Maipú 777', 'fernando.acosta@gmail.com', '1102233344', 3, 19 UNION
-SELECT '97890123', 'Julieta', 'Vega', 'F', 'Bolivia', '1996-09-07', 'Las Heras 888', 'julieta.vega@gmail.com', '1103344455', 3, 20 UNION
+SELECT '97890123', 'Julieta', 'Venegas', 'F', 'Bolivia', '1996-09-07', 'Las Heras 888', 'julieta.venegas@gmail.com', '1103344455', 3, 20 UNION
 SELECT '98901234', 'Gonzalo', 'Navarro', 'M', 'Argentina', '1989-12-21', 'Colón 999', 'gonzalo.navarro@gmail.com', '1104455566', 4, 25 UNION
 SELECT '99012345', 'Brenda', 'Rojas', 'F', 'Argentina', '2003-07-11', 'Alem 123', 'brenda.rojas@gmail.com', '1105566677', 4, 26;
 GO

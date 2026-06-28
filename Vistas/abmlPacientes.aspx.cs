@@ -32,8 +32,8 @@ namespace Vistas {
             ddlProvincia.Items.Clear();
 
             ddlProvincia.DataSource = objNegocioProvincia.getTodos();
-            ddlProvincia.DataValueField = "IdProvincia";
-            ddlProvincia.DataTextField = "Nombre";
+            ddlProvincia.DataValueField = "idProvincia";
+            ddlProvincia.DataTextField = "nombre";
             ddlProvincia.DataBind();
 
             ddlProvincia.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
@@ -44,8 +44,8 @@ namespace Vistas {
 
             if (idProvincia > 0) {
                 ddlLocalidad.DataSource = objNegocioLocalidad.getPorProvincia(idProvincia);
-                ddlLocalidad.DataValueField = "IdLocalidad";
-                ddlLocalidad.DataTextField = "Nombre";
+                ddlLocalidad.DataValueField = "idLocalidad";
+                ddlLocalidad.DataTextField = "nombre";
                 ddlLocalidad.DataBind();
             }
 
@@ -115,8 +115,11 @@ namespace Vistas {
                 Common.mostrarMensajeEnAlerta(mensajeError, this);
                 return;
             }
+            #region 3) verificar que el ID sea único comparando con la base de datos
+
             #endregion
-            #region 3) crear entidad y guardar en la base de datos
+            #endregion
+            #region 4) crear entidad y guardar en la base de datos
             Paciente objPaciente = new Paciente();
 
             objPaciente.setDni(dni);
@@ -134,7 +137,7 @@ namespace Vistas {
 
             bool ok = new NegocioPaciente().agregarPaciente(objPaciente);
             #endregion
-            #region 4) limpiar formulario y mostrar mensaje de éxito o error
+            #region 5) limpiar formulario y mostrar mensaje de éxito o error
 
             if (ok) {
                 lblMensaje.Text = "Paciente agregado correctamente";
@@ -160,10 +163,7 @@ namespace Vistas {
             GridViewRow fila = (GridViewRow)ddlProvincia.NamingContainer;
 
             DropDownList ddlLocalidad = (DropDownList)fila.FindControl("ddl_eit_Localidad");
-
-            NegocioLocalidad negocio = new NegocioLocalidad();
-
-            ddlLocalidad.DataSource = negocio.getPorProvincia(
+            ddlLocalidad.DataSource = new NegocioLocalidad().getPorProvincia(
                 Convert.ToInt32(ddlProvincia.SelectedValue)
             );
             ddlLocalidad.DataTextField = "Nombre";

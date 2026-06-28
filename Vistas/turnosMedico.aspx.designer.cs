@@ -11,7 +11,7 @@ namespace Vistas
 {
 
 
-    public partial class turnosMedico
+    public partial class TurnosMedico
     {
 
         /// <summary>

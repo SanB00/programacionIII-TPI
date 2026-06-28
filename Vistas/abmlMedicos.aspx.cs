@@ -3,7 +3,10 @@ using Negocio;
 using System;
 
 namespace Vistas {
-    public partial class abmlMedicos : System.Web.UI.Page {
+    public partial class AbmlMedicos : System.Web.UI.Page {
+        private readonly NegocioProvincia objNegocioProvincia = new NegocioProvincia();
+        private readonly NegocioLocalidad objNegocioLocalidad = new NegocioLocalidad();
+        private readonly NegocioMedico objNegocioMedico = new NegocioMedico();
         protected void page_Load(object sender, EventArgs e) {
             if (!this.IsPostBack) {
             }
@@ -34,16 +37,16 @@ namespace Vistas {
                 || string.IsNullOrWhiteSpace(telefono)
                 || string.IsNullOrWhiteSpace(dias)
                 || string.IsNullOrWhiteSpace(horario)
-                ) { 
-            
+                ) {
+
                 lblMensaje.Text = "Error: No puede dejar campos vacíos o con solo espacios.";
-               
-                return; 
-                }
-            if (!long.TryParse(legajo , out long l)) {
-               
+
+                return;
+            }
+            if (!long.TryParse(legajo, out long l)) {
+
                 lblMensaje.Text = "El legajo debe ser numérico.";
-                return; 
+                return;
             }
 
             Medico objMedico = new Medico();
@@ -64,17 +67,15 @@ namespace Vistas {
             objMedico.setIdProvincia(int.Parse(ddlProvincia.SelectedValue));
             objMedico.setIdEspecialidad(int.Parse(ddlEspecialidad.SelectedValue));
 
-            NegocioMedico negMedico = new NegocioMedico();
-            bool exito = negMedico.registrarMedico(objMedico);
-           
+            bool exito = new NegocioMedico().registrarMedico(objMedico);
+
             if (exito) {
-                
+
                 lblMensaje.Text = "Se agrego correctamente en la base de datos";
                 limpiarCampos();
-            }
-            else {
+            } else {
                 lblMensaje.Text = "Error al guardar. Verifique que el DNI o Legajo no estén repetidos.";
-                
+
             }
 
         }
