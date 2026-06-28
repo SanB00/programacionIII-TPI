@@ -23,7 +23,7 @@ namespace Vistas {
             string nombre = txtNombre.Text.Trim();
             string apellido = txtApellido.Text.Trim();
             string nacionalidad = txtNacionalidad.Text.Trim();
-            string nacimiento = txtNacimiento.Text.Trim();
+            DateTime nacimiento = DateTime.Parse(txtNacimiento.Text.Trim());
             string direccion = txtDireccion.Text.Trim();
             string correo = txtCorreo.Text.Trim();
             string telefono = txtTelefono.Text.Trim();
@@ -35,7 +35,7 @@ namespace Vistas {
                 || string.IsNullOrWhiteSpace(nombre)
                 || string.IsNullOrWhiteSpace(apellido)
                 || string.IsNullOrWhiteSpace(nacionalidad)
-                || string.IsNullOrWhiteSpace(nacimiento)
+                || string.IsNullOrWhiteSpace(txtNacimiento.Text)
                 || string.IsNullOrWhiteSpace(direccion)
                 || string.IsNullOrWhiteSpace(correo)
                 || string.IsNullOrWhiteSpace(telefono)

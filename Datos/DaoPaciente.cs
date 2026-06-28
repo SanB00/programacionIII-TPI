@@ -21,10 +21,7 @@ namespace Datos {
             P.IdProvincia,
             P.IdLocalidad,
 
-            CASE
-                WHEN P.Estado = 1 THEN 'Activo'
-                ELSE 'Inactivo'
-            END AS Estado,
+            P.Estado,
 
             PR.Nombre AS Provincia,
             LO.Nombre AS Localidad

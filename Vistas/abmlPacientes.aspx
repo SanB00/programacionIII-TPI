@@ -136,7 +136,7 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Fecha De Nac.">
                 <EditItemTemplate>
-                    <asp:TextBox ID="text_eit_Nacimiento" runat="server" TextMode="Date" />
+                    <asp:TextBox ID="text_eit_Nacimiento" runat="server" TextMode="Date" Text='<%# Bind("FechaNacimiento", "{0:yyyy-MM-dd}") %>' />
                 </EditItemTemplate>
                 <ItemTemplate>
                     <asp:Label ID="lbl__it_fechaNac" runat="server" Text='<%# Eval("FechaNacimiento", "{0:dd/MM/yyyy}") %>'></asp:Label>
@@ -192,13 +192,12 @@
             <asp:TemplateField HeaderText="Estado">
                 <EditItemTemplate>
                     <asp:DropDownList ID="ddl_eit_estado" runat="server">
-                        <asp:ListItem>--</asp:ListItem>
                         <asp:ListItem Text="Activo" Value="True"></asp:ListItem>
                         <asp:ListItem Text="Inactivo" Value="False"></asp:ListItem>
                     </asp:DropDownList>
                 </EditItemTemplate>
                 <ItemTemplate>
-                    <asp:Label ID="lblEstado" runat="server" Text='<%# Bind("Estado") %>'></asp:Label>
+                    <asp:Label ID="lblEstado" runat="server" Text='<%# (Convert.ToBoolean(Eval("Estado")) ? "Activo" : "Inactivo") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>

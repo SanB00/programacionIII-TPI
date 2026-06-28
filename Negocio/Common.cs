@@ -11,9 +11,9 @@ namespace Utils {
         public static bool esUnNroValido(string texto) {
             return int.TryParse(texto, out int nroValidar) && nroValidar >= 0;
         }
-        public static bool esUnaFechaValida(string texto) {
-            return System.DateTime.TryParse(texto, out _);
-        }
+        //public static bool esUnaFechaValida(string texto) {
+        //    return System.DateTime.TryParse(texto, out _);
+        //}
         public static bool esUnNroValidoMayorACero(string texto) {
             return int.TryParse(texto, out int nroValidar) && nroValidar > 0; //texto.All(char.IsDigit)
         }
