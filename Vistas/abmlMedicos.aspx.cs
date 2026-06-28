@@ -12,6 +12,7 @@ namespace Vistas {
             if (!this.IsPostBack) {
                 cargarProvincias();
                 cargarEspecialidades();
+                cargarGrid();
             }
         }
 
@@ -142,6 +143,12 @@ namespace Vistas {
             ddlProvincia.DataBind();
 
             ddlProvincia.Items.Insert(0, new ListItem("-- Seleccione Provincia --", "0"));
+        }
+
+        private void cargarGrid() {
+            NegocioMedico neg = new NegocioMedico();
+            grdMedicos.DataSource = neg.obtenerTablaMedicos();
+            grdMedicos.DataBind();
         }
     }
 }

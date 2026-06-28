@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Datos;
 using Entidades; 
-using Datos;
+using System;
+using System.Data;
 
 namespace Negocio {
     public class NegocioMedico {
@@ -8,6 +9,10 @@ namespace Negocio {
         DaoMedico daoMedico = new DaoMedico();
         public System.Data.DataTable getTodos() {
             return daoMedico.getTodos();
+        }
+        public DataTable obtenerTablaMedicos() {
+            DaoMedico dao = new DaoMedico();
+            return dao.obtenerTablaMedicos();
         }
         public bool registrarMedico(Medico objMedico) {
             if (string.IsNullOrWhiteSpace(objMedico.getDni())

@@ -53,5 +53,26 @@ namespace Datos {
                   WHERE M.Estado = 1");
         }
 
+        public DataTable obtenerTablaMedicos() {
+            AccesoDatos conexion = new AccesoDatos();
+
+            string consulta = @"SELECT Legajo, 
+                               DNI, 
+                               Nombre, 
+                               Apellido, 
+                               IdEspecialidad AS Especialidad, 
+                               DiasAtencion AS Dias, 
+                               HorarioAtencion AS Horario
+                        FROM MEDICO 
+                        WHERE Estado = 1";
+
+            SqlConnection cn = conexion.obtenerConexion();
+            SqlDataAdapter adaptador = new SqlDataAdapter(consulta, cn);
+            DataTable tabla = new DataTable();
+            adaptador.Fill(tabla);
+
+            return tabla;
+        }
+
     }
 }

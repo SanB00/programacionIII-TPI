@@ -102,13 +102,13 @@
 
     <br /><br />
     <asp:GridView ID="grdMedicos" runat="server"
-    AutoGenerateColumns="false"
+    AutoGenerateColumns="False"
     DataKeyNames="Legajo"
-    AllowPaging="true" PageSize="8"
+    AllowPaging="True" PageSize="8"
     GridLines="Horizontal"
-    Width="600px"
+    Width="744px"
     Font-Names="Arial" Font-Size="Small"
-    EmptyDataText="No se encontraron médicos.">
+    EmptyDataText="No se encontraron médicos." style="margin-right: 3px">
     <HeaderStyle BackColor="#102a43" ForeColor="White" Font-Bold="true" />
     <AlternatingRowStyle BackColor="#f0f4f8" />
     <Columns>
@@ -116,7 +116,9 @@
         <asp:BoundField DataField="DNI"                HeaderText="DNI"          />
         <asp:BoundField DataField="Nombre"             HeaderText="Nombre"       />
         <asp:BoundField DataField="Apellido"           HeaderText="Apellido"     />
-        <asp:BoundField DataField="NombreEspecialidad" HeaderText="Especialidad" />
+        <asp:BoundField DataField="Especialidad" HeaderText="Especialidad" />
+        <asp:BoundField DataField="Dias" HeaderText="Dias de Atencion" SortExpression="dias" />
+        <asp:BoundField DataField="Horario" HeaderText="Horarios de Atencion" SortExpression="Horarios" />
         <asp:TemplateField HeaderText="Acciones">
             <ItemTemplate>
                 <asp:LinkButton runat="server" CommandName="Edit"   Text="Editar" />
