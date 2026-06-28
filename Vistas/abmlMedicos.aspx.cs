@@ -1,6 +1,7 @@
 ﻿using Entidades;
 using Negocio;
 using System;
+using System.Web.UI.WebControls;
 
 namespace Vistas {
     public partial class AbmlMedicos : System.Web.UI.Page {
@@ -9,6 +10,8 @@ namespace Vistas {
         private readonly NegocioMedico objNegocioMedico = new NegocioMedico();
         protected void page_Load(object sender, EventArgs e) {
             if (!this.IsPostBack) {
+                cargarProvincias();
+                cargarEspecialidades();
             }
         }
 
@@ -80,6 +83,26 @@ namespace Vistas {
 
         }
 
+        protected void ddlProvincia_SelectedIndexChanged1(object sender, EventArgs e) {
+            int idProvinciaSeleccionada = Convert.ToInt32(ddlProvincia.SelectedValue);
+
+            if (idProvinciaSeleccionada > 0) {
+                NegocioLocalidad negLocalidad = new NegocioLocalidad();
+
+                ddlLocalidad.DataSource = negLocalidad.getPorProvincia(idProvinciaSeleccionada);
+                ddlLocalidad.DataTextField = "Nombre";
+                ddlLocalidad.DataValueField = "IdLocalidad";
+                ddlLocalidad.DataBind();
+
+                ddlLocalidad.Items.Insert(0, new ListItem("-- Seleccione Localidad --", "0"));
+
+                ddlLocalidad.Enabled = true;
+            } else {
+                ddlLocalidad.Items.Clear();
+                ddlLocalidad.Items.Insert(0, new ListItem("-- Seleccione Provincia Primero --", "0"));
+                ddlLocalidad.Enabled = false;
+            }
+        }
         private void limpiarCampos() {
             txtLegajo.Text = "";
             txtDni.Text = "";
@@ -97,6 +120,28 @@ namespace Vistas {
             ddlLocalidad.SelectedIndex = 0;
             ddlProvincia.SelectedIndex = 0;
             ddlEspecialidad.SelectedIndex = 0;
+        }
+        private void cargarEspecialidades() {
+            NegocioEspecialidad negEspecialidad = new NegocioEspecialidad();
+
+            ddlEspecialidad.DataSource = negEspecialidad.getTodos();
+
+            ddlEspecialidad.DataTextField = "Nombre"; 
+            ddlEspecialidad.DataValueField = "IdEspecialidad";    
+
+            ddlEspecialidad.DataBind();
+
+            ddlEspecialidad.Items.Insert(0, new ListItem("-- Seleccione Especialidad --", "0"));
+        }
+        private void cargarProvincias() {
+            NegocioProvincia negProvincia = new NegocioProvincia();
+
+            ddlProvincia.DataSource = negProvincia.getTodos();
+            ddlProvincia.DataTextField = "Nombre";
+            ddlProvincia.DataValueField = "IdProvincia"; 
+            ddlProvincia.DataBind();
+
+            ddlProvincia.Items.Insert(0, new ListItem("-- Seleccione Provincia --", "0"));
         }
     }
 }

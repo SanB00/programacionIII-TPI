@@ -35,14 +35,17 @@
         </tr>
         <tr>
             <td>Especialidad</td>
-            <td><asp:DropDownList ID="ddlEspecialidad" runat="server" /></td>
+            <td><asp:DropDownList ID="ddlEspecialidad" runat="server" >
+                <asp:ListItem></asp:ListItem>
+                </asp:DropDownList>
+            </td>
             <td>Localidad</td>
-            <td><asp:DropDownList ID="ddlLocalidad" runat="server" /></td>
+            <td><asp:DropDownList ID="ddlLocalidad" runat="server" AutoPostBack="True" /></td>
         </tr>
         <tr>
             <td>Provincia</td>
             <td>
-                <asp:DropDownList ID="ddlProvincia" runat="server">
+                <asp:DropDownList ID="ddlProvincia" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlProvincia_SelectedIndexChanged1">
                 </asp:DropDownList>
             </td>
             <td>&nbsp;</td>
