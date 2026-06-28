@@ -3,28 +3,28 @@
    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:Label ID="lblTurnos" runat="server" Font-Size="Larger" Text="Asignacion de Turnos"></asp:Label>
+     <h1>Asignación de Turnos</h1>
     <table class="auto-style1" style="width: 100%; max-width: 750px; margin: 20px auto;border: 1px solid #e2e8f0; border-radius: 8px; border-collapse: separate; border-spacing: 15px;">
         <tr>
             <td class="auto-style2">Especialidad:</td>
             <td class="auto-style3">
-                <asp:DropDownList ID="DropDownList1" runat="server">
+                <asp:DropDownList ID="ddlEspecialidad" runat="server">
                 </asp:DropDownList>
             </td>
             <td class="auto-style7">Dia:</td>
             <td>
-                <asp:TextBox ID="txtDia_Turno" runat="server" TextMode="Date"></asp:TextBox>
+                <asp:TextBox ID="txtDiaTurno" runat="server" TextMode="Date"></asp:TextBox>
             </td>
         </tr>
         <tr>
             <td class="auto-style2">Medico:</td>
             <td class="auto-style3">
-                <asp:DropDownList ID="DropDownList2" runat="server">
+                <asp:DropDownList ID="ddlMedico" runat="server">
                 </asp:DropDownList>
             </td>
             <td class="auto-style7">Horario:</td>
             <td>
-                <asp:DropDownList ID="DropDownList3" runat="server">
+                <asp:DropDownList ID="ddlHorario" runat="server">
                     <asp:ListItem Value="8">08:00 - 09:00</asp:ListItem>
                     <asp:ListItem Value="9">09:00 - 10:00</asp:ListItem>
                     <asp:ListItem Value="10">10:00 - 11:00</asp:ListItem>
@@ -42,7 +42,7 @@
         </tr>
         <tr>
             <td class="auto-style9">
-                <asp:Button ID="btnAsignarTurno" runat="server" Text="Asignar turno" />
+                <asp:Button ID="btnAsignarTurno" runat="server" Text="Asignar turno" OnClick="btnAsignarTurno_Click" />
             </td>
             <td class="auto-style10">
                 <asp:Label ID="lblMensaje" runat="server"></asp:Label>
@@ -52,4 +52,5 @@
         </tr>
     </table>
     <br />
+    <asp:HyperLink ID="lnkVolverMenu" runat="server" NavigateUrl="~/HomeAdmin.aspx">Volver al menú</asp:HyperLink>
 </asp:Content>

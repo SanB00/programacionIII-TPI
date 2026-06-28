@@ -27,10 +27,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-<asp:Label ID="lblInforme" runat="server"
-    CssClass="titulo"
-    Text="INFORMES">
-</asp:Label>
+<h1>INFORMES</h1>
 
 <br />
 <br />
@@ -119,5 +116,5 @@
     </tr>
 
 </table>
-
+    <asp:HyperLink ID="lnkVolverMenu" runat="server" NavigateUrl="~/HomeAdmin.aspx">Volver al menú</asp:HyperLink>
 </asp:Content>

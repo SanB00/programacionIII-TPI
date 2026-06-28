@@ -1,4 +1,5 @@
 ﻿using Datos;
+using Entidades;
 using System.Data;
 
 namespace Negocio {
@@ -9,6 +10,9 @@ namespace Negocio {
         public DataTable getTodosPacientes() {
             return objDaoPaciente.getTodos();
         }
-                
+        
+        public bool agregarPaciente(Paciente nuevo) {
+            return objDaoPaciente.agregarPaciente(nuevo);
+        }
     }
 }

@@ -22,6 +22,9 @@ namespace Entidades {
         private String direccion;
         private String correoElectronico;
         private String telefono;
+        private int idLocalidad;
+        private int idProvincia;
+        private bool estado;
         public String getDni() {
             return this.dni;
         }
@@ -62,6 +65,15 @@ namespace Entidades {
         public String getTelefono() {
             return telefono;
         }
+        public int getIdLocalidad() {
+            return idLocalidad;
+        }
+        public int getIdProvincia() {
+            return idProvincia;
+        }
+        public bool getEstado() {
+            return estado;
+        }
 
         // Setters
         public void setNombre(String nombre) {
@@ -95,6 +107,14 @@ namespace Entidades {
         public void setTelefono(String telefono) {
             this.telefono = telefono;
         }
-
+        public void setIdLocalidad(int idLocalidad) {
+            this.idLocalidad = idLocalidad;
+        }
+        public void setIdProvincia(int idProvincia) {
+           this.idProvincia = idProvincia;
+        }
+        public void setEstado(bool estado) {
+            this.estado = true;
+        }
     }
 }

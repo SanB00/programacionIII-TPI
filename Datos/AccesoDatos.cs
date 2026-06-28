@@ -13,6 +13,8 @@ namespace Datos {
         // private string rutaBD = @"Data Source =.\SQLEXPRESS;Initial Catalog = BDClinica; Integrated Security = True;";
         // Santiago
         private string rutaBD = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=BDClinica;Integrated Security=True";
+        // Elian
+        //private string rutaBD = @"Data Source=DESKTOP-6K4PVV3\SQLEXPRESS;Initial Catalog=BDClinica;Integrated Security=True";
         public AccesoDatos() { }
 
         public SqlConnection obtenerConexion() {
@@ -43,6 +45,7 @@ namespace Datos {
             sqlCommand.CommandType = CommandType.StoredProcedure;
             sqlCommand.CommandText = nombreProcedimientoAlmacenado;
             filasCambiadas = sqlCommand.ExecuteNonQuery();
+            conexion.Close();
             return filasCambiadas;
         }
 
@@ -80,26 +83,27 @@ namespace Datos {
             return filasAfectadas;
         }
 
-        public Boolean existe(String consulta) {
-            Boolean estado = false;
-            SqlConnection conexion = obtenerConexion();
-            SqlCommand cmd = new SqlCommand(consulta, conexion);
-            SqlDataReader datos = cmd.ExecuteReader();
-            if (datos.Read()) {
-                estado = true;
+        public bool existe(String consulta) {
+            using (SqlConnection conexion = new SqlConnection(rutaBD)) {
+                conexion.Open();
+
+                using (SqlCommand cmd = new SqlCommand(consulta, conexion)) {
+                    using (SqlDataReader datos = cmd.ExecuteReader()) {
+                        return datos.Read();
+                    }
+                }
             }
-            return estado;
         }
 
-        public int obtenerMaximo(String consulta) {
-            int max = 0;
-            SqlConnection conexion = obtenerConexion();
-            SqlCommand cmd = new SqlCommand(consulta, conexion);
-            SqlDataReader datos = cmd.ExecuteReader();
-            if (datos.Read()) {
-                max = Convert.ToInt32(datos[0].ToString());
+        public int obtenerMaximo(string consulta) {
+            using (SqlConnection conexion = new SqlConnection(rutaBD)) {
+                conexion.Open();
+
+                using (SqlCommand cmd = new SqlCommand(consulta, conexion)) {
+                    object result = cmd.ExecuteScalar();
+                    return result != DBNull.Value ? Convert.ToInt32(result) : 0;
+                }
             }
-            return max;
         }
     }
 }

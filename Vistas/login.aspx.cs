@@ -1,23 +1,34 @@
-﻿using System;
+﻿using Negocio;
+using System;
 
 namespace Vistas {
     public partial class login : System.Web.UI.Page {
         protected void page_Load(object sender, EventArgs e) {
-
+            if (!this.IsPostBack) {
+            }
         }
 
         protected void btnIniciarSesion_Click(object sender, EventArgs e) {
-            string usuario = tbUsuario.Text;
-            string contraseña = tbContrasenia.Text;
+            NegocioUsuario negocio = new NegocioUsuario();
 
-            if (usuario == "admin" && contraseña == "1234") {
-                Session["Usuario"] = usuario;
+            string tipoUsuario = negocio.validarUsuario(txtUsuario.Text, txtContrasenia.Text);
 
-                Response.Redirect("HomeAdmin.aspx");
+            if (tipoUsuario != null) {
+                Session["Usuario"] = txtUsuario.Text;
+                Session["TipoUsuario"] = tipoUsuario;
+
+                if (tipoUsuario == "Administrador") {
+                    Response.Redirect("HomeAdmin.aspx");
+                } else if (tipoUsuario == "Medico") {
+                    Response.Redirect("turnosMedico.aspx");
+                }
             } else {
-                lblMensaje.Text = "Usuario o contraseña incorrectos.";
+                txtUsuario.Text = "";
                 lblMensaje.Visible = true;
+                lblMensaje.Text = "Usuario o contraseña incorrectos";
             }
         }
+
     }
 }
+
