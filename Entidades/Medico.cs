@@ -5,7 +5,9 @@ namespace Entidades {
         private String legajo;
         private int idEspecialidad;
         private String diasAtencion;
-        private String horarioAtencion;          
+        private String horarioAtencion;
+        private String usuario;
+        private String contrasena;
 
         //Getters
         public String getLegajo() {
@@ -19,6 +21,12 @@ namespace Entidades {
         }
         public String getHorarioAtencion() {
             return this.horarioAtencion;
+        }
+        public String getUsuario() {
+            return this.usuario;
+        }
+        public String getContrasena() {
+            return this.contrasena;
         }
 
         //Setters
@@ -35,7 +43,12 @@ namespace Entidades {
         public void setHorarioAtencion(string horarioAtencion) { 
             this.horarioAtencion = horarioAtencion;
         }
-
+        public void setUsuario(string usuario) {
+            this.usuario = usuario;
+        }
+        public void setContrasena(string contrasena) {
+            this.contrasena = contrasena;
+        }
     }
 }
 

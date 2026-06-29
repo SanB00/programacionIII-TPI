@@ -17,8 +17,7 @@ namespace Vistas {
             }
         }
 
-        protected void btnNuevo_Click(object sender, EventArgs e) {
-
+        protected void btnGuardarMedico_Click(object sender, EventArgs e) {
             string legajo = txtLegajo.Text.Trim();
             string dni = txtDni.Text.Trim();
             string nombre = txtNombre.Text.Trim();
@@ -30,6 +29,8 @@ namespace Vistas {
             string telefono = txtTelefono.Text.Trim();
             string dias = txtDiasAtencion.Text.Trim();
             string horario = txtHorario.Text.Trim();
+            string usuario=txtUsuario.Text.Trim();
+            string contrasena = txtContrasena.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(legajo)
                 || string.IsNullOrWhiteSpace(dni)
@@ -42,6 +43,8 @@ namespace Vistas {
                 || string.IsNullOrWhiteSpace(telefono)
                 || string.IsNullOrWhiteSpace(dias)
                 || string.IsNullOrWhiteSpace(horario)
+                || string.IsNullOrWhiteSpace(usuario)
+                || string.IsNullOrWhiteSpace(contrasena)
                 ) {
 
                 lblMensaje.Text = "Error: No puede dejar campos vacíos o con solo espacios.";
@@ -66,6 +69,8 @@ namespace Vistas {
             objMedico.setTelefono(telefono);
             objMedico.setDiasAtencion(dias);
             objMedico.setHorarioAtencion(horario);
+            objMedico.setUsuario(usuario);
+            objMedico.setContrasena(contrasena);
 
             objMedico.setSexo(ddlSexo.SelectedValue);
             objMedico.setIdLocalidad(int.Parse(ddlLocalidad.SelectedValue));
@@ -78,11 +83,11 @@ namespace Vistas {
 
                 lblMensaje.Text = "Se agrego correctamente en la base de datos";
                 limpiarCampos();
+                cargarGrid();
             } else {
                 lblMensaje.Text = "Error al guardar. Verifique que el DNI o Legajo no estén repetidos.";
 
             }
-
         }
 
         protected void ddlProvincia_SelectedIndexChanged1(object sender, EventArgs e) {
@@ -166,5 +171,6 @@ namespace Vistas {
                 cargarGrid();
             }
         }
+
     }
 }

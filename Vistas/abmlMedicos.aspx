@@ -78,9 +78,19 @@
             </td>
         </tr>
         <tr>
+            <td>Usuario</td>
+            <td>
+                <asp:TextBox ID="txtUsuario" runat="server"></asp:TextBox>
+            </td>
+            <td>Password</td>
+            <td>
+                <asp:TextBox ID="txtContrasena" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
             <td>
       
-                <asp:Button ID="btnGuardarMedico" runat="server" Text="Guardar" />
+                <asp:Button ID="btnGuardarMedico" runat="server" Text="Guardar" OnClick="btnGuardarMedico_Click" />
       
             </td>
             <td>

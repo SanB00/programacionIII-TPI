@@ -8,8 +8,11 @@
         <tr>
             <td class="auto-style2">Especialidad:</td>
             <td class="auto-style3">
-                <asp:DropDownList ID="ddlEspecialidad" runat="server">
-                </asp:DropDownList>
+            <asp:DropDownList ID="ddlEspecialidad" runat="server"
+                AutoPostBack="true"
+                OnSelectedIndexChanged="ddlEspecialidad_SelectedIndexChanged">
+            </asp:DropDownList>
+
             </td>
             <td class="auto-style7">Dia:</td>
             <td>

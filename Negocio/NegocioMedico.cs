@@ -24,7 +24,10 @@ namespace Negocio {
                 || string.IsNullOrWhiteSpace(objMedico.getApellido())
                 || string.IsNullOrWhiteSpace(objMedico.getLegajo())
                 || string.IsNullOrWhiteSpace(objMedico.getDiasAtencion())
-                || string.IsNullOrWhiteSpace(objMedico.getHorarioAtencion())) 
+                || string.IsNullOrWhiteSpace(objMedico.getHorarioAtencion())
+                || string.IsNullOrWhiteSpace(objMedico.getUsuario())
+                || string.IsNullOrWhiteSpace(objMedico.getContrasena())
+                ) 
                 {
                 return false;
             }
@@ -36,5 +39,8 @@ namespace Negocio {
             }
             return daoMedico.agregarMedico(objMedico);
         }
-}
+        public DataTable getTodosPorEspecialidad(int idEspecialidad) {
+            return daoMedico.getTodosPorEspecialidad(idEspecialidad);
+        }
+    }
 }
