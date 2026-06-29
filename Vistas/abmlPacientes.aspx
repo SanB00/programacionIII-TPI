@@ -65,9 +65,36 @@
     </table>
 
     <br />
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    Buscar por DNI: <asp:TextBox ID="txtFiltro" runat="server" />
-    
+     
+        <div class="container mt-4">
+            <!-- Filter Area Box Container -->
+            <div class="card shadow-sm p-4 bg-light" style="max-width: 500px;">
+                <h5 class="card-title mb-3 text-secondary">Filtros y Búsqueda</h5>
+                
+                <!-- Floating Label Group -->
+                <div class="form-floating mb-3">
+                    <!-- The TextBox must have placeholder text for the floating effect to work -->
+                    <asp:TextBox 
+                        ID="txtBuscarDNI" 
+                        runat="server" 
+                        CssClass="form-control" 
+                        placeholder="12345678"
+                        data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Ejemplo: 12345678"
+                        />
+                    
+                    <!-- Dynamic client ID linkage -->
+                    <label for="<%= txtBuscarDNI.ClientID %>">Buscar por DNI</label>
+                </div>
+
+                <!-- Action Button -->
+                <asp:Button 
+                    ID="btnBuscar" 
+                    runat="server" 
+                    Text="Buscar" 
+                    CssClass="btn btn-primary px-4" />
+            </div>
+        </div>
+
     <br /><br />
     <asp:GridView ID="gvPacientes" runat="server"
         AutoGenerateColumns="False"
