@@ -29,7 +29,7 @@ CREATE TABLE LOCALIDAD (
 CREATE TABLE USUARIO(
     IdUsuario INT IDENTITY(1,1),
     NombreUsuario VARCHAR(50) NOT NULL UNIQUE,
-    Contrasena VARCHAR(8) NOT NULL,
+    Contrasena VARCHAR(50) NOT NULL,
     TipoUsuario VARCHAR(20) NOT NULL,
 
     CONSTRAINT PK_USUARIO PRIMARY KEY (IdUsuario)
@@ -373,13 +373,13 @@ SELECT 'santi','5555','Administrador' UNION
 SELECT 'fran','6666','Medico';
 GO
 
-INSERT INTO MEDICO (Legajo, DNI, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, Direccion, IdLocalidad, IdProvincia, CorreoElectronico, Telefono, IdEspecialidad, DiasAtencion, HorarioAtencion, IdUsuario)
-SELECT 1001, '30111222', 'Laura', 'Fernandez', 'F', 'Argentina', '1980-05-12', 'San Martin 123', 1, 1, 'laura.fernandez@gmail.com', '1160011122', 1, 'Lunes-Miercoles', '08:00-14:00', NULL UNION
-SELECT 1002, '28999888', 'Lautaro', 'Mendez', 'M', 'Argentina', '1975-09-03', 'Belgrano 456', 2, 1, 'carlos.mendez@gmail.com', '1160022233', 2, 'Martes-Jueves', '14:00-20:00', NULL UNION
-SELECT 1003, '31222333', 'Sofia', 'Gomez', 'F', 'Argentina', '1988-11-20', 'Rivadavia 789', 3, 2, 'sofia.gomez@gmail.com', '1160033344', 3, 'Lunes-Viernes', '09:00-13:00', NULL UNION
-SELECT 1004, '29888777', 'Elian', 'Ramirez', 'M', 'Argentina', '1979-02-15', 'Mitre 321', 4, 2, 'jorge.ramirez@gmail.com', '1160044455', 1, 'Lunes-Miercoles-Viernes', '15:00-19:00', NULL UNION
+INSERT INTO MEDICO (Legajo, DNI, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, Direccion, IdLocalidad, IdProvincia, CorreoElectronico, Telefono, IdEspecialidad, DiasAtencion, HorarioAtencion, IdUsuario) 
+SELECT 1001, '30111222', 'Laura', 'Fernandez', 'F', 'Argentina', '1980-05-12', 'San Martin 123', 1, 1, 'laura.fernandez@gmail.com', '1160011122', 1, 'Lunes-Miercoles', '08:00-14:00', NULL UNION 
+SELECT 1002, '28999888', 'Lautaro', 'Mendez', 'M', 'Argentina', '1975-09-03', 'Belgrano 456', 2, 1, 'carlos.mendez@gmail.com', '1160022233', 2, 'Martes-Jueves', '14:00-20:00', 2 UNION 
+SELECT 1003, '31222333', 'Sofia', 'Gomez', 'F', 'Argentina', '1988-11-20', 'Rivadavia 789', 3, 2, 'sofia.gomez@gmail.com', '1160033344', 3, 'Lunes-Viernes', '09:00-13:00', NULL UNION 
+SELECT 1004, '29888777', 'Elian', 'Ramirez', 'M', 'Argentina', '1979-02-15', 'Mitre 321', 4, 2, 'jorge.ramirez@gmail.com', '1160044455', 1, 'Lunes-Miercoles-Viernes', '15:00-19:00', 4 UNION
 SELECT 1005, '32555666', 'Valeria', 'Torres', 'F', 'Argentina', '1990-07-08', 'Italia 654', 5, 3, 'valeria.torres@gmail.com', '1160055566', 4, 'Martes-Jueves', '10:00-16:00', NULL UNION
-SELECT 1006, '27777444', 'Franco', 'Sanchez', 'M', 'Argentina', '1972-12-01', 'Urquiza 987', 6, 3, 'diego.sanchez@gmail.com', '1160066677', 2, 'Lunes-Viernes', '08:00-12:00', NULL;
+SELECT 1006, '27777444', 'Franco', 'Sanchez', 'M', 'Argentina', '1972-12-01', 'Urquiza 987', 6, 3, 'diego.sanchez@gmail.com', '1160066677', 2, 'Lunes-Viernes', '08:00-12:00', 6;
 GO
 
 CREATE PROCEDURE SP_AgregarPaciente
@@ -442,36 +442,42 @@ END
 GO
 
 CREATE PROCEDURE SP_AgregarMedico
-    @legajo INT,
-    @dni CHAR(8),
-    @nombre VARCHAR(50),
-    @apellido VARCHAR(50),
-    @sexo CHAR(1),
-    @nacionalidad VARCHAR(50),
-    @fecha DATE,
-    @direccion VARCHAR(100),
-    @idLocalidad INT,
-    @idProvincia INT,
-    @correo VARCHAR(100),
-    @telefono VARCHAR(20),
-    @idEspecialidad INT,
-    @diasAtencion VARCHAR(100),
-    @horarioAtencion VARCHAR(100),
-    @idUsuario INT = NULL
+    @Legajo varchar(50),
+    @DNI varchar(20),
+    @Nombre varchar(100),
+    @Apellido varchar(100),
+    @Sexo varchar(20),
+    @Nacionalidad varchar(50),
+    @FechaNacimiento date,
+    @Direccion varchar(150),
+    @IdLocalidad int,
+    @IdProvincia int,
+    @CorreoElectronico varchar(100),
+    @Telefono varchar(50),
+    @IdEspecialidad int,
+    @DiasAtencion varchar(100),
+    @HorarioAtencion varchar(100),
+    @NombreUsuario varchar(50),
+    @Contrasena varchar(50)
 AS
 BEGIN
-    INSERT INTO MEDICO
-    (
-        Legajo, DNI, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento,
-        Direccion, IdLocalidad, IdProvincia, CorreoElectronico, Telefono,
-        IdEspecialidad, DiasAtencion, HorarioAtencion, IdUsuario, Estado
-    )
-    VALUES
-    (
-        @legajo, @dni, @nombre, @apellido, @sexo, @nacionalidad, @fecha,
-        @direccion, @idLocalidad, @idProvincia, @correo, @telefono,
-        @idEspecialidad, @diasAtencion, @horarioAtencion, @idUsuario, 1
-    )
+    BEGIN TRY
+        BEGIN TRAN;
+
+        INSERT INTO USUARIO (NombreUsuario, Contrasena, TipoUsuario)
+        VALUES (@NombreUsuario, @Contrasena, 'Medico');
+
+        DECLARE @NuevoIdUsuario INT = SCOPE_IDENTITY();
+
+        INSERT INTO MEDICO (Legajo, DNI, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, Direccion, IdLocalidad, IdProvincia, CorreoElectronico, Telefono, IdEspecialidad, DiasAtencion, HorarioAtencion, IdUsuario, Estado)
+        VALUES (@Legajo, @DNI, @Nombre, @Apellido, @Sexo, @Nacionalidad, @FechaNacimiento, @Direccion, @IdLocalidad, @IdProvincia, @CorreoElectronico, @Telefono, @IdEspecialidad, @DiasAtencion, @HorarioAtencion, @NuevoIdUsuario, 1);
+
+        COMMIT TRAN;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRAN;
+        THROW;
+    END CATCH
 END
 GO
 
