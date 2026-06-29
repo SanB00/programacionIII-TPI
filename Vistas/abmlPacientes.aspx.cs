@@ -68,7 +68,7 @@ namespace Vistas {
             string apellido = txtApellido.Text;
             string sexo = ddlSexo.SelectedValue;
             string nacionalidad = ddlNacionalidad.SelectedValue;
-            DateTime nacimiento = DateTime.Parse(txtNacimiento.Text);
+            String strFechaNacimiento = txtNacimiento.Text;
             string direccion = txtDireccion.Text;
             string correo = txtCorreo.Text;
             string telefono = txtTelefono.Text;
@@ -90,7 +90,7 @@ namespace Vistas {
             if (!Common.estaElTextoDentroDelRango(apellido)) {
                 mensajeError += $"\n El apellido debe tener entre {Common.MIN_CHARS_TEXTO} y {Common.MAX_CHARS_TEXTO} caracteres. ";
             }
-            if (!DateTime.TryParse(txtNacimiento.Text, out nacimiento)) {
+            if (!Common.esUnaFechaValida(strFechaNacimiento)) {
                 lblMensaje.Text = "Ingrese una fecha válida.";
                 return;
             }
@@ -119,13 +119,13 @@ namespace Vistas {
             #endregion
             #region 3) crear entidad y guardar en la base de datos
             Paciente objPaciente = new Paciente();
-
+            DateTime fechaNacimiento = DateTime.Parse(strFechaNacimiento);
             objPaciente.setDni(dni);
             objPaciente.setNombre(nombre);
             objPaciente.setApellido(apellido);
             objPaciente.setSexo(sexo);
             objPaciente.setNacionalidad(nacionalidad);
-            objPaciente.setFechaNacimiento(nacimiento);
+            objPaciente.setFechaNacimiento(fechaNacimiento);
             objPaciente.setDireccion(direccion);
             objPaciente.setCorreoElectronico(correo);
             objPaciente.setTelefono(telefono);
@@ -228,7 +228,7 @@ namespace Vistas {
         protected void gvPacientes_RowUpdating(object sender, GridViewUpdateEventArgs e) {
             GridViewRow fila = gvPacientes.Rows[e.RowIndex];
             Paciente datosNuevos = new Paciente();
-            
+
             datosNuevos.setDni(((Label)gvPacientes.Rows[e.RowIndex].FindControl("lbl_eit_DNI")).Text);
             datosNuevos.setNombre(((TextBox)gvPacientes.Rows[e.RowIndex].FindControl("txt_eit_nombrePaciente")).Text);
             datosNuevos.setApellido(((TextBox)gvPacientes.Rows[e.RowIndex].FindControl("txt_eit_apellido")).Text);
@@ -241,7 +241,7 @@ namespace Vistas {
             datosNuevos.setIdProvincia(Convert.ToInt32(((DropDownList)gvPacientes.Rows[e.RowIndex].FindControl("ddl_eit_Provincia")).SelectedValue));
             datosNuevos.setIdLocalidad(Convert.ToInt32(((DropDownList)gvPacientes.Rows[e.RowIndex].FindControl("ddl_eit_Localidad")).SelectedValue));
             datosNuevos.setEstado(Convert.ToBoolean(((DropDownList)fila.FindControl("ddl_eit_estado")).SelectedValue));
-            
+
             NegocioPaciente negocio = new NegocioPaciente();
 
             if (negocio.actualizarPaciente(datosNuevos)) {

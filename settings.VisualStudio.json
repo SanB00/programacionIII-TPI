@@ -1,8 +1,18 @@
 {
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-        "source.organizeImports": "explicit"
-    },
-    "java.format.settings.url": "https://githubusercontent.com",
-    "java.format.settings.profile": "Google Style"
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "editor.emptySelectionClipboard": false,
+  "editor.LineCut": false,
+  "java.format.settings.url": "https://githubusercontent.com",
+  "java.format.settings.profile": "Google Style",
+  
+  "keybindings": [
+    {
+      "command": "Edit.ExpandSelectionToEntireLine",
+      "key": "ctrl+l",
+      "when": "editorTextFocus"
+    }
+  ]
 }

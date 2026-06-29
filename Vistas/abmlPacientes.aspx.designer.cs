@@ -150,13 +150,22 @@ namespace Vistas
         protected global::System.Web.UI.WebControls.Button btnAgregar;
 
         /// <summary>
-        /// txtFiltro control.
+        /// txtBuscarDNI control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFiltro;
+        protected global::System.Web.UI.WebControls.TextBox txtBuscarDNI;
+
+        /// <summary>
+        /// btnBuscar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBuscar;
 
         /// <summary>
         /// gvPacientes control.

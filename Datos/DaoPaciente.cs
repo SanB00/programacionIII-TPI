@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace Datos {
     public class DaoPaciente {
-        AccesoDatos objAccesoDatos = new AccesoDatos();
+        private readonly AccesoDatos objAccesoDatos = new AccesoDatos();
         public DataTable getTodos() {
             return objAccesoDatos.ejecutarConsulta(
                 @"SELECT

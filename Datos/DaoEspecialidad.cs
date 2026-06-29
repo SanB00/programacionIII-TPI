@@ -2,7 +2,7 @@
 
 namespace Datos {
     public class DaoEspecialidad {
-        AccesoDatos objAccesoDatos = new AccesoDatos();
+        private readonly AccesoDatos objAccesoDatos = new AccesoDatos();
 
         public DataTable getTodos() {
             return objAccesoDatos.ejecutarConsulta("SELECT IdEspecialidad, Nombre FROM ESPECIALIDAD");
