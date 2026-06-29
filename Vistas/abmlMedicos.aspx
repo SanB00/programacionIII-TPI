@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/principal.Master" AutoEventWireup="true" CodeBehind="abmlMedicos.aspx.cs" Inherits="Vistas.abmlMedicos" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/principal.Master" AutoEventWireup="true" CodeBehind="abmlMedicos.aspx.cs" Inherits="Vistas.AbmlMedicos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -35,14 +35,17 @@
         </tr>
         <tr>
             <td>Especialidad</td>
-            <td><asp:DropDownList ID="ddlEspecialidad" runat="server" /></td>
+            <td><asp:DropDownList ID="ddlEspecialidad" runat="server" >
+                <asp:ListItem></asp:ListItem>
+                </asp:DropDownList>
+            </td>
             <td>Localidad</td>
-            <td><asp:DropDownList ID="DropDownList1" runat="server" /></td>
+            <td><asp:DropDownList ID="ddlLocalidad" runat="server" AutoPostBack="True" /></td>
         </tr>
         <tr>
             <td>Provincia</td>
             <td>
-                <asp:DropDownList ID="ddlProvincia" runat="server">
+                <asp:DropDownList ID="ddlProvincia" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlProvincia_SelectedIndexChanged1">
                 </asp:DropDownList>
             </td>
             <td>&nbsp;</td>
@@ -71,30 +74,54 @@
             </td>
             <td>Horarios</td>
             <td>
-                <asp:TextBox ID="txtHorarios" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtHorario" runat="server"></asp:TextBox>
             </td>
+        </tr>
+        <tr>
+            <td>Usuario</td>
+            <td>
+                <asp:TextBox ID="txtUsuario" runat="server"></asp:TextBox>
+            </td>
+            <td>Password</td>
+            <td>
+                <asp:TextBox ID="txtContrasena" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
+      
+                <asp:Button ID="btnGuardarMedico" runat="server" Text="Guardar" OnClick="btnGuardarMedico_Click" />
+      
+            </td>
+            <td>
+                <asp:Label ID="lblMensaje" runat="server"></asp:Label>
+            </td>
+            <td>&nbsp;</td>
+            <td>
+                &nbsp;</td>
         </tr>
         <tr>
             <td colspan="4">
       
-                <asp:Button ID="btnGuardarMedico" runat="server" Text="Guardar" />
-      
-            </td>
+                &nbsp;</td>
         </tr>
     </table>
 
     Buscar por Legajo: <asp:TextBox ID="txtFiltro" runat="server" />
     
 
+    <asp:Button ID="btnFiltrarMedicos" runat="server" OnClick="btnFiltrarMedicos_Click" Text="Buscar" />
+    
+
     <br /><br />
     <asp:GridView ID="grdMedicos" runat="server"
-    AutoGenerateColumns="false"
+    AutoGenerateColumns="False"
     DataKeyNames="Legajo"
-    AllowPaging="true" PageSize="8"
+    AllowPaging="True" PageSize="8"
     GridLines="Horizontal"
-    Width="600px"
+    Width="744px"
     Font-Names="Arial" Font-Size="Small"
-    EmptyDataText="No se encontraron médicos.">
+    EmptyDataText="No se encontraron médicos." style="margin-right: 3px">
     <HeaderStyle BackColor="#102a43" ForeColor="White" Font-Bold="true" />
     <AlternatingRowStyle BackColor="#f0f4f8" />
     <Columns>
@@ -102,7 +129,9 @@
         <asp:BoundField DataField="DNI"                HeaderText="DNI"          />
         <asp:BoundField DataField="Nombre"             HeaderText="Nombre"       />
         <asp:BoundField DataField="Apellido"           HeaderText="Apellido"     />
-        <asp:BoundField DataField="NombreEspecialidad" HeaderText="Especialidad" />
+        <asp:BoundField DataField="Especialidad" HeaderText="Especialidad" />
+        <asp:BoundField DataField="Dias" HeaderText="Dias de Atencion" SortExpression="dias" />
+        <asp:BoundField DataField="Horario" HeaderText="Horarios de Atencion" SortExpression="Horarios" />
         <asp:TemplateField HeaderText="Acciones">
             <ItemTemplate>
                 <asp:LinkButton runat="server" CommandName="Edit"   Text="Editar" />

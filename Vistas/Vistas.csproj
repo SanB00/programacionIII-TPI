@@ -65,7 +65,7 @@
     <Content Include="abmlPacientes.aspx" />
     <Content Include="asignarTurnos.aspx" />
     <Content Include="HomeAdmin.aspx" />
-    <Content Include="informes.aspx" />
+    <Content Include="Informes.aspx" />
     <Content Include="login.aspx" />
     <Content Include="turnosMedico.aspx" />
     <Content Include="Web.config" />
@@ -99,12 +99,12 @@
     <Compile Include="HomeAdmin.aspx.designer.cs">
       <DependentUpon>HomeAdmin.aspx</DependentUpon>
     </Compile>
-    <Compile Include="informes.aspx.cs">
-      <DependentUpon>informes.aspx</DependentUpon>
+    <Compile Include="Informes.aspx.cs">
+      <DependentUpon>Informes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="informes.aspx.designer.cs">
-      <DependentUpon>informes.aspx</DependentUpon>
+    <Compile Include="Informes.aspx.designer.cs">
+      <DependentUpon>Informes.aspx</DependentUpon>
     </Compile>
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>

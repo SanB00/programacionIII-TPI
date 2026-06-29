@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Datos;
 using Entidades; 
-using Datos;
+using System;
+using System.Data;
 
 namespace Negocio {
     public class NegocioMedico {
@@ -9,13 +10,24 @@ namespace Negocio {
         public System.Data.DataTable getTodos() {
             return daoMedico.getTodos();
         }
+        public DataTable obtenerTablaMedicos() {
+            DaoMedico dao = new DaoMedico();
+            return dao.obtenerTablaMedicos();
+        }
+        public DataTable filtrarPorLegajo(int legajo) {
+            DaoMedico dao = new DaoMedico();
+            return dao.filtrarPorLegajo(legajo);
+        }
         public bool registrarMedico(Medico objMedico) {
             if (string.IsNullOrWhiteSpace(objMedico.getDni())
                 || string.IsNullOrWhiteSpace(objMedico.getNombre())
                 || string.IsNullOrWhiteSpace(objMedico.getApellido())
                 || string.IsNullOrWhiteSpace(objMedico.getLegajo())
                 || string.IsNullOrWhiteSpace(objMedico.getDiasAtencion())
-                || string.IsNullOrWhiteSpace(objMedico.getHorarioAtencion())) 
+                || string.IsNullOrWhiteSpace(objMedico.getHorarioAtencion())
+                || string.IsNullOrWhiteSpace(objMedico.getUsuario())
+                || string.IsNullOrWhiteSpace(objMedico.getContrasena())
+                ) 
                 {
                 return false;
             }
@@ -27,5 +39,8 @@ namespace Negocio {
             }
             return daoMedico.agregarMedico(objMedico);
         }
-}
+        public DataTable getTodosPorEspecialidad(int idEspecialidad) {
+            return daoMedico.getTodosPorEspecialidad(idEspecialidad);
+        }
+    }
 }

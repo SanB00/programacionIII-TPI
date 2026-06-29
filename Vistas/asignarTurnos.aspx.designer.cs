@@ -11,7 +11,7 @@ namespace Vistas
 {
 
 
-    public partial class asignarTurnos
+    public partial class AsignarTurnos
     {
 
         /// <summary>

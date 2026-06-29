@@ -18,7 +18,7 @@ namespace Entidades {
         private String apellido;
         private String sexo;
         private String nacionalidad;
-        private String fechaNacimiento;
+        private DateTime fechaNacimiento;
         private String direccion;
         private String correoElectronico;
         private String telefono;
@@ -50,7 +50,7 @@ namespace Entidades {
             return nacionalidad;
         }
 
-        public String getFechaNacimiento() {
+        public DateTime getFechaNacimiento() {
             return fechaNacimiento;
         }
 
@@ -92,7 +92,7 @@ namespace Entidades {
             this.nacionalidad = nacionalidad;
         }
 
-        public void setFechaNacimiento(String fechaNacimiento) {
+        public void setFechaNacimiento(DateTime fechaNacimiento) {
             this.fechaNacimiento = fechaNacimiento;
         }
 
@@ -114,7 +114,7 @@ namespace Entidades {
            this.idProvincia = idProvincia;
         }
         public void setEstado(bool estado) {
-            this.estado = true;
+            this.estado = estado;
         }
     }
 }

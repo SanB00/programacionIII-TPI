@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Vistas {
-    public partial class informes : System.Web.UI.Page {
+    public partial class Informes : System.Web.UI.Page {
         protected void page_Load(object sender, EventArgs e) {
             if (!this.IsPostBack) {
                 lblUsuario.Text = "Usuario: " + Session["Usuario"];

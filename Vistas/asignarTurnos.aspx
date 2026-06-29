@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/principal.Master" AutoEventWireup="true" CodeBehind="asignarTurnos.aspx.cs" Inherits="Vistas.asignarTurnos" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/principal.Master" AutoEventWireup="true" CodeBehind="asignarTurnos.aspx.cs" Inherits="Vistas.AsignarTurnos" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
    
 </asp:Content>
@@ -8,8 +8,11 @@
         <tr>
             <td class="auto-style2">Especialidad:</td>
             <td class="auto-style3">
-                <asp:DropDownList ID="ddlEspecialidad" runat="server">
-                </asp:DropDownList>
+            <asp:DropDownList ID="ddlEspecialidad" runat="server"
+                AutoPostBack="true"
+                OnSelectedIndexChanged="ddlEspecialidad_SelectedIndexChanged">
+            </asp:DropDownList>
+
             </td>
             <td class="auto-style7">Dia:</td>
             <td>

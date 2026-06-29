@@ -11,7 +11,7 @@ namespace Vistas
 {
 
 
-    public partial class informes
+    public partial class Informes
     {
 
         /// <summary>
