@@ -14,6 +14,10 @@ namespace Negocio {
             DaoMedico dao = new DaoMedico();
             return dao.obtenerTablaMedicos();
         }
+        public DataTable filtrarPorLegajo(int legajo) {
+            DaoMedico dao = new DaoMedico();
+            return dao.filtrarPorLegajo(legajo);
+        }
         public bool registrarMedico(Medico objMedico) {
             if (string.IsNullOrWhiteSpace(objMedico.getDni())
                 || string.IsNullOrWhiteSpace(objMedico.getNombre())

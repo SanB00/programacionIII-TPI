@@ -177,7 +177,16 @@ namespace Vistas
         protected global::System.Web.UI.WebControls.TextBox txtFiltro;
 
         /// <summary>
-        /// grdMedicos control.
+        /// Control btnFiltrarMedicos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFiltrarMedicos;
+
+        /// <summary>
+        /// Control grdMedicos.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.

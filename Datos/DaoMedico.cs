@@ -56,15 +56,10 @@ namespace Datos {
         public DataTable obtenerTablaMedicos() {
             AccesoDatos conexion = new AccesoDatos();
 
-            string consulta = @"SELECT Legajo, 
-                               DNI, 
-                               Nombre, 
-                               Apellido, 
-                               IdEspecialidad AS Especialidad, 
-                               DiasAtencion AS Dias, 
-                               HorarioAtencion AS Horario
-                        FROM MEDICO 
-                        WHERE Estado = 1";
+            string consulta = "SELECT M.Legajo, M.DNI, M.Nombre, M.Apellido, E.Nombre AS Especialidad,M.DiasAtencion as Dias,M.HorarioAtencion as Horario " +
+                  "FROM MEDICO M " +
+                  "INNER JOIN ESPECIALIDAD E ON M.IdEspecialidad = E.IdEspecialidad " +
+                  "WHERE M.Estado = 1";
 
             SqlConnection cn = conexion.obtenerConexion();
             SqlDataAdapter adaptador = new SqlDataAdapter(consulta, cn);
@@ -72,6 +67,22 @@ namespace Datos {
             adaptador.Fill(tabla);
 
             return tabla;
+        }
+
+        public DataTable filtrarPorLegajo(int legajo) {
+            AccesoDatos conexion = new AccesoDatos();
+
+            string consulta = "SELECT M.Legajo, M.DNI, M.Nombre, M.Apellido, E.Nombre AS Especialidad,M.DiasAtencion as Dias,M.HorarioAtencion as Horario " +
+                 "FROM MEDICO M " +
+                 "INNER JOIN ESPECIALIDAD E ON M.IdEspecialidad = E.IdEspecialidad " +
+                 "WHERE M.Legajo = @legajo AND M.Estado = 1";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+        new SqlParameter("@legajo", legajo)
+            };
+
+            return conexion.ejecutarConsulta(consulta, parametros);
         }
 
     }

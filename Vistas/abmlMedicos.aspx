@@ -100,6 +100,9 @@
     Buscar por Legajo: <asp:TextBox ID="txtFiltro" runat="server" />
     
 
+    <asp:Button ID="btnFiltrarMedicos" runat="server" OnClick="btnFiltrarMedicos_Click" Text="Buscar" />
+    
+
     <br /><br />
     <asp:GridView ID="grdMedicos" runat="server"
     AutoGenerateColumns="False"

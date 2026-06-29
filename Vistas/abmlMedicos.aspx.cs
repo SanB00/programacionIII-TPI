@@ -1,6 +1,7 @@
 ﻿using Entidades;
 using Negocio;
 using System;
+using System.Data;
 using System.Web.UI.WebControls;
 
 namespace Vistas {
@@ -149,6 +150,21 @@ namespace Vistas {
             NegocioMedico neg = new NegocioMedico();
             grdMedicos.DataSource = neg.obtenerTablaMedicos();
             grdMedicos.DataBind();
+        }
+
+        protected void btnFiltrarMedicos_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtFiltro.Text)) {
+                int legajoBuscado = Convert.ToInt32(txtFiltro.Text.Trim());
+
+                NegocioMedico negocio = new NegocioMedico();
+                DataTable tablaFiltrada = negocio.filtrarPorLegajo(legajoBuscado);
+
+                grdMedicos.DataSource = tablaFiltrada;
+                grdMedicos.DataBind();
+            } else {
+                cargarGrid();
+            }
         }
     }
 }
