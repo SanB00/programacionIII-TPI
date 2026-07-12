@@ -67,7 +67,7 @@
     <Content Include="HomeAdmin.aspx" />
     <Content Include="Informes.aspx" />
     <Content Include="login.aspx" />
-    <Content Include="turnosMedico.aspx" />
+    <Content Include="HomeMedico.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -121,12 +121,12 @@
       <DependentUpon>principal.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="turnosMedico.aspx.cs">
-      <DependentUpon>turnosMedico.aspx</DependentUpon>
+    <Compile Include="HomeMedico.aspx.cs">
+      <DependentUpon>HomeMedico.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="turnosMedico.aspx.designer.cs">
-      <DependentUpon>turnosMedico.aspx</DependentUpon>
+    <Compile Include="HomeMedico.aspx.designer.cs">
+      <DependentUpon>HomeMedico.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

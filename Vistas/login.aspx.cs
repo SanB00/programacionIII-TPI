@@ -20,7 +20,7 @@ namespace Vistas {
                 if (tipoUsuario == "Administrador") {
                     Response.Redirect("HomeAdmin.aspx");
                 } else if (tipoUsuario == "Medico") {
-                    Response.Redirect("turnosMedico.aspx");
+                    Response.Redirect("HomeMedico.aspx");
                 }
             } else {
                 txtUsuario.Text = "";

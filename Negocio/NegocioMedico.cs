@@ -7,18 +7,41 @@ namespace Negocio {
     public class NegocioMedico {
         
         DaoMedico daoMedico = new DaoMedico();
-        public System.Data.DataTable getTodos() {
+
+        //FUNCIONES BASICAS
+        public DataTable getTodos() {
             return daoMedico.getTodos();
         }
+        public bool agregarMedico(Medico nuevo) {
+            return daoMedico.agregarMedico(nuevo);
+        }
+
+        public bool actualizarMedico(Medico nuevoDatos) {
+            return daoMedico.actualizarMedico(nuevoDatos);
+        }
+        
         public DataTable obtenerTablaMedicos() {
-            DaoMedico dao = new DaoMedico();
-            return dao.obtenerTablaMedicos();
+            return daoMedico.obtenerTablaMedicos();
+        }
+        public DataTable getTodosPorEspecialidad(int idEspecialidad) {
+            return daoMedico.getTodosPorEspecialidad(idEspecialidad);
+        }
+
+        //FUNCIONES DE CONSULTAS
+        public bool existeDNI(String dni) {
+            return daoMedico.existeDNI(dni);
+        }
+        public bool existeUsuario(string usuario) {
+            return daoMedico.existeUsuario(usuario);
         }
         public DataTable filtrarPorLegajo(int legajo) {
             DaoMedico dao = new DaoMedico();
             return dao.filtrarPorLegajo(legajo);
         }
-        public bool registrarMedico(Medico objMedico) {
+        public int getLegajoPorUsuario(string nombreUsuario) {
+            return daoMedico.getLegajoPorUsuario(nombreUsuario);
+        }
+public bool registrarMedico(Medico objMedico) {
             if (string.IsNullOrWhiteSpace(objMedico.getDni())
                 || string.IsNullOrWhiteSpace(objMedico.getNombre())
                 || string.IsNullOrWhiteSpace(objMedico.getApellido())
@@ -42,5 +65,6 @@ namespace Negocio {
         public DataTable getTodosPorEspecialidad(int idEspecialidad) {
             return daoMedico.getTodosPorEspecialidad(idEspecialidad);
         }
+
     }
 }
