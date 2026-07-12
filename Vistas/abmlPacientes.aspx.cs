@@ -63,26 +63,26 @@ namespace Vistas {
 
         protected void btnAgregar_Click(object sender, EventArgs e) {
             #region 1) obtener datos del formulario
-            string dni = txtDni.Text;
-            string nombre = txtNombre.Text;
-            string apellido = txtApellido.Text;
-            string sexo = ddlSexo.SelectedValue;
-            string nacionalidad = ddlNacionalidad.SelectedValue;
+            String dni = txtDni.Text;
+            String nombre = txtNombre.Text;
+            String apellido = txtApellido.Text;
+            String sexo = ddlSexo.SelectedValue;
+            String nacionalidad = ddlNacionalidad.SelectedValue;
             String strFechaNacimiento = txtNacimiento.Text;
-            string direccion = txtDireccion.Text;
-            string correo = txtCorreo.Text;
-            string telefono = txtTelefono.Text;
+            String direccion = txtDireccion.Text;
+            String correo = txtCorreo.Text;
+            String telefono = txtTelefono.Text;
             int idProvincia = Convert.ToInt32(ddlProvincia.SelectedValue);
             int idLocalidad = Convert.ToInt32(ddlLocalidad.SelectedValue);
             #endregion
             #region 2) validar datos del formulario
 
-            string mensajeError = "";
+            String mensajeError = "";
             if (!Common.esUnNroValido(dni)) {
-                mensajeError += "\n El DNI debe ser solo numeros. ";
+                mensajeError += $"\n El DNI debe ser solo numeros. ";
             }
             if (!Common.estaElTextoDentroDelRango(dni, 1, 10)) {
-                mensajeError += "\n El dni debe tener entre 1 y 10 caracteres. ";
+                mensajeError += $"\n El dni debe tener entre 1 y 10 caracteres. ";
             }
             if (!Common.estaElTextoDentroDelRango(nombre)) {
                 mensajeError += $"\n El nombre debe tener entre {Common.MIN_CHARS_TEXTO} y {Common.MAX_CHARS_TEXTO} caracteres. ";
@@ -91,24 +91,24 @@ namespace Vistas {
                 mensajeError += $"\n El apellido debe tener entre {Common.MIN_CHARS_TEXTO} y {Common.MAX_CHARS_TEXTO} caracteres. ";
             }
             if (!Common.esUnaFechaValida(strFechaNacimiento)) {
-                lblMensaje.Text = "Ingrese una fecha válida.";
+                lblMensaje.Text = $"\n Ingrese una fecha válida en la fecha nacimiento.";
                 return;
             }
             if (!Common.estaElTextoDentroDelRango(direccion, 3, 100)) {
-                mensajeError += "\n La direccion debe tener entre 3 y 100 caracteres. ";
+                mensajeError += $"\n La direccion debe tener entre 3 y 100 caracteres. ";
             }
             if (!Common.estaElTextoDentroDelRango(correo, 5, 50)) {
-                mensajeError += "\n El correo debe tener entre 5 y 50 caracteres. ";
+                mensajeError += $"\n El correo debe tener entre 5 y  {Common.MAX_CHARS_TEXTO} caracteres. ";
             }
             if (!(sexo.Equals("M") || sexo.Equals("F"))) {
-                mensajeError += "\n Debe seleccionar un sexo M o F. ";
+                mensajeError += $"\n Debe seleccionar un sexo M o F. ";
             }
 
             if (ddlProvincia.SelectedIndex == 0 || ddlLocalidad.SelectedIndex == 0) {
-                mensajeError += "\n Debe seleccionar una provincia y una localidad. ";
+                mensajeError += $"\n Debe seleccionar una provincia y una localidad. ";
             }
             if (!Common.esUnNroValido(telefono)) {
-                mensajeError += "\n El telefono debe ser solo numeros. ";
+                mensajeError += $"\n El telefono debe ser solo numeros. ";
             }
 
             if (!string.IsNullOrEmpty(mensajeError)) {
@@ -253,6 +253,18 @@ namespace Vistas {
             }
         }
 
+        protected void btnBuscar_Click(object sender, EventArgs e) {
+            string consultaDniONombre = "";
+            // objNegocioPaciente.buscar
+            gvPacientes.DataSource = objNegocioPaciente.getTodosPacientes();
+            gvPacientes.DataBind();
+
+        }
+
+        protected void btnLimpiarFiltros_Click(object sender, EventArgs e) {
+            cargarGridView();
+            lblMensaje.Text = "Filtros eliminados.";
+        }
     }
 }
 

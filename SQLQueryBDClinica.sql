@@ -509,3 +509,8 @@ BEGIN
     VALUES (@legajo, @dni, @fecha, @horarioInicio, 1)
 END
 GO
+
+
+
+SELECT * FROM PACIENTE WHERE DNI = '93456789' 
+AND Apellido LIKE '%%'

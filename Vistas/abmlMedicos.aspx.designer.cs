@@ -150,25 +150,25 @@ namespace Vistas
         protected global::System.Web.UI.WebControls.TextBox txtHorario;
 
         /// <summary>
-        /// Control txtUsuario.
+        /// txtUsuario control.
         /// </summary>
         /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtUsuario;
 
         /// <summary>
-        /// Control txtContrasena.
+        /// txtContrasena control.
         /// </summary>
         /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtContrasena;
 
         /// <summary>
-        /// Control btnGuardarMedico.
+        /// btnGuardarMedico control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
@@ -195,16 +195,16 @@ namespace Vistas
         protected global::System.Web.UI.WebControls.TextBox txtFiltro;
 
         /// <summary>
-        /// Control btnFiltrarMedicos.
+        /// btnFiltrarMedicos control.
         /// </summary>
         /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnFiltrarMedicos;
 
         /// <summary>
-        /// Control grdMedicos.
+        /// grdMedicos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.

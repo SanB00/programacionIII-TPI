@@ -3,7 +3,7 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 
-<asp:Content ID="Content4" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">   
+<asp:Content ID="Content4" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h1>PACIENTES</h1>
     <asp:Button ID="btnAgregarPaciente" runat="server" OnClick="btnAgregarPaciente_Click" Text="Agregar Nuevo Paciente" />
     &nbsp;&nbsp;
@@ -13,13 +13,16 @@
     <table id="bloqueAgregarPaciente" runat="server" visible="false" border="0">
         <tr>
             <td>DNI</td>
-            <td><asp:TextBox ID="txtDni" runat="server" MaxLength="8" /></td>
+            <td>
+                <asp:TextBox ID="txtDni" runat="server" MaxLength="8" /></td>
             <td>Nombre</td>
-            <td><asp:TextBox ID="txtNombre" runat="server" /></td>
+            <td>
+                <asp:TextBox ID="txtNombre" runat="server" /></td>
         </tr>
         <tr>
             <td>Apellido</td>
-            <td><asp:TextBox ID="txtApellido" runat="server" /></td>
+            <td>
+                <asp:TextBox ID="txtApellido" runat="server" /></td>
             <td>Sexo</td>
             <td>
                 <asp:DropDownList ID="ddlSexo" runat="server">
@@ -31,80 +34,100 @@
         </tr>
         <tr>
             <td>Nacionalidad</td>
-            <td><asp:DropDownList ID="ddlNacionalidad" runat="server" >
-                <asp:ListItem>Argentino</asp:ListItem>
-                <asp:ListItem>Chileno</asp:ListItem>
-                <asp:ListItem>Paraguayo</asp:ListItem>
-                <asp:ListItem>Boliviano</asp:ListItem>
-                <asp:ListItem>Uruguayo</asp:ListItem>
-                <asp:ListItem>Brasilero</asp:ListItem>
+            <td>
+                <asp:DropDownList ID="ddlNacionalidad" runat="server">
+                    <asp:ListItem>Argentino</asp:ListItem>
+                    <asp:ListItem>Chileno</asp:ListItem>
+                    <asp:ListItem>Paraguayo</asp:ListItem>
+                    <asp:ListItem>Boliviano</asp:ListItem>
+                    <asp:ListItem>Uruguayo</asp:ListItem>
+                    <asp:ListItem>Brasilero</asp:ListItem>
                 </asp:DropDownList>
             </td>
             <td>Fecha Nac.</td>
-            <td><asp:TextBox ID="txtNacimiento" runat="server" TextMode="Date" /></td>
+            <td>
+                <asp:TextBox ID="txtNacimiento" runat="server" TextMode="Date" /></td>
         </tr>
         <tr>
             <td>Dirección</td>
-            <td><asp:TextBox ID="txtDireccion" runat="server" /></td>
+            <td>
+                <asp:TextBox ID="txtDireccion" runat="server" /></td>
             <td>Provincia</td>
-            <td><asp:DropDownList ID="ddlProvincia" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlProvincia_SelectedIndexChanged" /></td>
+            <td>
+                <asp:DropDownList ID="ddlProvincia" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlProvincia_SelectedIndexChanged" /></td>
         </tr>
         <tr>
             <td>Localidad</td>
-            <td><asp:DropDownList ID="ddlLocalidad" runat="server" /></td>
+            <td>
+                <asp:DropDownList ID="ddlLocalidad" runat="server" /></td>
             <td>Correo</td>
-            <td><asp:TextBox ID="txtCorreo" runat="server" TextMode="Email" /></td>
+            <td>
+                <asp:TextBox ID="txtCorreo" runat="server" TextMode="Email" /></td>
         </tr>
         <tr>
             <td>Teléfono</td>
-            <td><asp:TextBox ID="txtTelefono" runat="server" /></td>
+            <td>
+                <asp:TextBox ID="txtTelefono" runat="server" /></td>
             <td></td>
-            <td style="text-align: right">&nbsp;<asp:Button ID="btnAgregar" runat="server" style="text-align: right" Text="Agregar" OnClick="btnAgregar_Click" />
+            <td style="text-align: right">&nbsp;<asp:Button ID="btnAgregar" runat="server" Style="text-align: right" Text="Agregar" OnClick="btnAgregar_Click" />
             </td>
         </tr>
     </table>
 
     <br />
-     
-        <div class="container mt-4">
-            <!-- Filter Area Box Container -->
-            <div class="card shadow-sm p-4 bg-light" style="max-width: 500px;">
-                <h5 class="card-title mb-3 text-secondary">Filtros y Búsqueda</h5>
-                
-                <!-- Floating Label Group -->
-                <div class="form-floating mb-3">
-                    <!-- The TextBox must have placeholder text for the floating effect to work -->
-                    <asp:TextBox 
-                        ID="txtBuscarDNI" 
-                        runat="server" 
-                        CssClass="form-control" 
-                        placeholder="12345678"
-                        data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Ejemplo: 12345678"
-                        />
-                    
-                    <!-- Dynamic client ID linkage -->
-                    <label for="<%= txtBuscarDNI.ClientID %>">Buscar por DNI</label>
-                </div>
 
-                <!-- Action Button -->
-                <asp:Button 
-                    ID="btnBuscar" 
-                    runat="server" 
-                    Text="Buscar" 
-                    CssClass="btn btn-primary px-4" />
+    <div class="container mt-6">
+        <!-- Filter Area Box Container -->
+        <div class="card shadow-sm p-4 bg-light" style="max-width: 500px;">
+            <h5 class="card-title mb-3 text-secondary">Filtros y Búsqueda</h5>
+
+            <!-- Floating Label Group -->
+            <div class="form-floating mb-3">
+                <!-- The TextBox must have placeholder text for the floating effect to work -->
+                <!-- Dynamic client ID linkage -->
+                <label for="<%= txtBuscarDNI.ClientID %>">Buscar por DNI</label>
+                <asp:TextBox
+                    ID="txtBuscarDNI"
+                    runat="server"
+                    CssClass="form-control"
+                    placeholder="12345678" />
+                <br/>
+                <label for="<%= txtBuscarApellido.ClientID %>">Buscar por Apellido</label>
+                <asp:TextBox
+                    ID="txtBuscarApellido"
+                    runat="server"
+                    CssClass="form-control"
+                    placeholder="Apellido"
+                    data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Apellido" />
             </div>
-        </div>
 
-    <br /><br />
+
+            <!-- Action Button -->
+            <asp:Button
+                ID="btnBuscar"
+                runat="server"
+                Text="Buscar"
+                CssClass="btn btn-primary px-4" OnClick="btnBuscar_Click" />
+            <br/>
+            <asp:Button
+                ID="btnLimpiarFiltros"
+                runat="server"
+                Text="Limpiar Filtros"
+                CssClass="btn btn-default px-4" OnClick="btnLimpiarFiltros_Click" />
+        </div>
+    </div>
+
+    <br />
+    <br />
     <asp:GridView ID="gvPacientes" runat="server"
         AutoGenerateColumns="False"
         DataKeyNames="DNI"
         AllowPaging="True" PageSize="8"
-        OnPageIndexChanging="gvPacientes_PageIndexChanging"    
+        OnPageIndexChanging="gvPacientes_PageIndexChanging"
         GridLines="None"
-        Width="900px" 
+        Width="900px"
         Font-Names="Arial" Font-Size="Small"
-        EmptyDataText="No se encontraron pacientes." CellPadding="4" ForeColor="#333333" style="margin-right: 53px" AutoGenerateEditButton="True" OnRowCancelingEdit="gvPacientes_RowCancelingEdit" OnRowEditing="gvPacientes_RowEditing" OnRowUpdating="gvPacientes_RowUpdating" OnRowDataBound="gvPacientes_RowDataBound">
+        EmptyDataText="No se encontraron pacientes." CellPadding="4" ForeColor="#333333" Style="margin-right: 53px" AutoGenerateEditButton="True" OnRowCancelingEdit="gvPacientes_RowCancelingEdit" OnRowEditing="gvPacientes_RowEditing" OnRowUpdating="gvPacientes_RowUpdating" OnRowDataBound="gvPacientes_RowDataBound">
         <EditRowStyle BackColor="#2461BF" />
         <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
         <HeaderStyle BackColor="#507CD1" ForeColor="White" Font-Bold="true" />
@@ -236,7 +259,7 @@
         <SortedDescendingCellStyle BackColor="#E9EBEF" />
         <SortedDescendingHeaderStyle BackColor="#4870BE" />
     </asp:GridView>
-   
+
     <br />
     <asp:HyperLink ID="lnkVolverMenu" runat="server" NavigateUrl="~/HomeAdmin.aspx">Volver al menú</asp:HyperLink>
 </asp:Content>
