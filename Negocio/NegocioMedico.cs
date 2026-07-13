@@ -34,36 +34,35 @@ namespace Negocio {
         public bool existeUsuario(string usuario) {
             return daoMedico.existeUsuario(usuario);
         }
-        public DataTable filtrarPorLegajo(int legajo) {
-            DaoMedico dao = new DaoMedico();
-            return dao.filtrarPorLegajo(legajo);
-        }
         public int getLegajoPorUsuario(string nombreUsuario) {
             return daoMedico.getLegajoPorUsuario(nombreUsuario);
         }
-public bool registrarMedico(Medico objMedico) {
-            if (string.IsNullOrWhiteSpace(objMedico.getDni())
-                || string.IsNullOrWhiteSpace(objMedico.getNombre())
-                || string.IsNullOrWhiteSpace(objMedico.getApellido())
-                || string.IsNullOrWhiteSpace(objMedico.getLegajo())
-                || string.IsNullOrWhiteSpace(objMedico.getDiasAtencion())
-                || string.IsNullOrWhiteSpace(objMedico.getHorarioAtencion())
-                || string.IsNullOrWhiteSpace(objMedico.getUsuario())
-                || string.IsNullOrWhiteSpace(objMedico.getContrasena())
-                ) 
-                {
-                return false;
-            }
-            int legajoInt = 0;
-            int.TryParse(objMedico.getLegajo(), out legajoInt);
 
-            if (daoMedico.existeDNILegajo(objMedico.getDni(), legajoInt)) {
-                return false;
-            }
-            return daoMedico.agregarMedico(objMedico);
+        //BUSQUEDAS
+        public DataTable filtrarPorLegajo(int legajo) {
+            return daoMedico.filtrarPorLegajo(legajo);
         }
-        public DataTable getTodosPorEspecialidad(int idEspecialidad) {
-            return daoMedico.getTodosPorEspecialidad(idEspecialidad);
+
+        public DataTable filtrarPorApellido(string busqueda) {
+            return daoMedico.filtrarPorApellido(busqueda);
+        }
+
+        public DataTable filtrarPorNombre(string busqueda) {
+            return daoMedico.filtrarPorNombre(busqueda);
+        }
+
+        //FILTROS
+
+        public DataTable filtrarPorSexo(string sexo) {
+            return daoMedico.filtrarPorSexo(sexo);
+        }
+
+        public DataTable filtrarPorEstado(int estado) {
+            return daoMedico.filtrarPorEstado(estado);
+        }
+
+        public DataTable filtrarPorEspecialidad(string especialidad) {
+            return daoMedico.filtrarPorEspecialidad(especialidad);
         }
 
     }

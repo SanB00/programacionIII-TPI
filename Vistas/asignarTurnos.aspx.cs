@@ -7,6 +7,7 @@ namespace Vistas {
     public partial class AsignarTurnos : System.Web.UI.Page {
         private readonly NegocioMedico objNegocioMedico = new NegocioMedico();
         private readonly NegocioTurno objNegocioTurno = new NegocioTurno();
+        private readonly NegocioPaciente objNegocioPaciente = new NegocioPaciente();
 
         protected void page_Load(object sender, EventArgs e) {
             if (!this.IsPostBack) {
@@ -47,8 +48,11 @@ namespace Vistas {
                 lblMensaje.Text = "Complete todos los campos.";
                 return;
             }
-
-            Turno t = new Turno();
+            if (!objNegocioPaciente.existeDNI(txtDniPaciente.Text)) {
+                lblMensaje.Text = "Error: El DNI ingresado no corresponde a ningún paciente registrado.";
+                return;
+            }
+                        Turno t = new Turno();
             t.setLegajo(Convert.ToInt32(ddlMedico.SelectedValue));
             t.setDniPaciente(txtDniPaciente.Text.Trim());
             t.setFecha(txtDiaTurno.Text);

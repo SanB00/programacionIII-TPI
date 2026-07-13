@@ -4,6 +4,7 @@ using System;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Utils;
 
 namespace Vistas {
     public partial class AbmlMedicos : System.Web.UI.Page {
@@ -26,7 +27,7 @@ namespace Vistas {
         }
 
         private void cargarGridView() {
-            gvMedicos.DataSource = objNegocioMedico.obtenerTablaMedicos();
+            gvMedicos.DataSource = objNegocioMedico.obtenerTablaMedicos ();
             gvMedicos.DataBind();
         }
         private void cargarProvincias() {
@@ -104,6 +105,7 @@ namespace Vistas {
             string dni = txtDni.Text.Trim();
             string nombre = txtNombre.Text.Trim();
             string apellido = txtApellido.Text.Trim();
+            DateTime nacimiento;
             string nacionalidad = ddlNacionalidad.SelectedValue;
             string direccion = txtDireccion.Text.Trim();
             string correo = txtCorreo.Text.Trim();
@@ -116,58 +118,42 @@ namespace Vistas {
             string usuario = txtUsuario.Text.Trim();
             string contrasena = txtContrasena.Text.Trim();
 
-            //validaciones
-            if (objNegocioMedico.existeDNI(dni)) {
-                lbl_mensaje.Text = "El DNI ya se encuentra registrado.";
-                return;
-            }
-
-            if (objNegocioMedico.existeUsuario(usuario)) {
-                lbl_mensaje.Text = "El nombre de usuario ya existe.";
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(dni) || dni.Length != 8 ||
-                string.IsNullOrWhiteSpace(nombre) ||
-                string.IsNullOrWhiteSpace(apellido) ||
-                string.IsNullOrWhiteSpace(nacionalidad) ||
-                string.IsNullOrWhiteSpace(txtNacimiento.Text) ||
-                string.IsNullOrWhiteSpace(direccion) ||
-                string.IsNullOrWhiteSpace(correo) ||
-                string.IsNullOrWhiteSpace(telefono) ||
-                string.IsNullOrWhiteSpace(usuario) ||
-                string.IsNullOrWhiteSpace(contrasena) ||
-                string.IsNullOrWhiteSpace(provincia) ||
-                string.IsNullOrWhiteSpace(localidad) ||
-                string.IsNullOrWhiteSpace(especialidad) ||
-                string.IsNullOrWhiteSpace(dias) ||
-                string.IsNullOrWhiteSpace(horario)) {
-
-                lbl_mensaje.Text = "Error: Debe completar todos los campos.";
-                return;
-            }
-
-            int idProvincia = Convert.ToInt32(provincia);
-            int idLocalidad = Convert.ToInt32(localidad);
-            int idEspecialidad = Convert.ToInt32(especialidad);
-            int diasAtencion = Convert.ToInt32(dias);
-            int horarioAtencion = Convert.ToInt32(horario);
-
-            if (!DateTime.TryParse(txtNacimiento.Text.Trim(), out DateTime nacimiento)) {
-                lbl_mensaje.Text = "La fecha de nacimiento no es válida.";
-                return;
-            }
-
             /*
-            Validacion de edad, que sea mayor a 21(creo que es la edad minima como para ser medico)
-            primero declaro edad que es la fecha de hoy meno el anio de nacimiento
+           Validacion de edad, que sea mayor a 21(creo que es la edad minima como para ser medico)
+           primero declaro edad que es la fecha de hoy meno el anio de nacimiento
 
-            despues el primer if toma la fecha de nacimiento sin la hora (los datetime tambien guardan hora)
-            y si es mayor a la resta ente el dia hoy y la edad ("DateTime.Today.AddYears(-edad)") le resta 1
-            porque todavia no cumplio los anios
-            dejo la aclaracion porqque es medio engorroso
-            */
+           despues el primer if toma la fecha de nacimiento sin la hora (los datetime tambien guardan hora)
+           y si es mayor a la resta ente el dia hoy y la edad ("DateTime.Today.AddYears(-edad)") le resta 1
+           porque todavia no cumplio los anios
+           dejo la aclaracion porqque es medio engorroso
+           */
+            
+            //validaciones
 
+
+
+
+            string mensajeError = "";
+
+            if (!Common.esUnNroValido(dni)) {
+                mensajeError += "\nEl DNI debe ser solo numeros. ";
+            }
+            if (!Common.estaElTextoDentroDelRango(dni, 7, 8)) {
+                mensajeError += "\nEl dni debe tener 7 u 8 caracteres. ";
+            }
+            if (objNegocioMedico.existeDNI(dni)) {
+                mensajeError += "\nEl DNI ya se encuentra registrado.";
+            }
+
+            if (!Common.estaElTextoDentroDelRango(nombre)) {
+                mensajeError += $"\nEl nombre debe tener entre {Common.MIN_CHARS_TEXTO} y {Common.MAX_CHARS_TEXTO} caracteres. ";
+            }
+            if (!Common.estaElTextoDentroDelRango(apellido)) {
+                mensajeError += $"\nEl apellido debe tener entre {Common.MIN_CHARS_TEXTO} y {Common.MAX_CHARS_TEXTO} caracteres. ";
+            }
+            if (!DateTime.TryParse(txtNacimiento.Text.Trim(), out nacimiento)) {
+                mensajeError += "\nDebe seleccionar una fecha de nacimiento valida. ";
+            }
             int edad = DateTime.Today.Year - nacimiento.Year;
 
             if (nacimiento.Date > DateTime.Today.AddYears(-edad)) {
@@ -175,9 +161,60 @@ namespace Vistas {
             }
 
             if (edad < 21) {
-                lbl_mensaje.Text = "El médico debe ser mayor de edad.";
+                mensajeError += "\nEl médico debe ser mayor de edad.";
+            }
+            if (!Common.estaElTextoDentroDelRango(direccion, 3, 100)) {
+                mensajeError += "\nLa direccion debe tener entre 3 y 100 caracteres. ";
+            }
+            if (!Common.estaElTextoDentroDelRango(correo, 5, 50)) {
+                mensajeError += "\nEl correo debe tener entre 5 y 50 caracteres. ";
+            }
+            if (!Common.esUnNroValido(telefono)) {
+                mensajeError += "\nEl telefono debe ser solo numeros. ";
+            }
+
+            if (ddlSexo.SelectedValue == "") {
+                mensajeError += "\nDebe seleccionar un sexo M o F. ";
+            }
+
+            if (ddlProvincia.SelectedIndex == 0) {
+                mensajeError += "\nDebe seleccionar una provincia.";
+            }
+
+            if (ddlLocalidad.SelectedIndex == 0) {
+                mensajeError += "\nDebe seleccionar una localidad.";
+            }
+            if (ddlEspecialidad.SelectedIndex == 0) {
+                mensajeError += "\nDebe seleccionar una especialidad. ";
+            }
+            if (ddl_agregarDiasMedico.SelectedIndex == 0) {
+                mensajeError += "\nDebe seleccionar dias. ";
+            }
+            if (ddl_agregarHorarioMedico.SelectedIndex == 0) {
+                mensajeError += "\nDebe seleccionar horario. ";
+            }
+            if (!Common.estaElTextoDentroDelRango(usuario, 3, 100)) {
+                mensajeError += "\nEl nombre de usuario debe tener entre 3 y 100 caracteres. ";
+            }
+            if (objNegocioMedico.existeUsuario(usuario)) {
+                mensajeError += "\nEl nombre de usuario ya existe.";
+            }
+            if (!Common.estaElTextoDentroDelRango(contrasena, 3, 100)) {
+                mensajeError += "\nLa contraseña debe tener entre 3 y 100 caracteres. ";
+            }
+            if (!string.IsNullOrEmpty(mensajeError)) {
+                Common.mostrarMensajeEnAlerta(mensajeError, this);
                 return;
             }
+
+            
+            int idProvincia = Convert.ToInt32(provincia);
+            int idLocalidad = Convert.ToInt32(localidad);
+            int idEspecialidad = Convert.ToInt32(especialidad);
+            int diasAtencion = Convert.ToInt32(dias);
+            int horarioAtencion = Convert.ToInt32(horario);
+
+           
 
             /// carga
 
@@ -212,25 +249,6 @@ namespace Vistas {
                 lbl_mensaje.Text = "Error al guardar. Verifique que el DNI no esté repetido.";
 
             }
-        }
-
-        protected void btnFiltrarMedicos_Click(object sender, EventArgs e) {
-            if (!string.IsNullOrWhiteSpace(txtFiltro.Text)) {
-                int legajoBuscado = Convert.ToInt32(txtFiltro.Text.Trim());
-
-                NegocioMedico negocio = new NegocioMedico();
-                DataTable tablaFiltrada = negocio.filtrarPorLegajo(legajoBuscado);
-
-                gvMedicos.DataSource = tablaFiltrada;
-                gvMedicos.DataBind();
-            } else {
-                cargarGridView();
-            }
-        }
-
-        protected void btnLimpiar_Click(object sender, EventArgs e) {
-            txtFiltro.Text = "";
-            cargarGridView();
         }
 
         protected void ddlProvincia_SelectedIndexChanged1(object sender, EventArgs e) {
@@ -273,14 +291,35 @@ namespace Vistas {
             ddlLocalidad.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
         }
 
+        //conserrvar filtrs
+        private void aplicarFiltros() {
+            if (!string.IsNullOrWhiteSpace(txtFiltrarLegajo.Text)) {
+                gvMedicos.DataSource = objNegocioMedico.filtrarPorLegajo(Convert.ToInt32(txtFiltrarLegajo.Text));
+            } else if (!string.IsNullOrWhiteSpace(txtFiltrarNombre.Text)) {
+                gvMedicos.DataSource = objNegocioMedico.filtrarPorNombre(txtFiltrarNombre.Text);
+            } else if (!string.IsNullOrWhiteSpace(txtFiltrarApellido.Text)) {
+                gvMedicos.DataSource = objNegocioMedico.filtrarPorApellido(txtFiltrarApellido.Text);
+            } else if (rbSexo.SelectedIndex != -1) {
+                gvMedicos.DataSource = objNegocioMedico.filtrarPorSexo(rbSexo.SelectedValue);
+            } else if (rbEspecialidad.SelectedIndex != -1) {
+                gvMedicos.DataSource = objNegocioMedico.filtrarPorEspecialidad(rbEspecialidad.SelectedValue);
+            } else if (rbEstado.SelectedIndex != -1) {
+                gvMedicos.DataSource = objNegocioMedico.filtrarPorEstado(Convert.ToInt32(rbEstado.SelectedValue));
+            } else {
+                cargarGridView();
+            }
+
+            gvMedicos.DataBind();
+        }
+
         protected void gvMedicos_RowEditing(object sender, GridViewEditEventArgs e) {
             gvMedicos.EditIndex = e.NewEditIndex;
-            cargarGridView();
+            aplicarFiltros();
         }
 
         protected void gvMedicos_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e) {
             gvMedicos.EditIndex = -1;
-            cargarGridView();
+            aplicarFiltros();
         }
         protected void gvMedicos_RowDataBound(object sender, GridViewRowEventArgs e) {
             if (e.Row.RowType == DataControlRowType.DataRow && (e.Row.RowState & DataControlRowState.Edit) != 0) {
@@ -369,7 +408,7 @@ namespace Vistas {
             if (objNegocioMedico.actualizarMedico(datosNuevos)) {
                 lbl_mensaje.Text = "Medico actualizado correctamente.";
                 gvMedicos.EditIndex = -1;
-                cargarGridView();
+                aplicarFiltros();
             } else {
                 lbl_mensaje.Text = "No se pudo actualizar el medico.";
             }
@@ -431,6 +470,68 @@ namespace Vistas {
             }
         }
 
+        //BUSQUEDAS
+
+        protected void btnBuscarLegajo_Click(object sender, EventArgs e) {
+            int legajo;
+
+            if (!int.TryParse(txtFiltrarLegajo.Text, out legajo)) {
+                lbl_Mensaje_busquedas.Text = "Ingrese un legajo válido.";
+                return;
+            }
+
+            gvMedicos.DataSource = objNegocioMedico.filtrarPorLegajo(legajo);
+            gvMedicos.DataBind();
+        }
+
+        protected void btnBuscarApellido_Click(object sender, EventArgs e) {
+            
+            if (string.IsNullOrEmpty(txtFiltrarApellido.Text)) {
+                lbl_Mensaje_busquedas.Text = "Ingrese un Apelllido válido.";
+                return;
+            }
+            gvMedicos.DataSource = objNegocioMedico.filtrarPorApellido(txtFiltrarApellido.Text);
+            gvMedicos.DataBind();
+        }
+
+        protected void btnBuscarNombre_Click(object sender, EventArgs e) {
+            
+            if (string.IsNullOrEmpty(txtFiltrarNombre.Text)) {
+                lbl_Mensaje_busquedas.Text = "Ingrese un Nombe válido.";
+                return;
+            }
+
+            gvMedicos.DataSource = objNegocioMedico.filtrarPorNombre(txtFiltrarNombre.Text);
+            gvMedicos.DataBind();
+        }
+        protected void btnLimpiar_Click(object sender, EventArgs e) {
+            cargarGridView();
+            rbSexo.ClearSelection();
+            rbEspecialidad.ClearSelection();
+            rbEstado.ClearSelection();
+            txtFiltrarLegajo.Text = "";
+            txtFiltrarApellido.Text = "";
+            txtFiltrarNombre.Text = "";
+        }
+
+        //FILTROS
+
+        protected void rbSexo_SelectedIndexChanged(object sender, EventArgs e) {
+            gvMedicos.DataSource = objNegocioMedico.filtrarPorSexo(rbSexo.SelectedValue);
+            gvMedicos.DataBind();
+        }
+
+        protected void rbEstado_SelectedIndexChanged(object sender, EventArgs e) {
+            int estado = Convert.ToInt32(rbEstado.SelectedValue);
+
+            gvMedicos.DataSource = objNegocioMedico.filtrarPorEstado(estado);
+            gvMedicos.DataBind();
+        }
+
+        protected void rbEspecialidad_SelectedIndexChanged(object sender, EventArgs e) {
+            gvMedicos.DataSource = objNegocioMedico.filtrarPorEspecialidad(rbEspecialidad.SelectedValue);
+            gvMedicos.DataBind();
+        }
     }
 }
 

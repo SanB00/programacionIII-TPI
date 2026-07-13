@@ -86,12 +86,12 @@
             <td class="auto-style2">Nacionalidad</td>
             <td class="auto-style2">
                 <asp:DropDownList ID="ddlNacionalidad" runat="server" >
-                <asp:ListItem>Argentino</asp:ListItem>
-                <asp:ListItem>Chileno</asp:ListItem>
-                <asp:ListItem>Paraguayo</asp:ListItem>
-                <asp:ListItem>Boliviano</asp:ListItem>
-                <asp:ListItem>Uruguayo</asp:ListItem>
-                <asp:ListItem>Brasilero</asp:ListItem>
+                <asp:ListItem>Argentina</asp:ListItem>
+                <asp:ListItem>Chile</asp:ListItem>
+                <asp:ListItem>Paraguay</asp:ListItem>
+                <asp:ListItem>Bolivia</asp:ListItem>
+                <asp:ListItem>Uruguay</asp:ListItem>
+                <asp:ListItem>Brasil</asp:ListItem>
                 </asp:DropDownList>
             </td>
             <td class="auto-style2">Dirección</td>
@@ -214,220 +214,269 @@
         </table>
 
     <br />
+    <asp:Label ID="lbl_Mensaje_busquedas" runat="server"></asp:Label>
     <br />
 
-    Buscar por Legajo: <asp:TextBox ID="txtFiltro" runat="server" />
+    Buscar por Legajo:&nbsp; <asp:TextBox ID="txtFiltrarLegajo" runat="server" Width="89px" />
     
 
-    <asp:Button ID="btnFiltrarMedicos" runat="server" OnClick="btnFiltrarMedicos_Click" Text="Buscar" />
+    &nbsp;&nbsp;
+    
+
+    <asp:Button ID="btnBuscarLegajo" runat="server" OnClick="btnBuscarLegajo_Click" Text="Buscar" />
+    
+
+    &nbsp;&nbsp;&nbsp;&nbsp; Buscar por Apellido:&nbsp;
+    <asp:TextBox ID="txtFiltrarApellido" runat="server"></asp:TextBox>
+&nbsp;&nbsp;&nbsp;
+    <asp:Button ID="btnBuscarApellido" runat="server" OnClick="btnBuscarApellido_Click" Text="Buscar" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Busca por Nombre:&nbsp;&nbsp;
+    <asp:TextBox ID="txtFiltrarNombre" runat="server"></asp:TextBox>
+&nbsp;&nbsp;
+    <asp:Button ID="btnBuscarNombre" runat="server" OnClick="btnBuscarNombre_Click" Text="Buscar" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     
 
     <asp:Button ID="btnLimpiar" runat="server" OnClick="btnLimpiar_Click" Text="Limpiar" />
     
 
-    <br /><br />
-    <asp:GridView ID="gvMedicos" runat="server"
-    AutoGenerateColumns="False"
-    DataKeyNames="DNI"
-    AllowPaging="True" PageSize="8"
-    OnPageIndexChanging="gvMedicos_PageIndexChanging"
-    OnRowUpdating="gvMedicos_RowUpdating"
-    OnRowEditing="gvMedicos_RowEditing"
-    OnRowCancelingEdit="gvMedicos_RowCancelingEdit"
-    OnRowDataBound="gvMedicos_RowDataBound"
-    GridLines="None"
-    Width="900px" 
-    Font-Names="Arial" Font-Size="Small"
-    EmptyDataText="No se encontraron medicos." CellPadding="4" ForeColor="#333333" style="margin-right: 53px" AutoGenerateEditButton="True">
-    <EditRowStyle BackColor="#2461BF" />
-    <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-    <HeaderStyle BackColor="#507CD1" ForeColor="White" Font-Bold="true" />
-    <AlternatingRowStyle BackColor="White" />
-    <Columns>
-        <asp:TemplateField HeaderText="Legajo">
-            <EditItemTemplate>
-                <asp:Label ID="lbl_eit_legajo" runat="server" Text='<%# Bind("Legajo") %>'></asp:Label>
-            </EditItemTemplate>
-            <ItemTemplate>
-                <asp:Label ID="lbl_it_legajo" runat="server" Text='<%# Bind("Legajo") %>'></asp:Label>
-            </ItemTemplate>
-        </asp:TemplateField>
-       <asp:TemplateField HeaderText="DNI">
-            <EditItemTemplate>
-                <asp:Label ID="lbl_eit_DNI" runat="server" Text='<%# Bind("DNI") %>'></asp:Label>
-            </EditItemTemplate>
-            <ItemTemplate>
-                <asp:Label ID="lbl_it_DNI" runat="server" Text='<%# Bind("DNI") %>'></asp:Label>
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField HeaderText="Nombre">
-            <EditItemTemplate>
-                <asp:TextBox ID="txt_eit_nombreMedico" runat="server" Text='<%# Bind("Nombre") %>'></asp:TextBox>
-            </EditItemTemplate>
-            <ItemTemplate>
-                <asp:Label ID="lbl_it_Nombre" runat="server" Text='<%# Bind("Nombre") %>'></asp:Label>
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField HeaderText="Apellido">
-            <EditItemTemplate>
-                <asp:TextBox ID="txt_eit_apellido" runat="server" Text='<%# Bind("Apellido") %>'></asp:TextBox>
-            </EditItemTemplate>
-            <ItemTemplate>
-                <asp:Label ID="lbl_it_Apellido" runat="server" Text='<%# Bind("Apellido") %>'></asp:Label>
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField HeaderText="Sexo">
-            <EditItemTemplate>
-                <asp:DropDownList ID="ddl_eit_Sexo" runat="server" SelectedValue='<%# Bind("Sexo") %>'>
-                    <asp:ListItem>--</asp:ListItem>
-                    <asp:ListItem Value="M">Masculino</asp:ListItem>
+    <br />
+    <br />
+    <table>
+        <tr>
+        <!-- Columna izquierda -->
+        <td style="vertical-align:top; padding-right:20px;">
+            Sexo:<br />
+                <asp:RadioButtonList ID="rbSexo" runat="server" AutoPostBack="True" OnSelectedIndexChanged="rbSexo_SelectedIndexChanged" Width="102px">
+                    <asp:ListItem Value="M">Masculinos</asp:ListItem>
                     <asp:ListItem Value="F">Femenino</asp:ListItem>
-                </asp:DropDownList>
-            </EditItemTemplate>
-            <ItemTemplate>
-                <asp:Label ID="lbl_it_Sexo" runat="server" Text='<%# Bind("Sexo") %>'></asp:Label>
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField HeaderText="Nacionalidad">
-            <EditItemTemplate>
-                <asp:DropDownList ID="ddl_eit_nacionalidad" runat="server">
-                    <asp:ListItem>Argentino</asp:ListItem>
-                    <asp:ListItem>Chileno</asp:ListItem>
-                    <asp:ListItem>Paraguayo</asp:ListItem>
-                    <asp:ListItem>Boliviano</asp:ListItem>
-                    <asp:ListItem>Uruguayo</asp:ListItem>
-                    <asp:ListItem>Brasilero</asp:ListItem>
-                </asp:DropDownList>
-            </EditItemTemplate>
-            <ItemTemplate>
-                <asp:Label ID="lbl_it_Nacionalidad" runat="server" Text='<%# Bind("Nacionalidad") %>'></asp:Label>
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField HeaderText="Fecha De Nac.">
-            <EditItemTemplate>
-                <asp:TextBox ID="text_eit_Nacimiento" runat="server" TextMode="Date" Text='<%# Bind("FechaNacimiento", "{0:yyyy-MM-dd}") %>' />
-            </EditItemTemplate>
-            <ItemTemplate>
-                <asp:Label ID="lbl__it_fechaNac" runat="server" Text='<%# Eval("FechaNacimiento", "{0:dd/MM/yyyy}") %>'></asp:Label>
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField HeaderText="Direccion">
-            <EditItemTemplate>
-                <asp:TextBox ID="text_eit_Direccion" runat="server" Text='<%# Bind("Direccion") %>' />
-            </EditItemTemplate>
-            <ItemTemplate>
-                <asp:Label ID="lbl_it_Direccion" runat="server" Text='<%# Bind("Direccion") %>'></asp:Label>
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField HeaderText="Localidad">
-            <EditItemTemplate>
-                <asp:DropDownList ID="ddl_eit_Localidad" runat="server">
-                </asp:DropDownList>
-            </EditItemTemplate>
-            <ItemTemplate>
-                <asp:Label ID="lbl_it_localidad" runat="server"
-                    Text='<%# Bind("Localidad") %>'>
-                </asp:Label>
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField HeaderText="Provincia">
-            <EditItemTemplate>
-                <asp:DropDownList
-                    ID="ddl_eit_Provincia" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddl_eit_Provincia_SelectedIndexChanged">
-                </asp:DropDownList>
-            </EditItemTemplate>
-            <ItemTemplate>
-                <asp:Label ID="lbl_it_Provincia" runat="server"
-                    Text='<%# Bind("Provincia") %>'>
-                </asp:Label>
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField HeaderText="Correo Electronico">
-            <EditItemTemplate>
-                <asp:TextBox ID="txt_eit_Correo" runat="server" TextMode="Email" Text='<%# Bind("CorreoElectronico") %>' />
-            </EditItemTemplate>
-            <ItemTemplate>
-                <asp:Label ID="lbl_it_mail" runat="server" Text='<%# Bind("CorreoElectronico") %>'></asp:Label>
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField HeaderText="Telefono">
-            <EditItemTemplate>
-                <asp:TextBox ID="txt_eit_Telefono" runat="server" Text='<%# Bind("Telefono") %>' />
-            </EditItemTemplate>
-            <ItemTemplate>
-                <asp:Label ID="lbl_it_Telefono" runat="server" Text='<%# Bind("Telefono") %>'></asp:Label>
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField HeaderText="Especialidad">
-            <EditItemTemplate>
-                <asp:DropDownList ID="ddl_eit_especialidad" runat="server">
-                </asp:DropDownList>
-            </EditItemTemplate>
-            <ItemTemplate>
-                <asp:Label ID="lbl_it_especialidad" runat="server" Text='<%# Bind("Especialidad") %>'></asp:Label>
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField HeaderText="Dias de Atencion">
-            <EditItemTemplate>
-                <asp:DropDownList ID="ddl_eit_diasAtencion" runat="server">
-                    <asp:ListItem Value="0">Lunes a Viernes</asp:ListItem>
-                    <asp:ListItem Value="1">Martes a Sabados</asp:ListItem>
-                    <asp:ListItem Value="2">Miercoles a Domingo</asp:ListItem>
-                    <asp:ListItem Value="3">Jueves a Lunes</asp:ListItem>
-                    <asp:ListItem Value="4">Viernes a Martes</asp:ListItem>
-                </asp:DropDownList>
-            </EditItemTemplate>
-            <ItemTemplate>
-                <asp:Label ID="lbl_it_diasAtencion" runat="server"
-                   Text='<%# Convert.ToInt32(Eval("DiasAtencion")) == 0 ? "Lunes a Viernes" :
-                             Convert.ToInt32(Eval("DiasAtencion")) == 1 ? "Martes a Sabados" :
-                             Convert.ToInt32(Eval("DiasAtencion")) == 2 ? "Miercoles a Domingo" :
-                             Convert.ToInt32(Eval("DiasAtencion")) == 3 ? "Jueves a Lunes" :
-                             Convert.ToInt32(Eval("DiasAtencion")) == 4 ? "Viernes a Martes" :
-                             ""
-                %>'></asp:Label>
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField HeaderText="Horarios">
-            <EditItemTemplate>
-                <asp:DropDownList ID="ddl_eit_horarioAtencion" runat="server">
-                    <asp:ListItem Value="0">00:00 a 08:00</asp:ListItem>
-                    <asp:ListItem Value="1">06:00 a 14:00</asp:ListItem>
-                    <asp:ListItem Value="2">12:00 a 20:00</asp:ListItem>
-                    <asp:ListItem Value="3">18:00 a 02:00</asp:ListItem>
-                </asp:DropDownList>
-            </EditItemTemplate>
-            <ItemTemplate>
-                <asp:Label ID="lbl_it_horariosAtencion" runat="server" Text='<%#
-                             Convert.ToInt32(Eval("HorarioAtencion")) == 0 ? "00:00 a 08:00" :
-                             Convert.ToInt32(Eval("HorarioAtencion")) == 1 ? "06:00 a 14:00" :
-                             Convert.ToInt32(Eval("HorarioAtencion")) == 2 ? "12:00 a 20:00" :
-                             Convert.ToInt32(Eval("HorarioAtencion")) == 3 ? "18:00 a 02:00" :
-                             ""
-               %>'></asp:Label>
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField HeaderText="Estado">
-            <EditItemTemplate>
-                <asp:DropDownList ID="ddl_eit_estado" runat="server">
-                    <asp:ListItem Text="Activo" Value="True"></asp:ListItem>
-                    <asp:ListItem Text="Inactivo" Value="False"></asp:ListItem>
-                </asp:DropDownList>
-            </EditItemTemplate>
-            <ItemTemplate>
-                <asp:Label ID="lblEstado" runat="server" Text='<%# (Convert.ToBoolean(Eval("Estado")) ? "Activo" : "Inactivo") %>' />
-            </ItemTemplate>
-        </asp:TemplateField>
-    </Columns>
-    <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
-    <RowStyle BackColor="#EFF3FB" />
-    <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
-    <SortedAscendingCellStyle BackColor="#F5F7FB" />
-    <SortedAscendingHeaderStyle BackColor="#6D95E1" />
-    <SortedDescendingCellStyle BackColor="#E9EBEF" />
-    <SortedDescendingHeaderStyle BackColor="#4870BE" />
-</asp:GridView>
-   
+                </asp:RadioButtonList>
+                Estado:<asp:RadioButtonList ID="rbEstado" runat="server" AutoPostBack="True" OnSelectedIndexChanged="rbEstado_SelectedIndexChanged">
+                <asp:ListItem Value="-1">Todos</asp:ListItem>
+                <asp:ListItem Value="1">Activos</asp:ListItem>
+                <asp:ListItem Value="0">Inactivos</asp:ListItem>
+                </asp:RadioButtonList>
+                Especialidad<br />
+            <asp:RadioButtonList ID="rbEspecialidad" runat="server" AutoPostBack="True" OnSelectedIndexChanged="rbEspecialidad_SelectedIndexChanged">
+                <asp:ListItem Value="Clinica Medica">Clinica Medica</asp:ListItem>
+                <asp:ListItem Value="Pediatria">Pediatria</asp:ListItem>
+                <asp:ListItem Value="Cardiologia">Cardiologia</asp:ListItem>
+                <asp:ListItem Value="Dermatologia">Dermatologia</asp:ListItem>
+                <asp:ListItem Value="Traumatologia">Traumatologia</asp:ListItem>
+                <asp:ListItem Value="Ginecologia">Ginecologia</asp:ListItem>
+            </asp:RadioButtonList>
+        </td>
+
+        <!-- Columna derecha -->
+        <td style="vertical-align:top;">
+
+                <asp:GridView ID="gvMedicos" runat="server"
+                AutoGenerateColumns="False"
+                DataKeyNames="DNI"
+                AllowPaging="True" PageSize="8"
+                OnPageIndexChanging="gvMedicos_PageIndexChanging"
+                OnRowUpdating="gvMedicos_RowUpdating"
+                OnRowEditing="gvMedicos_RowEditing"
+                OnRowCancelingEdit="gvMedicos_RowCancelingEdit"
+                OnRowDataBound="gvMedicos_RowDataBound"
+                GridLines="None"
+                Width="900px" 
+                Font-Names="Arial" Font-Size="Small"
+                EmptyDataText="No se encontraron medicos." CellPadding="4" ForeColor="#333333" style="margin-right: 53px" AutoGenerateEditButton="True">
+                <EditRowStyle BackColor="#2461BF" />
+                <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                <HeaderStyle BackColor="#507CD1" ForeColor="White" Font-Bold="true" />
+                <AlternatingRowStyle BackColor="White" />
+                <Columns>
+                    <asp:TemplateField HeaderText="Legajo">
+                        <EditItemTemplate>
+                            <asp:Label ID="lbl_eit_legajo" runat="server" Text='<%# Bind("Legajo") %>'></asp:Label>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_it_legajo" runat="server" Text='<%# Bind("Legajo") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                   <asp:TemplateField HeaderText="DNI">
+                        <EditItemTemplate>
+                            <asp:Label ID="lbl_eit_DNI" runat="server" Text='<%# Bind("DNI") %>'></asp:Label>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_it_DNI" runat="server" Text='<%# Bind("DNI") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Nombre">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txt_eit_nombreMedico" runat="server" Text='<%# Bind("Nombre") %>'></asp:TextBox>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_it_Nombre" runat="server" Text='<%# Bind("Nombre") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Apellido">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txt_eit_apellido" runat="server" Text='<%# Bind("Apellido") %>'></asp:TextBox>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_it_Apellido" runat="server" Text='<%# Bind("Apellido") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Sexo">
+                        <EditItemTemplate>
+                            <asp:DropDownList ID="ddl_eit_Sexo" runat="server" SelectedValue='<%# Bind("Sexo") %>'>
+                                <asp:ListItem>--</asp:ListItem>
+                                <asp:ListItem Value="M">Masculino</asp:ListItem>
+                                <asp:ListItem Value="F">Femenino</asp:ListItem>
+                            </asp:DropDownList>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_it_Sexo" runat="server" Text='<%# Bind("Sexo") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Nacionalidad">
+                        <EditItemTemplate>
+                            <asp:DropDownList ID="ddl_eit_nacionalidad" runat="server">
+                                <asp:ListItem>Argentino</asp:ListItem>
+                                <asp:ListItem>Chileno</asp:ListItem>
+                                <asp:ListItem>Paraguayo</asp:ListItem>
+                                <asp:ListItem>Boliviano</asp:ListItem>
+                                <asp:ListItem>Uruguayo</asp:ListItem>
+                                <asp:ListItem>Brasilero</asp:ListItem>
+                            </asp:DropDownList>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_it_Nacionalidad" runat="server" Text='<%# Bind("Nacionalidad") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Fecha De Nac.">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="text_eit_Nacimiento" runat="server" TextMode="Date" Text='<%# Bind("FechaNacimiento", "{0:yyyy-MM-dd}") %>' />
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lbl__it_fechaNac" runat="server" Text='<%# Eval("FechaNacimiento", "{0:dd/MM/yyyy}") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Direccion">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="text_eit_Direccion" runat="server" Text='<%# Bind("Direccion") %>' />
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_it_Direccion" runat="server" Text='<%# Bind("Direccion") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Localidad">
+                        <EditItemTemplate>
+                            <asp:DropDownList ID="ddl_eit_Localidad" runat="server">
+                            </asp:DropDownList>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_it_localidad" runat="server"
+                                Text='<%# Bind("Localidad") %>'>
+                            </asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Provincia">
+                        <EditItemTemplate>
+                            <asp:DropDownList
+                                ID="ddl_eit_Provincia" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddl_eit_Provincia_SelectedIndexChanged">
+                            </asp:DropDownList>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_it_Provincia" runat="server"
+                                Text='<%# Bind("Provincia") %>'>
+                            </asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Correo Electronico">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txt_eit_Correo" runat="server" TextMode="Email" Text='<%# Bind("CorreoElectronico") %>' />
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_it_mail" runat="server" Text='<%# Bind("CorreoElectronico") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Telefono">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txt_eit_Telefono" runat="server" Text='<%# Bind("Telefono") %>' />
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_it_Telefono" runat="server" Text='<%# Bind("Telefono") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Especialidad">
+                        <EditItemTemplate>
+                            <asp:DropDownList ID="ddl_eit_especialidad" runat="server">
+                            </asp:DropDownList>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_it_especialidad" runat="server" Text='<%# Bind("Especialidad") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Dias de Atencion">
+                        <EditItemTemplate>
+                            <asp:DropDownList ID="ddl_eit_diasAtencion" runat="server">
+                                <asp:ListItem Value="0">Lunes a Viernes</asp:ListItem>
+                                <asp:ListItem Value="1">Martes a Sabados</asp:ListItem>
+                                <asp:ListItem Value="2">Miercoles a Domingo</asp:ListItem>
+                                <asp:ListItem Value="3">Jueves a Lunes</asp:ListItem>
+                                <asp:ListItem Value="4">Viernes a Martes</asp:ListItem>
+                            </asp:DropDownList>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_it_diasAtencion" runat="server"
+                               Text='<%# Convert.ToInt32(Eval("DiasAtencion")) == 0 ? "Lunes a Viernes" :
+                                         Convert.ToInt32(Eval("DiasAtencion")) == 1 ? "Martes a Sabados" :
+                                         Convert.ToInt32(Eval("DiasAtencion")) == 2 ? "Miercoles a Domingo" :
+                                         Convert.ToInt32(Eval("DiasAtencion")) == 3 ? "Jueves a Lunes" :
+                                         Convert.ToInt32(Eval("DiasAtencion")) == 4 ? "Viernes a Martes" :
+                                         ""
+                            %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Horarios">
+                        <EditItemTemplate>
+                            <asp:DropDownList ID="ddl_eit_horarioAtencion" runat="server">
+                                <asp:ListItem Value="0">00:00 a 08:00</asp:ListItem>
+                                <asp:ListItem Value="1">06:00 a 14:00</asp:ListItem>
+                                <asp:ListItem Value="2">12:00 a 20:00</asp:ListItem>
+                                <asp:ListItem Value="3">18:00 a 02:00</asp:ListItem>
+                            </asp:DropDownList>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_it_horariosAtencion" runat="server" Text='<%#
+                                         Convert.ToInt32(Eval("HorarioAtencion")) == 0 ? "00:00 a 08:00" :
+                                         Convert.ToInt32(Eval("HorarioAtencion")) == 1 ? "06:00 a 14:00" :
+                                         Convert.ToInt32(Eval("HorarioAtencion")) == 2 ? "12:00 a 20:00" :
+                                         Convert.ToInt32(Eval("HorarioAtencion")) == 3 ? "18:00 a 02:00" :
+                                         ""
+                           %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Estado">
+                        <EditItemTemplate>
+                            <asp:DropDownList ID="ddl_eit_estado" runat="server">
+                                <asp:ListItem Text="Activo" Value="True"></asp:ListItem>
+                                <asp:ListItem Text="Inactivo" Value="False"></asp:ListItem>
+                            </asp:DropDownList>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblEstado" runat="server" Text='<%# (Convert.ToBoolean(Eval("Estado")) ? "Activo" : "Inactivo") %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+                <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+                <RowStyle BackColor="#EFF3FB" />
+                <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                <SortedDescendingHeaderStyle BackColor="#4870BE" />
+            </asp:GridView>
+        </td>
+        </tr>
+    </table>
+
+    <br />
+    <br />
 
     <asp:HyperLink ID="lnkVolverMenu" runat="server" NavigateUrl="~/HomeAdmin.aspx">Volver al menú</asp:HyperLink>
 

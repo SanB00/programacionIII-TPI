@@ -107,8 +107,7 @@ namespace Datos {
                 FROM MEDICO M
                 INNER JOIN PROVINCIA P ON M.IdProvincia = P.IdProvincia
                 INNER JOIN LOCALIDAD L ON M.IdLocalidad = L.IdLocalidad
-                INNER JOIN ESPECIALIDAD E ON M.IdEspecialidad = E.IdEspecialidad
-                WHERE M.Estado = 1";
+                INNER JOIN ESPECIALIDAD E ON M.IdEspecialidad = E.IdEspecialidad";
 
             SqlDataAdapter adaptador = conexion.obtenerAdaptador(consulta);
             DataTable tabla = new DataTable();
@@ -155,7 +154,7 @@ namespace Datos {
         }
 
         public bool existeUsuario(string usuario) {
-            
+
             string consulta = "SELECT NombreUsuario FROM USUARIO WHERE NombreUsuario = @usuario";
 
             SqlParameter[] parametros = { new SqlParameter("@usuario", usuario)};
@@ -165,6 +164,22 @@ namespace Datos {
             return dt.Rows.Count > 0;
         }
 
+        public int getLegajoPorUsuario(string nombreUsuario) {
+            AccesoDatos conexion = new AccesoDatos();
+            string consulta = @"SELECT M.Legajo
+                         FROM MEDICO M
+                         INNER JOIN USUARIO U ON M.IdUsuario = U.IdUsuario
+                         WHERE U.NombreUsuario = @usuario AND M.Estado = 1";
+            SqlParameter[] parametros = { new SqlParameter("@usuario", nombreUsuario) };
+
+            DataTable dt = conexion.ejecutarConsulta(consulta, parametros);
+
+            if (dt.Rows.Count > 0) {
+                return Convert.ToInt32(dt.Rows[0]["Legajo"]);
+            }
+            return 0;
+        }
+        //BUSQUEDAS
         public DataTable filtrarPorLegajo(int legajo) {
 
             string consulta = @"SELECT 
@@ -191,28 +206,195 @@ namespace Datos {
                             INNER JOIN ESPECIALIDAD E ON M.IdEspecialidad = E.IdEspecialidad
                             INNER JOIN PROVINCIA P ON M.IdProvincia = P.IdProvincia
                             INNER JOIN LOCALIDAD L ON M.IdLocalidad = L.IdLocalidad
-                            WHERE M.Legajo = @legajo AND M.Estado = 1";
+                            WHERE M.Legajo = @legajo";
 
             SqlParameter[] parametros = new SqlParameter[] {new SqlParameter("@legajo", legajo)};
 
             return conexion.ejecutarConsulta(consulta, parametros);
         }
 
-        public int getLegajoPorUsuario(string nombreUsuario) {
-            AccesoDatos conexion = new AccesoDatos();
-            string consulta = @"SELECT M.Legajo
-                         FROM MEDICO M
-                         INNER JOIN USUARIO U ON M.IdUsuario = U.IdUsuario
-                         WHERE U.NombreUsuario = @usuario AND M.Estado = 1";
-            SqlParameter[] parametros = { new SqlParameter("@usuario", nombreUsuario) };
+        public DataTable filtrarPorApellido(string busqueda) {
+            string consulta = @"
+                SELECT
+                    M.Legajo,
+                    M.DNI,
+                    M.Nombre,
+                    M.Apellido,
+                    M.Sexo,
+                    M.Nacionalidad,
+                    M.FechaNacimiento,
+                    M.Direccion,
+                    M.CorreoElectronico,
+                    M.Telefono,
+                    M.IdProvincia,
+                    P.Nombre AS Provincia,
+                    M.IdLocalidad,
+                    L.Nombre AS Localidad,
+                    M.IdEspecialidad,
+                    E.Nombre AS Especialidad,
+                    M.DiasAtencion,
+                    M.HorarioAtencion,
+                    M.Estado
+                FROM MEDICO M
+                INNER JOIN ESPECIALIDAD E
+                    ON M.IdEspecialidad = E.IdEspecialidad
+                INNER JOIN PROVINCIA P
+                    ON M.IdProvincia = P.IdProvincia
+                INNER JOIN LOCALIDAD L
+                    ON M.IdLocalidad = L.IdLocalidad
+                WHERE (M.Apellido LIKE '%' + @Busqueda + '%')";
 
-            DataTable dt = conexion.ejecutarConsulta(consulta, parametros);
+            SqlParameter[] parametros = { new SqlParameter("@Busqueda", busqueda) };
 
-            if (dt.Rows.Count > 0) {
-                return Convert.ToInt32(dt.Rows[0]["Legajo"]);
-            }
-            return 0;
+            return conexion.ejecutarConsulta(consulta, parametros);
         }
 
+        public DataTable filtrarPorNombre(string busqueda) {
+            string consulta = @"
+                SELECT
+                    M.Legajo,
+                    M.DNI,
+                    M.Nombre,
+                    M.Apellido,
+                    M.Sexo,
+                    M.Nacionalidad,
+                    M.FechaNacimiento,
+                    M.Direccion,
+                    M.CorreoElectronico,
+                    M.Telefono,
+                    M.IdProvincia,
+                    P.Nombre AS Provincia,
+                    M.IdLocalidad,
+                    L.Nombre AS Localidad,
+                    M.IdEspecialidad,
+                    E.Nombre AS Especialidad,
+                    M.DiasAtencion,
+                    M.HorarioAtencion,
+                    M.Estado
+                FROM MEDICO M
+                INNER JOIN ESPECIALIDAD E
+                    ON M.IdEspecialidad = E.IdEspecialidad
+                INNER JOIN PROVINCIA P
+                    ON M.IdProvincia = P.IdProvincia
+                INNER JOIN LOCALIDAD L
+                    ON M.IdLocalidad = L.IdLocalidad
+                WHERE (M.Nombre LIKE '%' + @Busqueda + '%')";
+
+            SqlParameter[] parametros ={new SqlParameter("@Busqueda", busqueda) };
+
+            return conexion.ejecutarConsulta(consulta, parametros);
+        }
+
+        //FILTROS
+        public DataTable filtrarPorSexo(string sexo) {
+            string consulta = @"
+                SELECT
+                    M.Legajo,
+                    M.DNI,
+                    M.Nombre,
+                    M.Apellido,
+                    M.Sexo,
+                    M.Nacionalidad,
+                    M.FechaNacimiento,
+                    M.Direccion,
+                    M.CorreoElectronico,
+                    M.Telefono,
+                    M.IdProvincia,
+                    P.Nombre AS Provincia,
+                    M.IdLocalidad,
+                    L.Nombre AS Localidad,
+                    M.IdEspecialidad,
+                    E.Nombre AS Especialidad,
+                    M.DiasAtencion,
+                    M.HorarioAtencion,
+                    M.Estado
+                FROM MEDICO M
+                INNER JOIN ESPECIALIDAD E
+                    ON M.IdEspecialidad = E.IdEspecialidad
+                INNER JOIN PROVINCIA P
+                    ON M.IdProvincia = P.IdProvincia
+                INNER JOIN LOCALIDAD L
+                    ON M.IdLocalidad = L.IdLocalidad
+                    WHERE Sexo = @Sexo";
+
+            SqlParameter[] parametros ={new SqlParameter("@Sexo", sexo)};
+
+            return conexion.ejecutarConsulta(consulta, parametros);
+        }
+
+        public DataTable filtrarPorEstado(int estado) {
+            if (estado == 1 || estado == 0) {
+                string consulta = @"
+                SELECT 
+                    M.Legajo,
+                    M.DNI,
+                    M.Nombre,
+                    M.Apellido,
+                    M.Sexo,
+                    M.Nacionalidad,
+                    M.FechaNacimiento,
+                    M.Direccion,
+                    M.CorreoElectronico,
+                    M.Telefono,
+                    M.IdProvincia,
+                    P.Nombre AS Provincia,
+                    M.IdLocalidad,
+                    L.Nombre AS Localidad,
+                    M.IdEspecialidad,
+                    E.Nombre AS Especialidad,
+                    M.DiasAtencion,
+                    M.HorarioAtencion,
+                    M.Estado
+                FROM MEDICO M
+                INNER JOIN ESPECIALIDAD E
+                    ON M.IdEspecialidad = E.IdEspecialidad
+                INNER JOIN PROVINCIA P
+                    ON M.IdProvincia = P.IdProvincia
+                INNER JOIN LOCALIDAD L
+                    ON M.IdLocalidad = L.IdLocalidad
+                    WHERE Estado = @Estado";
+
+                SqlParameter[] parametros = { new SqlParameter("@Estado", estado) };
+                return conexion.ejecutarConsulta(consulta, parametros);
+            } else {
+                return obtenerTablaMedicos();
+            }
+        }
+
+        public DataTable filtrarPorEspecialidad(string especialidad) {
+            string consulta = @"
+                 SELECT 
+                    M.Legajo,
+                    M.DNI,
+                    M.Nombre,
+                    M.Apellido,
+                    M.Sexo,
+                    M.Nacionalidad,
+                    M.FechaNacimiento,
+                    M.Direccion,
+                    M.CorreoElectronico,
+                    M.Telefono,
+                    M.IdProvincia,
+                    P.Nombre AS Provincia,
+                    M.IdLocalidad,
+                    L.Nombre AS Localidad,
+                    M.IdEspecialidad,
+                    E.Nombre AS Especialidad,
+                    M.DiasAtencion,
+                    M.HorarioAtencion,
+                    M.Estado
+                FROM MEDICO M
+                INNER JOIN ESPECIALIDAD E
+                    ON M.IdEspecialidad = E.IdEspecialidad
+                INNER JOIN PROVINCIA P
+                    ON M.IdProvincia = P.IdProvincia
+                INNER JOIN LOCALIDAD L
+                    ON M.IdLocalidad = L.IdLocalidad
+                WHERE E.Nombre = @Especialidad";
+
+            SqlParameter[] parametros = { new SqlParameter("@Especialidad", especialidad) };
+
+            return conexion.ejecutarConsulta(consulta, parametros);
+        }
     }
 }

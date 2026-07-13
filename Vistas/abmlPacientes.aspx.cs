@@ -57,75 +57,102 @@ namespace Vistas {
             cargarLocalidades(idProvincia);
         }
 
+        private void limpiarCampos() {
+            txtDni.Text = "";
+            txtNombre.Text = "";
+            txtApellido.Text = "";
+            ddlSexo.SelectedIndex = 0;
+            txtNacimiento.Text = "";
+            txtDireccion.Text = "";
+            txtCorreo.Text = "";
+            txtTelefono.Text = "";
+            ddlNacionalidad.SelectedIndex = 0;
+            ddlProvincia.SelectedIndex = 0;
+            ddlLocalidad.SelectedIndex = 0;
+        }
+
         protected void btnAgregarPaciente_Click(object sender, EventArgs e) {
             bloqueAgregarPaciente.Visible = true;
         }
 
+        protected void btnCancelar_Click(object sender, EventArgs e) {
+            bloqueAgregarPaciente.Visible = false;
+            limpiarCampos();
+        }
+
         protected void btnAgregar_Click(object sender, EventArgs e) {
             #region 1) obtener datos del formulario
-            String dni = txtDni.Text;
-            String nombre = txtNombre.Text;
-            String apellido = txtApellido.Text;
-            String sexo = ddlSexo.SelectedValue;
-            String nacionalidad = ddlNacionalidad.SelectedValue;
-            String strFechaNacimiento = txtNacimiento.Text;
-            String direccion = txtDireccion.Text;
-            String correo = txtCorreo.Text;
-            String telefono = txtTelefono.Text;
-            int idProvincia = Convert.ToInt32(ddlProvincia.SelectedValue);
-            int idLocalidad = Convert.ToInt32(ddlLocalidad.SelectedValue);
+            string dni = txtDni.Text.Trim();
+            string nombre = txtNombre.Text.Trim();
+            string apellido = txtApellido.Text.Trim();
+            string sexo = ddlSexo.SelectedValue;
+            string nacionalidad = ddlNacionalidad.SelectedValue;
+            DateTime nacimiento;
+            string direccion = txtDireccion.Text.Trim();
+            string correo = txtCorreo.Text.Trim();
+            string telefono = txtTelefono.Text.Trim();
+            string provincia = ddlProvincia.SelectedValue;
+            string localidad = ddlLocalidad.SelectedValue;
             #endregion
             #region 2) validar datos del formulario
 
-            String mensajeError = "";
+            string mensajeError = "";
+
             if (!Common.esUnNroValido(dni)) {
-                mensajeError += $"\n El DNI debe ser solo numeros. ";
+                mensajeError += "\nEl DNI debe ser solo numeros. ";
             }
-            if (!Common.estaElTextoDentroDelRango(dni, 1, 10)) {
-                mensajeError += $"\n El dni debe tener entre 1 y 10 caracteres. ";
+            if (!Common.estaElTextoDentroDelRango(dni, 7, 8)) {
+                mensajeError += "\nEl dni debe tener 7 u 8 caracteres. ";
+            }
+            if (objNegocioPaciente.existeDNI(dni)) {
+                mensajeError += "\nYa existe paciente registado con ese dni.";
             }
             if (!Common.estaElTextoDentroDelRango(nombre)) {
-                mensajeError += $"\n El nombre debe tener entre {Common.MIN_CHARS_TEXTO} y {Common.MAX_CHARS_TEXTO} caracteres. ";
+                mensajeError += $"\nEl nombre debe tener entre {Common.MIN_CHARS_TEXTO} y {Common.MAX_CHARS_TEXTO} caracteres. ";
             }
             if (!Common.estaElTextoDentroDelRango(apellido)) {
-                mensajeError += $"\n El apellido debe tener entre {Common.MIN_CHARS_TEXTO} y {Common.MAX_CHARS_TEXTO} caracteres. ";
+                mensajeError += $"\nEl apellido debe tener entre {Common.MIN_CHARS_TEXTO} y {Common.MAX_CHARS_TEXTO} caracteres. ";
             }
-            if (!Common.esUnaFechaValida(strFechaNacimiento)) {
-                lblMensaje.Text = $"\n Ingrese una fecha válida en la fecha nacimiento.";
-                return;
+            if (ddlSexo.SelectedValue == "") {
+                mensajeError += "\nDebe seleccionar un sexo M o F. ";
+            }
+            if (!DateTime.TryParse(txtNacimiento.Text, out nacimiento)) {
+                mensajeError += "\nDebe seleccionar una fecha de nacimiento valida. ";
             }
             if (!Common.estaElTextoDentroDelRango(direccion, 3, 100)) {
-                mensajeError += $"\n La direccion debe tener entre 3 y 100 caracteres. ";
+                mensajeError += "\nLa direccion debe tener entre 3 y 100 caracteres. ";
             }
             if (!Common.estaElTextoDentroDelRango(correo, 5, 50)) {
-                mensajeError += $"\n El correo debe tener entre 5 y  {Common.MAX_CHARS_TEXTO} caracteres. ";
-            }
-            if (!(sexo.Equals("M") || sexo.Equals("F"))) {
-                mensajeError += $"\n Debe seleccionar un sexo M o F. ";
-            }
-
-            if (ddlProvincia.SelectedIndex == 0 || ddlLocalidad.SelectedIndex == 0) {
-                mensajeError += $"\n Debe seleccionar una provincia y una localidad. ";
+                mensajeError += "\nEl correo debe tener entre 5 y 50 caracteres. ";
             }
             if (!Common.esUnNroValido(telefono)) {
-                mensajeError += $"\n El telefono debe ser solo numeros. ";
+                mensajeError += "\n El telefono debe ser solo numeros. ";
+            }
+            if (ddlProvincia.SelectedIndex == 0) {
+                mensajeError += "\nDebe seleccionar una provincia.";
+            }
+
+            if (ddlLocalidad.SelectedIndex == 0) {
+                mensajeError += "\nDebe seleccionar una localidad.";
             }
 
             if (!string.IsNullOrEmpty(mensajeError)) {
-                lblMensaje.Text = mensajeError;
                 Common.mostrarMensajeEnAlerta(mensajeError, this);
                 return;
             }
+
+            int idProvincia = Convert.ToInt32(provincia);
+            int idLocalidad = Convert.ToInt32(localidad);
             #endregion
             #region 3) crear entidad y guardar en la base de datos
             Paciente objPaciente = new Paciente();
-            DateTime fechaNacimiento = DateTime.Parse(strFechaNacimiento);
+
             objPaciente.setDni(dni);
             objPaciente.setNombre(nombre);
             objPaciente.setApellido(apellido);
             objPaciente.setSexo(sexo);
             objPaciente.setNacionalidad(nacionalidad);
-            objPaciente.setFechaNacimiento(fechaNacimiento);
+            objPaciente.setFechaNacimiento(nacimiento);
             objPaciente.setDireccion(direccion);
             objPaciente.setCorreoElectronico(correo);
             objPaciente.setTelefono(telefono);
@@ -135,20 +162,11 @@ namespace Vistas {
 
             bool ok = new NegocioPaciente().agregarPaciente(objPaciente);
             #endregion
-            #region 4) limpiar formulario y mostrar mensaje de éxito o error
+            #region 4) mostrar mensaje de éxito o error
 
             if (ok) {
                 lblMensaje.Text = "Paciente agregado correctamente";
-                txtDni.Text = "";
-                txtNombre.Text = "";
-                txtApellido.Text = "";
-                ddlSexo.SelectedIndex = 0;
-                txtNacimiento.Text = "";
-                txtDireccion.Text = "";
-                txtCorreo.Text = "";
-                txtTelefono.Text = "";
-                ddlProvincia.SelectedIndex = 0;
-                ddlLocalidad.SelectedIndex = 0;
+                limpiarCampos();
                 bloqueAgregarPaciente.Visible = false;
             } else {
                 lblMensaje.Text = "Error al agregar paciente";
@@ -171,26 +189,50 @@ namespace Vistas {
             ddlLocalidad.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
         }
 
+        //conserrvar filtrs
+        private void aplicarFiltros() {
+            if (!string.IsNullOrWhiteSpace(txtBuscarPorDni.Text)) {
+                gvPacientes.DataSource = objNegocioPaciente.filtrarPorDni(txtBuscarPorDni.Text);
+            } 
+            else if (!string.IsNullOrWhiteSpace(txtBuscarPorNombre.Text)) {
+                gvPacientes.DataSource = objNegocioPaciente.filtrarPorNombre(txtBuscarPorNombre.Text);
+            } 
+            else if (!string.IsNullOrWhiteSpace(txtBuscarApellido.Text)) {
+                gvPacientes.DataSource = objNegocioPaciente.filtrarPorApellido(txtBuscarApellido.Text);
+            }
+
+            else if (rdFiltrarSexoP.SelectedIndex != -1) {
+                gvPacientes.DataSource = objNegocioPaciente.filtrarPorSexo(rdFiltrarSexoP.SelectedValue);
+            } 
+            else if (rdFiltrarEstadoP.SelectedIndex != -1) {
+                gvPacientes.DataSource = objNegocioPaciente.filtrarPorEstado(
+                    Convert.ToInt32(rdFiltrarEstadoP.SelectedValue));
+            } 
+            else {
+                cargarGridView();
+            }
+
+            gvPacientes.DataBind();
+        }
+
         protected void gvPacientes_RowEditing(object sender, GridViewEditEventArgs e) {
             gvPacientes.EditIndex = e.NewEditIndex;
-            cargarGridView();
+            aplicarFiltros();
         }
 
         protected void gvPacientes_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e) {
             gvPacientes.EditIndex = -1;
-            cargarGridView();
+            aplicarFiltros();
         }
         protected void gvPacientes_RowDataBound(object sender, GridViewRowEventArgs e) {
             if (e.Row.RowType == DataControlRowType.DataRow && (e.Row.RowState & DataControlRowState.Edit) != 0) {
                 DropDownList ddlProvincia = (DropDownList)e.Row.FindControl("ddl_eit_Provincia");
                 DropDownList ddlLocalidad = (DropDownList)e.Row.FindControl("ddl_eit_Localidad");
                 DropDownList ddlEstado = (DropDownList)e.Row.FindControl("ddl_eit_estado");
+                DropDownList ddlHorarios = (DropDownList)e.Row.FindControl("ddl_eit_horarioAtencion");
+                DropDownList ddlDias = (DropDownList)e.Row.FindControl("ddl_eit_diasAtencion");
 
-                NegocioProvincia negocioProv = new NegocioProvincia();
-                NegocioLocalidad negocioLoc = new NegocioLocalidad();
-                NegocioPaciente negocioPac = new NegocioPaciente();
-
-                ddlProvincia.DataSource = negocioProv.getTodos();
+                ddlProvincia.DataSource = objNegocioProvincia.getTodos();
                 ddlProvincia.DataTextField = "Nombre";
                 ddlProvincia.DataValueField = "IdProvincia";
                 ddlProvincia.DataBind();
@@ -203,7 +245,7 @@ namespace Vistas {
 
                 int provId = Convert.ToInt32(idProvincia);
 
-                ddlLocalidad.DataSource = negocioLoc.getPorProvincia(provId);
+                ddlLocalidad.DataSource = objNegocioLocalidad.getPorProvincia(provId);
                 ddlLocalidad.DataTextField = "Nombre";
                 ddlLocalidad.DataValueField = "IdLocalidad";
                 ddlLocalidad.DataBind();
@@ -228,7 +270,7 @@ namespace Vistas {
         protected void gvPacientes_RowUpdating(object sender, GridViewUpdateEventArgs e) {
             GridViewRow fila = gvPacientes.Rows[e.RowIndex];
             Paciente datosNuevos = new Paciente();
-
+            
             datosNuevos.setDni(((Label)gvPacientes.Rows[e.RowIndex].FindControl("lbl_eit_DNI")).Text);
             datosNuevos.setNombre(((TextBox)gvPacientes.Rows[e.RowIndex].FindControl("txt_eit_nombrePaciente")).Text);
             datosNuevos.setApellido(((TextBox)gvPacientes.Rows[e.RowIndex].FindControl("txt_eit_apellido")).Text);
@@ -241,30 +283,73 @@ namespace Vistas {
             datosNuevos.setIdProvincia(Convert.ToInt32(((DropDownList)gvPacientes.Rows[e.RowIndex].FindControl("ddl_eit_Provincia")).SelectedValue));
             datosNuevos.setIdLocalidad(Convert.ToInt32(((DropDownList)gvPacientes.Rows[e.RowIndex].FindControl("ddl_eit_Localidad")).SelectedValue));
             datosNuevos.setEstado(Convert.ToBoolean(((DropDownList)fila.FindControl("ddl_eit_estado")).SelectedValue));
-
+            
             NegocioPaciente negocio = new NegocioPaciente();
 
             if (negocio.actualizarPaciente(datosNuevos)) {
                 lblMensaje.Text = "Paciente actualizado correctamente.";
                 gvPacientes.EditIndex = -1;
-                cargarGridView();
+                aplicarFiltros();
             } else {
                 lblMensaje.Text = "No se pudo actualizar el paciente.";
             }
+            
         }
 
-        protected void btnBuscar_Click(object sender, EventArgs e) {
-            string consultaDniONombre = "";
-            // objNegocioPaciente.buscar
-            gvPacientes.DataSource = objNegocioPaciente.getTodosPacientes();
+        //BUSQUEDA
+        protected void btnBuscarPoDni_Click(object sender, EventArgs e) {
+
+            if (string.IsNullOrEmpty(txtBuscarPorDni.Text)) {
+                lbl_Mensaje_BusquedasP.Text = "Ingrese un Nombre válido.";
+                return;
+            }
+
+            gvPacientes.DataSource = objNegocioPaciente.filtrarPorDni(txtBuscarPorDni.Text);
             gvPacientes.DataBind();
-
         }
 
-        protected void btnLimpiarFiltros_Click(object sender, EventArgs e) {
+        protected void btnBuscarNombre_Click(object sender, EventArgs e) {
+         
+            if (string.IsNullOrEmpty(txtBuscarPorNombre.Text)) {
+                lbl_Mensaje_BusquedasP.Text = "Ingrese un Nombre válido.";
+                return;
+            }
+            gvPacientes.DataSource = objNegocioPaciente.filtrarPorNombre(txtBuscarPorNombre.Text);
+            gvPacientes.DataBind();
+        }
+
+        protected void btnBuscarPorApellido_Click(object sender, EventArgs e) {
+            
+            if (string.IsNullOrEmpty(txtBuscarApellido.Text)) {
+                lbl_Mensaje_BusquedasP.Text = "Ingrese un Apelllido válido.";
+                return;
+            }
+            gvPacientes.DataSource = objNegocioPaciente.filtrarPorApellido(txtBuscarApellido.Text);
+            gvPacientes.DataBind();
+        }
+
+        protected void btnLimpiarP_Click(object sender, EventArgs e) {
             cargarGridView();
-            lblMensaje.Text = "Filtros eliminados.";
+            rdFiltrarSexoP.ClearSelection();
+            rdFiltrarEstadoP.ClearSelection();
+            txtBuscarPorDni.Text = "";
+            txtBuscarPorNombre.Text = "";
+            txtBuscarApellido.Text = "";
         }
+        //FILTROS
+
+        protected void rdFiltrarSexoP_SelectedIndexChanged(object sender, EventArgs e) {
+            gvPacientes.DataSource = objNegocioPaciente.filtrarPorSexo(rdFiltrarSexoP.SelectedValue);
+            gvPacientes.DataBind();
+        }
+
+        protected void rdFiltrarEstadoP_SelectedIndexChanged(object sender, EventArgs e) {
+            int estado = Convert.ToInt32(rdFiltrarEstadoP.SelectedValue);
+
+            gvPacientes.DataSource = objNegocioPaciente.filtrarPorEstado(estado);
+            gvPacientes.DataBind();
+        }
+
     }
 }
 

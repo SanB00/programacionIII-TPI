@@ -8,5 +8,6 @@ namespace Negocio {
         public DataTable getTodos() {
             return objDaoProvincia.getTodos();
         }
+
     }
 }

@@ -7,26 +7,31 @@ namespace Datos {
         
         AccesoDatos acceso = new AccesoDatos();
         public string validarUsuario(string usuario, string contrasenia) {
-
-            string consulta =
-                @"SELECT *
-                  FROM USUARIO
-                  WHERE NombreUsuario = @usuario
-                  AND Contrasena = @contrasenia";
+            string consulta = @"
+        SELECT U.TipoUsuario
+        FROM USUARIO U
+        LEFT JOIN MEDICO M
+            ON U.IdUsuario = M.IdUsuario
+        WHERE U.NombreUsuario = @usuario
+          AND U.Contrasena = @contrasenia
+          AND (
+                U.TipoUsuario = 'Administrador'
+                OR M.Estado = 1
+              )";
 
             SqlParameter[] parametros =
             {
-                new SqlParameter("@usuario", usuario),
-                new SqlParameter("@contrasenia", contrasenia)
-            };
+        new SqlParameter("@usuario", usuario),
+        new SqlParameter("@contrasenia", contrasenia)
+    };
 
             DataTable dt = acceso.ejecutarConsulta(consulta, parametros);
 
             if (dt.Rows.Count > 0) {
                 return dt.Rows[0]["TipoUsuario"].ToString();
-            } else {
-                return null;
             }
+
+            return null;
         }
 
         public DataTable buscarPorLegajo(int legajo) {
