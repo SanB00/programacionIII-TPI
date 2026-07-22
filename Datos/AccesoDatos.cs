@@ -4,17 +4,17 @@ using System.Data.SqlClient;
 
 namespace Datos {
     public class AccesoDatos {
-        // private string rutaBD = @"Data Source=localhost;Initial Catalog=BDClinica;Integrated Security=True";
+        //private string rutaBD = @"Data Source=localhost;Initial Catalog=BDClinica;Integrated Security=True";
         //Franco
         //private string rutaBD = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=BDClinica;Integrated Security=True";
         //Lauti
-        // private string rutaBD = @"Data Source=localhost;Initial Catalog=BDClinica;Integrated Security=True";
-        // private string rutaBD = @"Data Source=DESKTOP-RFDMNU2\SQLEXPRESS;Initial Catalog=BDClinicaIntegrated Security=True;Encrypt=False;TrustServerCertificate=True";
-        // private string rutaBD = @"Data Source =.\SQLEXPRESS;Initial Catalog = BDClinica; Integrated Security = True;";
-        // Santiago
+        //private string rutaBD = @"Data Source=localhost;Initial Catalog=BDClinica;Integrated Security=True";ENTREGA
+        // Santi
         private string rutaBD = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=BDClinica;Integrated Security=True";
         // Elian
         //private string rutaBD = @"Data Source=DESKTOP-6K4PVV3\SQLEXPRESS;Initial Catalog=BDClinica;Integrated Security=True";
+        //Guille
+        //private string rutaBD = @"Data Source=DESKTOP-OJ9ACIL\SQLEXPRESS;Initial Catalog=BDClinica;Integrated Security=True";
         public AccesoDatos() { }
 
         public SqlConnection obtenerConexion() {
@@ -34,6 +34,15 @@ namespace Datos {
             } catch (Exception exception) {
                 return null;
             }
+        }
+
+        public SqlDataAdapter obtenerAdaptadorConComandSql(SqlCommand comandoSQL) {
+            
+            SqlConnection conexion = obtenerConexion();
+
+            comandoSQL.Connection = conexion;
+
+            return new SqlDataAdapter(comandoSQL);
         }
 
         public int ejecutarProcedimientoAlmacenado(SqlCommand comandoSQL, string nombreProcedimientoAlmacenado) {
@@ -69,7 +78,23 @@ namespace Datos {
             }
             return dataTable;
         }
-        public int ejecutarTransaccion(string consultaSQL) {
+        public int ejecutarAccion(string consultaSQL, SqlParameter[] parametros = null) {
+            int filasAfectadas = 0;
+
+            using (SqlConnection conexion = new SqlConnection(rutaBD)) {
+                SqlCommand comando = new SqlCommand(consultaSQL, conexion);
+
+                if (parametros != null)
+                    comando.Parameters.AddRange(parametros);
+
+                conexion.Open();
+                filasAfectadas = comando.ExecuteNonQuery();
+            }
+
+            return filasAfectadas;
+        }
+
+          public int ejecutarTransaccion(string consultaSQL) {
             string connectionString = rutaBD;
             SqlConnection sqlConnection = new SqlConnection(connectionString);
 

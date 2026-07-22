@@ -2,40 +2,50 @@
 
 namespace Entidades {
     public class Medico : Persona {
-        private String legajo;
-        private String especialidad;
-        private String diasAtencion;
-        private String horarioAtencion;          
+        private int legajo;
+        private int idEspecialidad;
+        private int diasAtencion;
+        private int horarioAtencion;
+        private String usuario;
+        private String contrasena;
 
-        //Getters
-        public String getLegajo() {
+       public int getLegajo() {
             return this.legajo;
         }
-        public string getEspecialidad() {
-            return this.especialidad;
+        public int getIdEspecialidad() {
+            return this.idEspecialidad;
         }
-        public String getDiasAtencion() {
+        public int getDiasAtencion() {
             return this.diasAtencion;
         }
-        public String getHorarioAtencion() {
+        public int getHorarioAtencion() {
             return this.horarioAtencion;
         }
+        public String getUsuario() {
+            return this.usuario;
+        }
+        public String getContrasena() {
+            return this.contrasena;
+        }
 
-        //Setters
-
-        public void setLegajo(String legajo) {
+        public void setLegajo(int legajo) {
             this.legajo = legajo;
         }
-        public void setEspecialidad(string especialidad) {
-            this.especialidad = especialidad;
+        public void setIdEspecialidad(int especialidad) {
+            this.idEspecialidad = especialidad;
         }
-        public void setDiasAtencion(String diasAtencion) {
+        public void setDiasAtencion(int diasAtencion) {
             this.diasAtencion = diasAtencion;
         }
-        public void setHorarioAtencion(string horarioAtencion) { 
+        public void setHorarioAtencion(int horarioAtencion) { 
             this.horarioAtencion = horarioAtencion;
         }
-
+        public void setUsuario(string usuario) {
+            this.usuario = usuario;
+        }
+        public void setContrasena(string contrasena) {
+            this.contrasena = contrasena;
+        }
     }
 }
 

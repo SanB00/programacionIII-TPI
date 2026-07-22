@@ -7,12 +7,24 @@ namespace Datos {
         AccesoDatos objAccesoDatos = new AccesoDatos();
 
         public bool agregarTurno(Turno t) {
+            if (t.getLegajo() == 0 ||
+                string.IsNullOrWhiteSpace(t.getDniPaciente()) ||
+                string.IsNullOrWhiteSpace(t.getFecha())) {
+                return false;
+            }
+
+            if (existeTurnoMedico(t.getLegajo(), t.getFecha(), t.getHorarioInicio())) {
+                return false;
+            }
+
             SqlCommand cmd = new SqlCommand();
             cmd.Parameters.AddWithValue("@legajo", t.getLegajo());
             cmd.Parameters.AddWithValue("@dni", t.getDniPaciente());
             cmd.Parameters.AddWithValue("@fecha", t.getFecha());
             cmd.Parameters.AddWithValue("@horarioInicio", t.getHorarioInicio());
+
             int filas = objAccesoDatos.ejecutarProcedimientoAlmacenado(cmd, "SP_AgregarTurno");
+
             return filas > 0;
         }
 
@@ -31,6 +43,37 @@ namespace Datos {
                                ORDER BY T.Fecha DESC";
             SqlParameter[] parametros = { new SqlParameter("@legajo", legajo) };
             return objAccesoDatos.ejecutarConsulta(consulta, parametros);
+        }
+
+        public bool existeTurnoMedico(int legajo, string fecha, int horarioInicio) {
+            string consulta = "SELECT 1 FROM TURNO WHERE Legajo = @legajo AND Fecha = @fecha AND HorarioInicio = @horarioInicio";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+             new SqlParameter("@legajo", legajo), new SqlParameter("@fecha", fecha), new SqlParameter("@horarioInicio", horarioInicio) };
+
+            DataTable tabla = objAccesoDatos.ejecutarConsulta(consulta, parametros);
+
+            return tabla.Rows.Count > 0;
+        }
+        public bool actualizarTurno(int idTurno, bool asistencia, string observacion) {
+            string consulta = @"
+        UPDATE TURNO
+        SET 
+            Asistencia = @asistencia,
+            Observacion = @observacion
+        WHERE IdTurno = @idTurno";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+        new SqlParameter("@idTurno", idTurno),
+        new SqlParameter("@asistencia", asistencia),
+        new SqlParameter("@observacion", observacion)
+            };
+
+            int filasAfectadas = objAccesoDatos.ejecutarAccion(consulta, parametros);
+
+            return filasAfectadas > 0;
         }
     }
 }

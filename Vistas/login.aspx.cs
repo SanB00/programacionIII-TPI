@@ -2,7 +2,7 @@
 using System;
 
 namespace Vistas {
-    public partial class login : System.Web.UI.Page {
+    public partial class Login : System.Web.UI.Page {
         protected void page_Load(object sender, EventArgs e) {
             if (!this.IsPostBack) {
             }
@@ -20,7 +20,7 @@ namespace Vistas {
                 if (tipoUsuario == "Administrador") {
                     Response.Redirect("HomeAdmin.aspx");
                 } else if (tipoUsuario == "Medico") {
-                    Response.Redirect("turnosMedico.aspx");
+                    Response.Redirect("HomeMedico.aspx");
                 }
             } else {
                 txtUsuario.Text = "";

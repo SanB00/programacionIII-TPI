@@ -8,11 +8,18 @@
     <title>Clínica Médica</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+    <style type="text/css">
+        .auto-style1 {
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <div style="background-color:#2c3e50; color:white; padding:10px 20px;">
-            <span>Usuario: <asp:Label ID="lblUsuario" runat="server" /></span>
+        <div style="background-color:#2c3e50; color:white; padding:10px 20px;" class="auto-style1">
+            <span>Usuario: <asp:Label ID="lblUsuario" runat="server" />
+            <asp:Button ID="btnCerrarSesion" runat="server" OnClick="btnCerrarSesion_Click" Text="Cerrar Sesion" Style="float:right;"/>
+            </span>
         </div>
         <div style="padding:20px;">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

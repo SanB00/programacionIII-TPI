@@ -1,13 +1,26 @@
-USE MASTER
-GO 
+-- PARA BORRAR BD --
+/*USE MASTER;
+GO
 
---DROP DATABASE [BDClinica]
+ALTER DATABASE BDClinica
+SET SINGLE_USER
+WITH ROLLBACK IMMEDIATE;
+GO
+
+DROP DATABASE BDClinica;
+GO*/
+---------------------
+
+USE MASTER
+GO
 
 CREATE DATABASE [BDClinica]
 GO
 
 USE BDClinica
 GO
+
+-- TABLAS --
 
 CREATE TABLE PROVINCIA (
     IdProvincia INT NOT NULL,
@@ -25,18 +38,20 @@ CREATE TABLE LOCALIDAD (
     CONSTRAINT PK_LOCALIDAD PRIMARY KEY (IdLocalidad),
     CONSTRAINT FK_LOCALIDAD FOREIGN KEY (IdProvincia) REFERENCES PROVINCIA (IdProvincia)
 );
+GO
 
 CREATE TABLE USUARIO(
     IdUsuario INT IDENTITY(1,1),
     NombreUsuario VARCHAR(50) NOT NULL UNIQUE,
-    Contrasena VARCHAR(8) NOT NULL,
+    Contrasena VARCHAR(50) NOT NULL,
     TipoUsuario VARCHAR(20) NOT NULL,
 
     CONSTRAINT PK_USUARIO PRIMARY KEY (IdUsuario)
 );
+GO
 
 CREATE TABLE PACIENTE(
-    DNI CHAR(8),
+    DNI CHAR(8) NOT NULL UNIQUE,
     Nombre VARCHAR(50) NOT NULL,
     Apellido VARCHAR(50) NOT NULL,
     Sexo CHAR(1),
@@ -53,6 +68,7 @@ CREATE TABLE PACIENTE(
     CONSTRAINT FK_PACIENTE_PROVINCIA FOREIGN KEY (IdProvincia) REFERENCES PROVINCIA(IdProvincia),
     CONSTRAINT FK_PACIENTE_LOCALIDAD FOREIGN KEY (IdLocalidad) REFERENCES Localidad(IdLocalidad)
 );
+GO
 
 
 CREATE TABLE ESPECIALIDAD(
@@ -61,9 +77,10 @@ CREATE TABLE ESPECIALIDAD(
 
     CONSTRAINT PK_ESPECIALIDAD PRIMARY KEY (IdEspecialidad)
 );
+GO
 
 CREATE TABLE MEDICO (
-    Legajo INT NOT NULL,
+    Legajo INT IDENTITY (10000,1) NOT NULL,
     DNI CHAR(8) NOT NULL UNIQUE,
     Nombre VARCHAR(50) NOT NULL,
     Apellido VARCHAR(50) NOT NULL,
@@ -76,9 +93,9 @@ CREATE TABLE MEDICO (
     CorreoElectronico VARCHAR(100),
     Telefono VARCHAR(20),
     IdEspecialidad INT NOT NULL,
-    DiasAtencion VARCHAR(100) NOT NULL,
-    HorarioAtencion VARCHAR(100) NOT NULL,
-    IdUsuario INT NULL,
+    DiasAtencion INT NOT NULL,
+    HorarioAtencion INT NOT NULL,
+    IdUsuario INT  NOT NULL,
     Estado BIT NOT NULL DEFAULT 1,
 
     CONSTRAINT PK_MEDICO PRIMARY KEY (Legajo),
@@ -87,7 +104,192 @@ CREATE TABLE MEDICO (
     CONSTRAINT FK_MEDICO_ESPECIALIDAD FOREIGN KEY (IdEspecialidad) REFERENCES ESPECIALIDAD (IdEspecialidad),
     CONSTRAINT FK_MEDICO_USUARIO FOREIGN KEY (IdUsuario) REFERENCES USUARIO (IdUsuario)
 );
+GO
 
+CREATE TABLE TURNO (
+    IdTurno       INT IDENTITY(1,1),
+    Legajo        INT      NOT NULL,
+    DNI           CHAR(8)  NOT NULL,
+    Fecha         DATE     NOT NULL,
+    HorarioInicio INT      NOT NULL,
+    Asistencia    BIT      NULL,
+    Observacion   VARCHAR(500) NULL,
+    Estado        BIT      NOT NULL DEFAULT 1,
+
+    CONSTRAINT PK_TURNO          PRIMARY KEY (IdTurno),
+    CONSTRAINT FK_TURNO_MEDICO   FOREIGN KEY (Legajo) REFERENCES MEDICO(Legajo),
+    CONSTRAINT FK_TURNO_PACIENTE FOREIGN KEY (DNI)    REFERENCES PACIENTE(DNI)
+);
+GO
+
+-- PROCEDIMIENTOS --
+
+CREATE PROCEDURE SP_AgregarPaciente
+    @dni CHAR(8),
+    @nombre VARCHAR(50),
+    @apellido VARCHAR(50),
+    @sexo CHAR(1),
+    @nacionalidad VARCHAR(50),
+    @fecha DATE,
+    @direccion VARCHAR(100),
+    @correo VARCHAR(100),
+    @telefono VARCHAR(20),
+    @provincia INT,
+    @localidad INT
+AS
+BEGIN
+    INSERT INTO PACIENTE
+    (
+        DNI, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento,
+        Direccion, CorreoElectronico, Telefono, IdProvincia, IdLocalidad, Estado
+    )
+    VALUES
+    (
+        @dni, @nombre, @apellido, @sexo, @nacionalidad, @fecha,
+        @direccion, @correo, @telefono, @provincia, @localidad, 1
+    )
+END
+GO
+
+CREATE PROCEDURE SP_ActualizarPaciente
+    @DNI CHAR(8),
+    @Nombre VARCHAR(50),
+    @Apellido VARCHAR(50),
+    @Sexo VARCHAR(1),
+    @Nacionalidad VARCHAR(50),
+    @FechaNacimiento DATE,
+    @Direccion VARCHAR(100),
+    @CorreoElectronico VARCHAR(100),
+    @Telefono VARCHAR(20),
+    @IdProvincia INT,
+    @IdLocalidad INT,
+    @Estado BIT
+AS
+BEGIN
+    UPDATE PACIENTE
+    SET
+        Nombre = @Nombre,
+        Apellido = @Apellido,
+        Sexo = @Sexo,
+        Nacionalidad = @Nacionalidad,
+        FechaNacimiento = @FechaNacimiento,
+        Direccion = @Direccion,
+        CorreoElectronico = @CorreoElectronico,
+        Telefono = @Telefono,
+        IdProvincia = @IdProvincia,
+        IdLocalidad = @IdLocalidad,
+        Estado = @Estado
+    WHERE DNI = @DNI
+END
+GO
+
+CREATE PROCEDURE SP_AgregarMedico
+    @DNI varchar(20),
+    @Nombre varchar(100),
+    @Apellido varchar(100),
+    @Sexo varchar(20),
+    @Nacionalidad varchar(50),
+    @FechaNacimiento date,
+    @Direccion varchar(150),
+    @IdLocalidad int,
+    @IdProvincia int,
+    @CorreoElectronico varchar(100),
+    @Telefono varchar(50),
+    @IdEspecialidad int,
+    @DiasAtencion int,
+    @HorarioAtencion int,
+    @NombreUsuario varchar(50),
+    @Contrasena varchar(50)
+AS
+BEGIN
+    
+        INSERT INTO USUARIO (NombreUsuario, Contrasena, TipoUsuario)
+        VALUES (@NombreUsuario, @Contrasena, 'Medico');
+
+        DECLARE @NuevoIdUsuario INT = SCOPE_IDENTITY();
+
+        INSERT INTO MEDICO (DNI, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, Direccion, IdLocalidad, IdProvincia, CorreoElectronico, Telefono, IdEspecialidad, DiasAtencion, HorarioAtencion, IdUsuario, Estado)
+        VALUES (@DNI, @Nombre, @Apellido, @Sexo, @Nacionalidad, @FechaNacimiento, @Direccion, @IdLocalidad, @IdProvincia, @CorreoElectronico, @Telefono, @IdEspecialidad, @DiasAtencion, @HorarioAtencion, @NuevoIdUsuario, 1);
+
+END
+GO
+
+CREATE PROCEDURE SP_ActualizarMedico
+(
+    @legajo INT,
+    @dni VARCHAR(8),
+    @nombre NVARCHAR(50),
+    @apellido NVARCHAR(50),
+    @sexo CHAR(1),
+    @nacionalidad NVARCHAR(50),
+    @FechaNacimiento DATE,
+    @direccion NVARCHAR(100),
+    @idLocalidad INT,
+    @idProvincia INT,
+    @CorreoElectronico NVARCHAR(100),
+    @telefono NVARCHAR(20),
+    @idEspecialidad INT,
+    @diasAtencion INT,
+    @horarioAtencion INT,
+    @estado BIT
+)
+AS
+BEGIN
+
+    UPDATE MEDICO
+    SET
+        Nombre = @nombre,
+        Apellido = @apellido,
+        Sexo = @sexo,
+        Nacionalidad = @nacionalidad,
+        FechaNacimiento = @FechaNacimiento,
+        Direccion = @direccion,
+        IdLocalidad = @idLocalidad,
+        IdProvincia = @idProvincia,
+        CorreoElectronico = @CorreoElectronico,
+        Telefono = @telefono,
+        IdEspecialidad = @idEspecialidad,
+        DiasAtencion = @diasAtencion,
+        HorarioAtencion = @horarioAtencion,
+        Estado = @estado
+
+    WHERE Legajo = @legajo AND DNI = @dni
+        
+END;
+GO
+
+CREATE PROCEDURE SP_ActualizarUsuario
+(
+    @legajo INT,
+    @NombreUsuario varchar(50),
+    @Contrasena varchar(50)
+)
+AS 
+BEGIN
+     UPDATE  USUARIO 
+    SET
+        NombreUsuario = @NombreUsuario,
+        Contrasena = @Contrasena
+       
+    WHERE IdUsuario = (SELECT IdUsuario FROM MEDICO  WHERE Legajo = @legajo);   
+
+END;
+GO
+
+CREATE PROCEDURE SP_AgregarTurno
+    @legajo        INT,
+    @dni           CHAR(8),
+    @fecha         DATE,
+    @horarioInicio INT
+AS
+BEGIN
+    INSERT INTO TURNO (Legajo, DNI, Fecha, HorarioInicio, Estado)
+    VALUES (@legajo, @dni, @fecha, @horarioInicio, 1)
+END
+GO
+
+
+-- CARGA DE TABLAS --
 
 INSERT INTO PROVINCIA (IdProvincia, Nombre) 
 SELECT 1 ,'Buenos Aires' UNION
@@ -359,113 +561,133 @@ SELECT '93456789', 'Camila', 'Silva', 'F', 'Argentina', '1997-08-30', 'Perú 444
 SELECT '94567890', 'Javier', 'Morales', 'M', 'Argentina', '1983-03-05', 'Urquiza 555', 'javier.morales@gmail.com', '1100011122', 3, 17 UNION
 SELECT '95678901', 'Florencia', 'Herrera', 'F', 'Argentina', '2002-11-19', 'Pellegrini 666', 'florencia.herrera@gmail.com', '1101122233', 3, 18 UNION
 SELECT '96789012', 'Fernando', 'Acosta', 'M', 'Argentina', '1990-02-14', 'Maipú 777', 'fernando.acosta@gmail.com', '1102233344', 3, 19 UNION
-SELECT '97890123', 'Julieta', 'Vega', 'F', 'Bolivia', '1996-09-07', 'Las Heras 888', 'julieta.vega@gmail.com', '1103344455', 3, 20 UNION
+SELECT '97890123', 'Julieta', 'Venegas', 'F', 'Bolivia', '1996-09-07', 'Las Heras 888', 'julieta.venegas@gmail.com', '1103344455', 3, 20 UNION
 SELECT '98901234', 'Gonzalo', 'Navarro', 'M', 'Argentina', '1989-12-21', 'Colón 999', 'gonzalo.navarro@gmail.com', '1104455566', 4, 25 UNION
 SELECT '99012345', 'Brenda', 'Rojas', 'F', 'Argentina', '2003-07-11', 'Alem 123', 'brenda.rojas@gmail.com', '1105566677', 4, 26;
 GO
 
 INSERT INTO USUARIO (NombreUsuario,Contrasena,TipoUsuario)
-SELECT 'admin','1234','Administrador' UNION
-SELECT 'lautaro','1111','Medico' UNION
-SELECT 'guille','2222','Administrador' UNION
-SELECT 'elian','4444','Medico' UNION
-SELECT 'santi','5555','Administrador' UNION
-SELECT 'fran','6666','Medico';
+VALUES 
+('admin','1234','Administrador'),
+('guille','2222','Administrador'),
+('santi','5555','Administrador'); 
 GO
 
-INSERT INTO MEDICO (Legajo, DNI, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, Direccion, IdLocalidad, IdProvincia, CorreoElectronico, Telefono, IdEspecialidad, DiasAtencion, HorarioAtencion, IdUsuario)
-SELECT 1001, '30111222', 'Laura', 'Fernandez', 'F', 'Argentina', '1980-05-12', 'San Martin 123', 1, 1, 'laura.fernandez@gmail.com', '1160011122', 1, 'Lunes-Miercoles', '08:00-14:00', NULL UNION
-SELECT 1002, '28999888', 'Lautaro', 'Mendez', 'M', 'Argentina', '1975-09-03', 'Belgrano 456', 2, 1, 'carlos.mendez@gmail.com', '1160022233', 2, 'Martes-Jueves', '14:00-20:00', NULL UNION
-SELECT 1003, '31222333', 'Sofia', 'Gomez', 'F', 'Argentina', '1988-11-20', 'Rivadavia 789', 3, 2, 'sofia.gomez@gmail.com', '1160033344', 3, 'Lunes-Viernes', '09:00-13:00', NULL UNION
-SELECT 1004, '29888777', 'Elian', 'Ramirez', 'M', 'Argentina', '1979-02-15', 'Mitre 321', 4, 2, 'jorge.ramirez@gmail.com', '1160044455', 1, 'Lunes-Miercoles-Viernes', '15:00-19:00', NULL UNION
-SELECT 1005, '32555666', 'Valeria', 'Torres', 'F', 'Argentina', '1990-07-08', 'Italia 654', 5, 3, 'valeria.torres@gmail.com', '1160055566', 4, 'Martes-Jueves', '10:00-16:00', NULL UNION
-SELECT 1006, '27777444', 'Franco', 'Sanchez', 'M', 'Argentina', '1972-12-01', 'Urquiza 987', 6, 3, 'diego.sanchez@gmail.com', '1160066677', 2, 'Lunes-Viernes', '08:00-12:00', NULL;
+INSERT INTO USUARIO(NombreUsuario, Contrasena, TipoUsuario)
+VALUES
+('laura.fernandez','1234','Medico'),
+('lautaro.mendez','1234','Medico'),
+('sofia.gomez','1234','Medico'),
+('elian.ramirez','1234','Medico'),
+('valeria.torres','1234','Medico'),
+('franco.sanchez','1234','Medico'),
+('mariana.lopez','1234','Medico'),
+('ricardo.alvarez','1234','Medico'),
+('natalia.benitez','1234','Medico'),
+('diego.castro','1234','Medico'),
+('gabriela.herrera','1234','Medico'),
+('pablo.dominguez','1234','Medico'),
+('carolina.vega','1234','Medico'),
+('javier.ortega','1234','Medico'),
+('luciana.romero','1234','Medico');
 GO
 
-CREATE PROCEDURE SP_AgregarPaciente
-    @dni CHAR(8),
-    @nombre VARCHAR(50),
-    @apellido VARCHAR(50),
-    @sexo CHAR(1),
-    @nacionalidad VARCHAR(50),
-    @fecha DATE,
-    @direccion VARCHAR(100),
-    @correo VARCHAR(100),
-    @telefono VARCHAR(20),
-    @provincia INT,
-    @localidad INT
-AS
-BEGIN
-    INSERT INTO PACIENTE
-    (
-        DNI, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento,
-        Direccion, CorreoElectronico, Telefono, IdProvincia, IdLocalidad, Estado
-    )
-    VALUES
-    (
-        @dni, @nombre, @apellido, @sexo, @nacionalidad, @fecha,
-        @direccion, @correo, @telefono, @provincia, @localidad, 1
-    )
-END
+INSERT INTO MEDICO
+(DNI, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento,
+ Direccion, IdLocalidad, IdProvincia, CorreoElectronico,
+ Telefono, IdEspecialidad, DiasAtencion, HorarioAtencion, IdUsuario)
+VALUES
+('30111222', 'Laura', 'Fernandez', 'F', 'Argentina', '1980-05-12', 'San Martin 123', 1, 1, 'laura.fernandez@gmail.com', '1160011122', 1, 2, 1, 4),
+('28999888', 'Lautaro', 'Mendez', 'M', 'Argentina', '1975-09-03', 'Belgrano 456', 2, 1, 'carlos.mendez@gmail.com', '1160022233', 2, 1, 3, 5),
+('31222333', 'Sofia', 'Gomez', 'F', 'Argentina', '1988-11-20', 'Rivadavia 789', 3, 2, 'sofia.gomez@gmail.com', '1160033344', 3, 4, 1, 6),
+('29888777', 'Elian', 'Ramirez', 'M', 'Argentina', '1979-02-15', 'Mitre 321', 4, 2, 'jorge.ramirez@gmail.com', '1160044455', 1, 1, 1, 7),
+('32555666', 'Valeria', 'Torres', 'F', 'Argentina', '1990-07-08', 'Italia 654', 5, 3, 'valeria.torres@gmail.com', '1160055566', 4, 1, 1, 8),
+('27777444', 'Franco', 'Sanchez', 'M', 'Argentina', '1972-12-01', 'Urquiza 987', 6, 3, 'diego.sanchez@gmail.com', '1160066677', 2, 1, 1, 9),
+('33666777', 'Mariana', 'Lopez', 'F', 'Argentina', '1984-03-15', 'Av. Libertador 1200', 7, 1, 'mariana.lopez@gmail.com', '1160077788', 5, 2, 2, 10),
+('34777888', 'Ricardo', 'Alvarez', 'M', 'Argentina', '1978-08-21', 'San Juan 455', 8, 1, 'ricardo.alvarez@gmail.com', '1160088899', 6, 3, 3, 11),
+('35888999', 'Natalia', 'Benitez', 'F', 'Argentina', '1986-12-11', 'Lavalle 789', 17, 3, 'natalia.benitez@gmail.com', '1160099900', 2, 1, 4, 12),
+('36999000', 'Diego', 'Castro', 'M', 'Argentina', '1977-05-04', 'Moreno 345', 18, 3, 'diego.castro@gmail.com', '1160101010', 3, 4, 1, 13),
+('37111222', 'Gabriela', 'Herrera', 'F', 'Argentina', '1989-01-19', 'Belgrano 222', 25, 4, 'gabriela.herrera@gmail.com', '1160111212', 1, 0, 2, 14),
+('38222333', 'Pablo', 'Dominguez', 'M', 'Argentina', '1976-10-28', 'Sarmiento 900', 26, 4, 'pablo.dominguez@gmail.com', '1160122323', 4, 2, 3, 15),
+('39333444', 'Carolina', 'Vega', 'F', 'Argentina', '1991-06-09', 'Pueyrredon 654', 33, 5, 'carolina.vega@gmail.com', '1160133434', 5, 1, 1, 16),
+('40444555', 'Javier', 'Ortega', 'M', 'Argentina', '1982-09-30', 'Cordoba 150', 41, 6, 'javier.ortega@gmail.com', '1160144545', 6, 3, 2, 17),
+('41555666', 'Luciana', 'Romero', 'F', 'Argentina', '1987-04-17', 'Roca 80', 49, 7, 'luciana.romero@gmail.com', '1160155656', 3, 4, 4, 18);
 GO
 
-CREATE PROCEDURE SP_AgregarMedico
-    @legajo INT,
-    @dni CHAR(8),
-    @nombre VARCHAR(50),
-    @apellido VARCHAR(50),
-    @sexo CHAR(1),
-    @nacionalidad VARCHAR(50),
-    @fecha DATE,
-    @direccion VARCHAR(100),
-    @idLocalidad INT,
-    @idProvincia INT,
-    @correo VARCHAR(100),
-    @telefono VARCHAR(20),
-    @idEspecialidad INT,
-    @diasAtencion VARCHAR(100),
-    @horarioAtencion VARCHAR(100),
-    @idUsuario INT = NULL
-AS
-BEGIN
-    INSERT INTO MEDICO
-    (
-        Legajo, DNI, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento,
-        Direccion, IdLocalidad, IdProvincia, CorreoElectronico, Telefono,
-        IdEspecialidad, DiasAtencion, HorarioAtencion, IdUsuario, Estado
-    )
-    VALUES
-    (
-        @legajo, @dni, @nombre, @apellido, @sexo, @nacionalidad, @fecha,
-        @direccion, @idLocalidad, @idProvincia, @correo, @telefono,
-        @idEspecialidad, @diasAtencion, @horarioAtencion, @idUsuario, 1
-    )
-END
-GO
-CREATE TABLE TURNO (
-    IdTurno       INT IDENTITY(1,1),
-    Legajo        INT      NOT NULL,
-    DNI           CHAR(8)  NOT NULL,
-    Fecha         DATE     NOT NULL,
-    HorarioInicio INT      NOT NULL,
-    Asistencia    BIT      NULL,
-    Observacion   VARCHAR(500) NULL,
-    Estado        BIT      NOT NULL DEFAULT 1,
+INSERT INTO TURNO (Legajo, DNI, Fecha, HorarioInicio, Asistencia, Observacion)
+VALUES
+-- Médico 10000
+(10000,'42419605','2026-07-15',1,NULL,NULL),
+(10000,'12345678','2026-07-16',2,NULL,NULL),
+(10000,'23456789','2026-07-17',3,NULL,NULL),
 
-    CONSTRAINT PK_TURNO          PRIMARY KEY (IdTurno),
-    CONSTRAINT FK_TURNO_MEDICO   FOREIGN KEY (Legajo) REFERENCES MEDICO(Legajo),
-    CONSTRAINT FK_TURNO_PACIENTE FOREIGN KEY (DNI)    REFERENCES PACIENTE(DNI)
-);
-GO
+-- Médico 10001
+(10001,'34567890','2026-07-15',1,NULL,NULL),
+(10001,'45678901','2026-07-16',2,NULL,NULL),
+(10001,'56789012','2026-07-17',3,NULL,NULL),
 
-CREATE PROCEDURE SP_AgregarTurno
-    @legajo        INT,
-    @dni           CHAR(8),
-    @fecha         DATE,
-    @horarioInicio INT
-AS
-BEGIN
-    INSERT INTO TURNO (Legajo, DNI, Fecha, HorarioInicio, Estado)
-    VALUES (@legajo, @dni, @fecha, @horarioInicio, 1)
-END
+-- Médico 10002
+(10002,'67890123','2026-07-15',1,NULL,NULL),
+(10002,'78901234','2026-07-16',2,NULL,NULL),
+(10002,'89012345','2026-07-17',3,NULL,NULL),
+
+-- Médico 10003
+(10003,'90123456','2026-07-15',1,NULL,NULL),
+(10003,'91234567','2026-07-16',2,NULL,NULL),
+(10003,'92345678','2026-07-17',3,NULL,NULL),
+
+-- Médico 10004
+(10004,'93456789','2026-07-15',1,NULL,NULL),
+(10004,'94567890','2026-07-16',2,NULL,NULL),
+(10004,'95678901','2026-07-17',3,NULL,NULL),
+
+-- Médico 10005
+(10005,'96789012','2026-07-15',1,NULL,NULL),
+(10005,'97890123','2026-07-16',2,NULL,NULL),
+(10005,'98901234','2026-07-17',3,NULL,NULL),
+
+-- Médico 10006
+(10006,'99012345','2026-07-15',1,NULL,NULL),
+(10006,'42419605','2026-07-16',2,NULL,NULL),
+(10006,'12345678','2026-07-17',3,NULL,NULL),
+
+-- Médico 10007
+(10007,'23456789','2026-07-15',1,NULL,NULL),
+(10007,'34567890','2026-07-16',2,NULL,NULL),
+(10007,'45678901','2026-07-17',3,NULL,NULL),
+
+-- Médico 10008
+(10008,'56789012','2026-07-15',1,NULL,NULL),
+(10008,'67890123','2026-07-16',2,NULL,NULL),
+(10008,'78901234','2026-07-17',3,NULL,NULL),
+
+-- Médico 10009
+(10009,'89012345','2026-07-15',1,NULL,NULL),
+(10009,'90123456','2026-07-16',2,NULL,NULL),
+(10009,'91234567','2026-07-17',3,NULL,NULL),
+
+-- Médico 10010
+(10010,'92345678','2026-07-15',1,NULL,NULL),
+(10010,'93456789','2026-07-16',2,NULL,NULL),
+(10010,'94567890','2026-07-17',3,NULL,NULL),
+
+-- Médico 10011
+(10011,'95678901','2026-07-15',1,NULL,NULL),
+(10011,'96789012','2026-07-16',2,NULL,NULL),
+(10011,'97890123','2026-07-17',3,NULL,NULL),
+
+-- Médico 10012
+(10012,'98901234','2026-07-15',1,NULL,NULL),
+(10012,'99012345','2026-07-16',2,NULL,NULL),
+(10012,'42419605','2026-07-17',3,NULL,NULL),
+
+-- Médico 10013
+(10013,'12345678','2026-07-15',1,NULL,NULL),
+(10013,'23456789','2026-07-16',2,NULL,NULL),
+(10013,'34567890','2026-07-17',3,NULL,NULL),
+
+-- Médico 10014
+(10014,'45678901','2026-07-15',1,NULL,NULL),
+(10014,'56789012','2026-07-16',2,NULL,NULL),
+(10014,'67890123','2026-07-17',3,NULL,NULL);
 GO
