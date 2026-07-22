@@ -78,55 +78,20 @@ namespace Datos {
             }
             return dataTable;
         }
+
         public int ejecutarAccion(string consultaSQL, SqlParameter[] parametros = null) {
-            int filasAfectadas = 0;
+            using (SqlConnection sqlConnection = new SqlConnection(rutaBD)) {
+                try {SqlCommand sqlCommand = new SqlCommand(consultaSQL, sqlConnection);
 
-            using (SqlConnection conexion = new SqlConnection(rutaBD)) {
-                SqlCommand comando = new SqlCommand(consultaSQL, conexion);
-
-                if (parametros != null)
-                    comando.Parameters.AddRange(parametros);
-
-                conexion.Open();
-                filasAfectadas = comando.ExecuteNonQuery();
-            }
-
-            return filasAfectadas;
-        }
-
-          public int ejecutarTransaccion(string consultaSQL) {
-            string connectionString = rutaBD;
-            SqlConnection sqlConnection = new SqlConnection(connectionString);
-
-            sqlConnection.Open();
-
-            SqlCommand sqlCommand = new SqlCommand(consultaSQL, sqlConnection);
-            int filasAfectadas = sqlCommand.ExecuteNonQuery(); /// INSERT, UPDATE, DELETE
-
-            sqlConnection.Close();
-
-            return filasAfectadas;
-        }
-
-        public bool existe(String consulta) {
-            using (SqlConnection conexion = new SqlConnection(rutaBD)) {
-                conexion.Open();
-
-                using (SqlCommand cmd = new SqlCommand(consulta, conexion)) {
-                    using (SqlDataReader datos = cmd.ExecuteReader()) {
-                        return datos.Read();
+                    if (parametros != null) {
+                        sqlCommand.Parameters.AddRange(parametros);
                     }
-                }
-            }
-        }
 
-        public int obtenerMaximo(string consulta) {
-            using (SqlConnection conexion = new SqlConnection(rutaBD)) {
-                conexion.Open();
+                    sqlConnection.Open();
 
-                using (SqlCommand cmd = new SqlCommand(consulta, conexion)) {
-                    object result = cmd.ExecuteScalar();
-                    return result != DBNull.Value ? Convert.ToInt32(result) : 0;
+                    return sqlCommand.ExecuteNonQuery();
+                } catch (Exception e) {
+                    throw new Exception($"Error al ejecutar la consulta: \n{e.Message}");
                 }
             }
         }
