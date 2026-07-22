@@ -52,7 +52,7 @@ namespace Vistas {
                 lblMensaje.Text = "Error: El DNI ingresado no corresponde a ningún paciente registrado.";
                 return;
             }
-                        Turno t = new Turno();
+            Turno t = new Turno();
             t.setLegajo(Convert.ToInt32(ddlMedico.SelectedValue));
             t.setDniPaciente(txtDniPaciente.Text.Trim());
             t.setFecha(txtDiaTurno.Text);
@@ -64,6 +64,9 @@ namespace Vistas {
                 lblMensaje.Text = "Turno asignado correctamente.";
                 txtDniPaciente.Text = "";
                 txtDiaTurno.Text = "";
+                ddlEspecialidad.SelectedIndex = 0;
+                ddlMedico.SelectedIndex = 0;
+                ddlHorario.SelectedIndex = 0;
             } else {
                 lblMensaje.Text = "Error: ese médico ya tiene un turno en ese día y horario, o los datos son inválidos.";
             }

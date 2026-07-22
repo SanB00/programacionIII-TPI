@@ -130,9 +130,6 @@ namespace Vistas {
             
             //validaciones
 
-
-
-
             string mensajeError = "";
 
             if (!Common.esUnNroValido(dni)) {

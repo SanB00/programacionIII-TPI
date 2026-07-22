@@ -29,18 +29,29 @@ namespace Datos {
         }
 
         public DataTable getTurnosPorMedico(int legajo) {
-            string consulta = @"SELECT T.IdTurno,
-                                       P.Nombre + ' ' + P.Apellido AS Paciente,
-                                       T.Fecha,
-                                       T.HorarioInicio AS Horario,
-                                       CASE WHEN T.Asistencia = 1 THEN 'Presente'
-                                            WHEN T.Asistencia = 0 THEN 'Ausente'
-                                            ELSE 'Sin marcar' END AS Asistencia,
-                                       T.Observacion
-                               FROM TURNO T
-                               INNER JOIN PACIENTE P ON T.DNI = P.DNI
-                               WHERE T.Legajo = @legajo AND T.Estado = 1
-                               ORDER BY T.Fecha DESC";
+            string consulta = @"SELECT 
+                                T.IdTurno,
+                                P.Nombre + ' ' + P.Apellido AS Paciente,
+                                T.Fecha,
+        
+                                T.HorarioInicio AS Horario,
+
+                                CASE 
+                                    WHEN T.Asistencia = 1 THEN 'Presente'
+                                    WHEN T.Asistencia = 0 THEN 'Ausente'
+                                    ELSE 'Sin marcar'
+                                END AS Asistencia,
+
+                                T.Observacion
+
+                            FROM TURNO T
+                            INNER JOIN PACIENTE P 
+                                ON T.DNI = P.DNI
+
+                            WHERE T.Legajo = @legajo 
+                                AND T.Estado = 1
+
+                            ORDER BY T.Fecha ASC";
             SqlParameter[] parametros = { new SqlParameter("@legajo", legajo) };
             return objAccesoDatos.ejecutarConsulta(consulta, parametros);
         }
@@ -58,18 +69,13 @@ namespace Datos {
         }
         public bool actualizarTurno(int idTurno, bool asistencia, string observacion) {
             string consulta = @"
-        UPDATE TURNO
-        SET 
-            Asistencia = @asistencia,
-            Observacion = @observacion
-        WHERE IdTurno = @idTurno";
+                                UPDATE TURNO
+                                SET 
+                                    Asistencia = @asistencia,
+                                    Observacion = @observacion
+                                WHERE IdTurno = @idTurno";
 
-            SqlParameter[] parametros = new SqlParameter[]
-            {
-        new SqlParameter("@idTurno", idTurno),
-        new SqlParameter("@asistencia", asistencia),
-        new SqlParameter("@observacion", observacion)
-            };
+            SqlParameter[] parametros = new SqlParameter[] {new SqlParameter("@idTurno", idTurno),new SqlParameter("@asistencia", asistencia),new SqlParameter("@observacion", observacion)};
 
             int filasAfectadas = objAccesoDatos.ejecutarAccion(consulta, parametros);
 

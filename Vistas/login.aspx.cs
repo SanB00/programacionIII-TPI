@@ -25,7 +25,7 @@ namespace Vistas {
             } else {
                 txtUsuario.Text = "";
                 lblMensaje.Visible = true;
-                lblMensaje.Text = "Usuario o contraseña incorrectos";
+                lblMensaje.Text = "Usuario o contraseña incorrectos o Usuario inactivo";
             }
         }
 

@@ -16,7 +16,7 @@
     Width="744px"
     Font-Names="Arial"
     Font-Size="Small"
-    EmptyDataText="No tiene turnos asignados.">
+    EmptyDataText="No tiene turnos asignados." OnSelectedIndexChanged="gvTurnos_SelectedIndexChanged">
 
     <HeaderStyle BackColor="#102a43" ForeColor="White" Font-Bold="true" />
     <AlternatingRowStyle BackColor="#f0f4f8" />
@@ -24,7 +24,7 @@
     <Columns>
 
         <asp:BoundField DataField="Paciente" HeaderText="Paciente" />
-        <asp:BoundField DataField="Fecha" HeaderText="Fecha" />
+        <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" HtmlEncode="false" />
         <asp:BoundField DataField="Horario" HeaderText="Horario" />
 
         <asp:TemplateField HeaderText="Asistencia">

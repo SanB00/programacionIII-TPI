@@ -597,21 +597,21 @@ INSERT INTO MEDICO
  Direccion, IdLocalidad, IdProvincia, CorreoElectronico,
  Telefono, IdEspecialidad, DiasAtencion, HorarioAtencion, IdUsuario)
 VALUES
-('30111222', 'Laura', 'Fernandez', 'F', 'Argentina', '1980-05-12', 'San Martin 123', 1, 1, 'laura.fernandez@gmail.com', '1160011122', 1, 2, 1, 4),
-('28999888', 'Lautaro', 'Mendez', 'M', 'Argentina', '1975-09-03', 'Belgrano 456', 2, 1, 'carlos.mendez@gmail.com', '1160022233', 2, 1, 3, 5),
-('31222333', 'Sofia', 'Gomez', 'F', 'Argentina', '1988-11-20', 'Rivadavia 789', 3, 2, 'sofia.gomez@gmail.com', '1160033344', 3, 4, 1, 6),
+('30111222', 'Laura', 'Fernandez', 'F', 'Argentina', '1980-05-12', 'San Martin 123', 1, 1, 'laura.fernandez@gmail.com', '1160011122', 1, 0, 1, 4),
+('28999888', 'Lautaro', 'Mendez', 'M', 'Argentina', '1975-09-03', 'Belgrano 456', 2, 1, 'carlos.mendez@gmail.com', '1160022233', 2, 1, 2, 5),
+('31222333', 'Sofia', 'Gomez', 'F', 'Argentina', '1988-11-20', 'Rivadavia 789', 3, 2, 'sofia.gomez@gmail.com', '1160033344', 3, 0, 1, 6),
 ('29888777', 'Elian', 'Ramirez', 'M', 'Argentina', '1979-02-15', 'Mitre 321', 4, 2, 'jorge.ramirez@gmail.com', '1160044455', 1, 1, 1, 7),
-('32555666', 'Valeria', 'Torres', 'F', 'Argentina', '1990-07-08', 'Italia 654', 5, 3, 'valeria.torres@gmail.com', '1160055566', 4, 1, 1, 8),
-('27777444', 'Franco', 'Sanchez', 'M', 'Argentina', '1972-12-01', 'Urquiza 987', 6, 3, 'diego.sanchez@gmail.com', '1160066677', 2, 1, 1, 9),
+('32555666', 'Valeria', 'Torres', 'F', 'Argentina', '1990-07-08', 'Italia 654', 5, 3, 'valeria.torres@gmail.com', '1160055566', 4, 0, 1, 8),
+('27777444', 'Franco', 'Sanchez', 'M', 'Argentina', '1972-12-01', 'Urquiza 987', 6, 3, 'diego.sanchez@gmail.com', '1160066677', 2, 2, 1, 9),
 ('33666777', 'Mariana', 'Lopez', 'F', 'Argentina', '1984-03-15', 'Av. Libertador 1200', 7, 1, 'mariana.lopez@gmail.com', '1160077788', 5, 2, 2, 10),
-('34777888', 'Ricardo', 'Alvarez', 'M', 'Argentina', '1978-08-21', 'San Juan 455', 8, 1, 'ricardo.alvarez@gmail.com', '1160088899', 6, 3, 3, 11),
-('35888999', 'Natalia', 'Benitez', 'F', 'Argentina', '1986-12-11', 'Lavalle 789', 17, 3, 'natalia.benitez@gmail.com', '1160099900', 2, 1, 4, 12),
-('36999000', 'Diego', 'Castro', 'M', 'Argentina', '1977-05-04', 'Moreno 345', 18, 3, 'diego.castro@gmail.com', '1160101010', 3, 4, 1, 13),
+('34777888', 'Ricardo', 'Alvarez', 'M', 'Argentina', '1978-08-21', 'San Juan 455', 8, 1, 'ricardo.alvarez@gmail.com', '1160088899', 6, 0, 0, 11),
+('35888999', 'Natalia', 'Benitez', 'F', 'Argentina', '1986-12-11', 'Lavalle 789', 17, 3, 'natalia.benitez@gmail.com', '1160099900', 2, 1, 1, 12),
+('36999000', 'Diego', 'Castro', 'M', 'Argentina', '1977-05-04', 'Moreno 345', 18, 3, 'diego.castro@gmail.com', '1160101010', 3, 2, 1, 13),
 ('37111222', 'Gabriela', 'Herrera', 'F', 'Argentina', '1989-01-19', 'Belgrano 222', 25, 4, 'gabriela.herrera@gmail.com', '1160111212', 1, 0, 2, 14),
-('38222333', 'Pablo', 'Dominguez', 'M', 'Argentina', '1976-10-28', 'Sarmiento 900', 26, 4, 'pablo.dominguez@gmail.com', '1160122323', 4, 2, 3, 15),
+('38222333', 'Pablo', 'Dominguez', 'M', 'Argentina', '1976-10-28', 'Sarmiento 900', 26, 4, 'pablo.dominguez@gmail.com', '1160122323', 4, 2, 1, 15),
 ('39333444', 'Carolina', 'Vega', 'F', 'Argentina', '1991-06-09', 'Pueyrredon 654', 33, 5, 'carolina.vega@gmail.com', '1160133434', 5, 1, 1, 16),
-('40444555', 'Javier', 'Ortega', 'M', 'Argentina', '1982-09-30', 'Cordoba 150', 41, 6, 'javier.ortega@gmail.com', '1160144545', 6, 3, 2, 17),
-('41555666', 'Luciana', 'Romero', 'F', 'Argentina', '1987-04-17', 'Roca 80', 49, 7, 'luciana.romero@gmail.com', '1160155656', 3, 4, 4, 18);
+('40444555', 'Javier', 'Ortega', 'M', 'Argentina', '1982-09-30', 'Cordoba 150', 41, 6, 'javier.ortega@gmail.com', '1160144545', 6, 1, 2, 17),
+('41555666', 'Luciana', 'Romero', 'F', 'Argentina', '1987-04-17', 'Roca 80', 49, 7, 'luciana.romero@gmail.com', '1160155656', 3, 1, 0, 18);
 GO
 
 INSERT INTO TURNO (Legajo, DNI, Fecha, HorarioInicio, Asistencia, Observacion)
@@ -624,7 +624,7 @@ VALUES
 -- Médico 10001
 (10001,'34567890','2026-07-15',1,NULL,NULL),
 (10001,'45678901','2026-07-16',2,NULL,NULL),
-(10001,'56789012','2026-07-17',3,NULL,NULL),
+(10001,'56789012','2026-07-17',4,NULL,NULL),
 
 -- Médico 10002
 (10002,'67890123','2026-07-15',1,NULL,NULL),
